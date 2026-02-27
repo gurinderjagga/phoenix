@@ -1,4 +1,4 @@
-# 🚗 Car Commerce App
+# 🚗 Phoenix
 
 A modern, full-stack e-commerce application for buying and selling cars, built with React, Node.js, and **Supabase**!
 
