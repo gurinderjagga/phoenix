@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, ChevronLeft, ChevronRight, MoreVertical, Shield, ShieldOff, User } from 'lucide-react';
+import { Search, Filter, ChevronLeft, ChevronRight, MoreVertical, User } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import apiService from '../../utils/api';
 import CustomerDetailsModal from '../../components/admin/CustomerDetailsModal';
@@ -169,16 +169,16 @@ const Customers = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${customer.role === 'admin'
-                                ? 'bg-purple-100 text-purple-800 border border-purple-200'
-                                : 'bg-blue-50 text-blue-700 border border-blue-100'
+                              ? 'bg-purple-100 text-purple-800 border border-purple-200'
+                              : 'bg-blue-50 text-blue-700 border border-blue-100'
                               }`}>
                               {customer.role}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${customer.is_active !== false
-                                ? 'bg-green-100 text-green-800' // Default true
-                                : 'bg-red-100 text-red-800'
+                              ? 'bg-green-100 text-green-800' // Default true
+                              : 'bg-red-100 text-red-800'
                               }`}>
                               {customer.is_active !== false ? 'Active' : 'Blocked'}
                             </span>

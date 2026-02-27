@@ -27,6 +27,7 @@ const Profile = () => {
         if (user) {
             fetchProfile();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     const fetchProfile = async () => {
@@ -84,6 +85,17 @@ const Profile = () => {
                             <Button variant="secondary">Register</Button>
                         </Link>
                     </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-secondary flex justify-center items-center">
+                <div className="text-red-500 border border-red-200 bg-white p-6">
+                    <h3 className="uppercase tracking-widest font-bold mb-2">Error</h3>
+                    <p className="text-sm">{error}</p>
                 </div>
             </div>
         );

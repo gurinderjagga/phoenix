@@ -10,7 +10,6 @@ const Wishlist = () => {
     const { user } = useAuth();
     const [wishlistItems, setWishlistItems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [creatingProfile, setCreatingProfile] = useState(false);
     const [showAddressModal, setShowAddressModal] = useState(false);
     const [currentUserProfile, setCurrentUserProfile] = useState(null);
     const [confirmModal, setConfirmModal] = useState({ isOpen: false, address: null });

@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   // Keep mock revenue data for visual chart until we implement real analytics aggregation
   const [revenueData, setRevenueData] = useState([]);
-  const [timeRange, setTimeRange] = useState('30d');
+  const [timeRange] = useState('30d');
 
   useEffect(() => {
     fetchDashboardData();
@@ -126,7 +126,6 @@ const Dashboard = () => {
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {kpiCards.map((card, index) => {
-            const Icon = card.icon;
             return (
               <div key={index} className="bg-white border border-gray-200 p-6">
                 <div className="flex items-center justify-between">

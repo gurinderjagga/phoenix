@@ -188,6 +188,17 @@ const Orders = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-secondary flex justify-center items-center">
+        <div className="text-red-500 border border-red-200 bg-white p-6">
+          <h3 className="uppercase tracking-widest font-bold mb-2">Error Loading Orders</h3>
+          <p className="text-sm">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-secondary flex justify-center items-center">
