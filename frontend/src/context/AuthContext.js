@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase';
+import { apiService } from '../utils/api';
 
 const AuthContext = createContext({});
 
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }) => {
                 if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session?.user) {
                     console.log('📝 Creating/verifying user profile for:', session.user.email);
                     try {
-                        const response = await fetch(`http://localhost:5000/api/auth/callback`, {
+                        const response = await fetch(`${apiService.baseURL}/auth/callback`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
