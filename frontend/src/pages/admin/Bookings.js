@@ -1,0 +1,185 @@
+import React, { useState, useEffect } from 'react';
+import AdminLayout from '../../components/admin/AdminLayout';
+import apiService from '../../utils/api';
+
+const Bookings = () => {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false });
+
+  useEffect(() => {
+    fetchBookings();
+  }, []);
+
+  const fetchBookings = async () => {
+    try {
+      setLoading(true);
+      const data = await apiService.getAllBookings();
+      setBookings(data || []);
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStatusChange = async (bookingId, newStatus) => {
+    try {
+      await apiService.updateBookingStatus(bookingId, newStatus);
+      // Refresh list to show updated status
+      fetchBookings();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      setAlertModal({ isOpen: true, message: 'Failed to update booking status', isError: true });
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'confirmed': return 'bg-green-100 text-green-800';
+      case 'delivered': return 'bg-blue-100 text-blue-800';
+      case 'shipped': return 'bg-purple-100 text-purple-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      default: return 'bg-yellow-100 text-yellow-800'; // pending
+    }
+  };
+
+  return (
+    <AdminLayout>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 uppercase tracking-widest">
+            Bookings Management
+          </h1>
+          <p className="text-gray-600 mt-2">Manage customer bookings and reservations</p>
+        </div>
+
+        <div className="bg-white border border-gray-200 overflow-hidden">
+          {loading ? (
+            <div className="p-8 text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
+              <p className="text-gray-500 mt-4">Loading bookings...</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Car</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {bookings.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                        No bookings found.
+                      </td>
+                    </tr>
+                  ) : (
+                    bookings.map((booking) => (
+                      <tr key={booking.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          #{booking.id.slice(0, 8)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <div className="font-medium text-gray-900">
+                            {booking.profiles?.name || booking.user?.name || 'Unknown'}
+                          </div>
+                          <div>{booking.profiles?.email || booking.user?.email}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {booking.shipping_address ? (
+                            typeof booking.shipping_address === 'object' ? (
+                              <div>
+                                <div className="font-medium text-gray-900">{booking.shipping_address.street || booking.shipping_address.address}</div>
+                                <div className="text-xs">{booking.shipping_address.city}, {booking.shipping_address.zipCode}</div>
+                              </div>
+                            ) : (
+                              <span>{booking.shipping_address}</span>
+                            )
+                          ) : (
+                            <span className="text-gray-400">Not provided</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {booking.order_items && booking.order_items.length > 0 ? (
+                            <div>
+                              {booking.order_items.map((item, idx) => (
+                                <div key={idx} className="mb-1">
+                                  {item.cars.brand} {item.cars.model} ({item.quantity}x)
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="text-gray-400">No items</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          ${(booking.total_amount || 0).toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${getStatusColor(booking.status)}`}>
+                            {booking.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <select
+                            value={booking.status}
+                            onChange={(e) => handleStatusChange(booking.id, e.target.value)}
+                            className="bg-white border border-gray-300 text-gray-700 py-1 px-2 rounded-sm text-xs focus:outline-none focus:ring-1 focus:ring-black"
+                          >
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                          </select>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Alert Modal */}
+      {alertModal.isOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative text-center border-t-4 border-black">
+            <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center border-2 ${alertModal.isError ? 'border-red-500 text-red-500' : 'border-green-500 text-green-500'}`}>
+              {alertModal.isError ? (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>
+              ) : (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" /></svg>
+              )}
+            </div>
+            <h2 className="text-lg font-bold uppercase tracking-widest text-gray-900 mb-2">
+              {alertModal.isError ? 'Action Failed' : 'Success'}
+            </h2>
+            <p className="text-sm text-gray-500 mb-8 leading-relaxed">
+              {alertModal.message}
+            </p>
+            <button
+              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+              onClick={() => setAlertModal({ isOpen: false, message: '', isError: false })}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </AdminLayout>
+  );
+};
+export default Bookings;
+
+
