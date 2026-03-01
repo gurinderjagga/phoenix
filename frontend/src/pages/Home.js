@@ -123,7 +123,7 @@ const Home = () => {
                             <img
                                 src="/engine.jpg"
                                 alt="Engine Engineering"
-                                className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                             />
                         </div>
                     </div>

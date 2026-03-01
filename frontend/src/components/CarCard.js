@@ -19,7 +19,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                     <img
                         src={car.images?.[0] || '/placeholder-car.jpg'}
                         alt={`${car.brand || 'Car'} ${car.model || ''}`}
-                        className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-out"
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out"
                         onError={(e) => {
                             e.target.src = '/placeholder-car.jpg';
                         }}
