@@ -143,28 +143,28 @@ const Inventory = () => {
 
         {/* Toolbar */}
         <div className="bg-white border border-gray-200 p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="relative">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center space-x-4 w-full sm:w-auto">
+              <div className="relative flex-1 sm:flex-none">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                   <SearchIcon />
                 </div>
                 <input
                   type="text"
-                  placeholder="Search by model, make, or VIN..."
+                  placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 focus:ring-0 focus:border-gray-900 w-80"
+                  className="pl-10 pr-4 py-2 border border-gray-300 focus:ring-0 focus:border-gray-900 w-full sm:w-64 md:w-80"
                 />
               </div>
-              <span className="text-sm text-gray-500">
+              <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap hidden sm:block">
                 {filteredCars.length} of {cars.length} cars
               </span>
             </div>
 
             <button
               onClick={handleAdd}
-              className="bg-black text-white px-4 py-2 flex items-center space-x-2"
+              className="bg-black text-white px-4 py-2 flex items-center justify-center space-x-2 w-full sm:w-auto min-h-[48px] sm:min-h-0"
             >
               <PlusIcon />
               <span>Add New Car</span>
@@ -173,15 +173,15 @@ const Inventory = () => {
         </div>
 
         {/* Inventory Table */}
-        <div className="bg-white border border-gray-200 overflow-hidden">
+        <div className="bg-white border border-gray-200 overflow-hidden relative">
           {loading ? (
             <div className="p-8 text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
               <p className="text-gray-500 mt-4">Loading inventory...</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
+            <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+              <table className="w-full min-w-[800px]">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
                     <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -252,13 +252,13 @@ const Inventory = () => {
                           <div className="flex items-center space-x-3">
                             <button
                               onClick={() => handleEdit(car)}
-                              className="text-gray-400"
+                              className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center"
                             >
                               <EditIcon />
                             </button>
                             <button
                               onClick={() => confirmDelete(car.id)}
-                              className="text-gray-400"
+                              className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center"
                             >
                               <TrashIcon />
                             </button>

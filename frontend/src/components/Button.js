@@ -12,10 +12,10 @@ const Button = ({
     const baseStyles = "relative uppercase tracking-widest font-bold text-xs md:text-sm transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-none";
 
     const variants = {
-        primary: "bg-primary text-secondary hover:bg-secondary hover:text-primary hover:border-primary border border-primary", // Strong Contrast
+        primary: "bg-primary-400 text-secondary-500 border border-primary", // Strong Contrast
         secondary: "bg-transparent text-primary border border-primary hover:bg-primary hover:text-secondary",
         text: "text-primary hover:text-accent p-0 border-none",
-        white: "bg-secondary text-primary hover:bg-primary hover:text-secondary border border-secondary hover:border-primary"
+        white: "bg-secondary text-primary"
     };
 
     if (variant === 'text') {

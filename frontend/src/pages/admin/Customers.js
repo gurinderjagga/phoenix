@@ -131,8 +131,8 @@ const Customers = () => {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
-                <table className="w-full">
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+                <table className="w-full min-w-[800px]">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
@@ -183,7 +183,7 @@ const Customers = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
                               onClick={() => handleCustomerClick(customer)}
-                              className="text-gray-400"
+                              className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center ml-auto"
                             >
                               <MoreVertical size={20} />
                             </button>

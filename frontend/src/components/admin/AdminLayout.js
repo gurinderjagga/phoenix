@@ -141,14 +141,14 @@ const AdminLayout = ({ children }) => {
                                             navigate(item.path);
                                             setIsSidebarOpen(false);
                                         }}
-                                        className={`w-full flex items-center px-4 py-3 text-left ${isActive ? 'text-white border-l-2 border-red-500 bg-gray-900' : 'text-gray-400 ' }`}
+                                        className={`w-full flex items-center px-4 py-3 min-h-[48px] text-left ${isActive ? 'text-white border-l-2 border-red-500 bg-gray-900' : 'text-gray-400 '}`}
                                     >
                                         {item.icon === 'LayoutDashboard' && <LayoutDashboardIcon />}
                                         {item.icon === 'Package' && <PackageIcon />}
                                         {item.icon === 'Calendar' && <CalendarIcon />}
                                         {item.icon === 'Users' && <UsersIcon />}
                                         {item.icon === 'Settings' && <SettingsIcon />}
-                                        <span className="font-medium">{item.label}</span>
+                                        <span className="font-medium ml-3">{item.label}</span>
                                     </button>
                                 </li>
                             );
@@ -167,7 +167,8 @@ const AdminLayout = ({ children }) => {
                             {/* Hamburger Menu for Mobile */}
                             <button
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="md:hidden text-gray-700 focus:outline-none"
+                                className="md:hidden text-gray-700 focus:outline-none min-h-[48px] min-w-[48px] flex items-center justify-center -ml-2"
+                                aria-label="Open Admin Menu"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -181,7 +182,7 @@ const AdminLayout = ({ children }) => {
                                         {index > 0 && <span className="text-gray-400">/</span>}
                                         <button
                                             onClick={() => navigate(crumb.path)}
-                                            className={`text-sm ${crumb.isLast ? 'text-gray-900 font-medium' : 'text-gray-500 ' }`}
+                                            className={`text-sm ${crumb.isLast ? 'text-gray-900 font-medium' : 'text-gray-500 '}`}
                                         >
                                             {crumb.label}
                                         </button>
@@ -194,14 +195,14 @@ const AdminLayout = ({ children }) => {
                         <div className="relative">
                             <button
                                 onClick={() => setShowUserMenu(!showUserMenu)}
-                                className="flex items-center space-x-3 text-gray-700 focus:outline-none"
+                                className="flex items-center space-x-2 md:space-x-3 text-gray-700 min-h-[48px] focus:outline-none"
                             >
-                                <div className="flex flex-col text-right">
+                                <div className="hidden sm:flex flex-col text-right">
                                     <span className="text-sm font-bold uppercase tracking-widest text-primary">
                                         {displayName}
                                     </span>
                                 </div>
-                                <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white">
+                                <div className="w-8 h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center text-white shrink-0">
                                     <UserIcon />
                                 </div>
                                 <ChevronDownIcon />
@@ -223,11 +224,11 @@ const AdminLayout = ({ children }) => {
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-y-auto p-6">
+                <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50">
                     {children}
                 </main>
             </div>
-        </div>
+        </div >
     );
 };
 
