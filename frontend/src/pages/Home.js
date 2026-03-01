@@ -38,6 +38,7 @@ const Home = () => {
                         loop
                         muted
                         playsInline
+                        preload="none"
                         className="w-full h-full object-cover"
                     >
                         <source src="/0125.mp4" type="video/mp4" />
@@ -120,8 +121,10 @@ const Home = () => {
                         </div>
                         <div className="relative aspect-square bg-gray-200 overflow-hidden group">
                             <img
-                                src="/engine.jpg"
+                                src="/engine.webp"
                                 alt="Engine Engineering"
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                             />
                         </div>
