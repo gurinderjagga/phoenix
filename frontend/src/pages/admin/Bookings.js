@@ -59,90 +59,134 @@ const Bookings = () => {
               <p className="text-gray-500 mt-4">Loading bookings...</p>
             </div>
           ) : (
-            <div className="overflow-x-auto scrollbar-hide">
-              <table className="w-full min-w-[800px]">
-                <thead className="bg-gray-50 border-b border-gray-200">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Car</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {bookings.length === 0 ? (
+            <>
+              {/* === MOBILE CARD VIEW === */}
+              <div className="block md:hidden divide-y divide-gray-200">
+                {bookings.length === 0 ? (
+                  <div className="p-8 text-center text-gray-500">No bookings found.</div>
+                ) : (
+                  bookings.map((booking) => (
+                    <div key={booking.id} className="p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold uppercase tracking-widest text-gray-500">#{booking.id.slice(0, 8)}</span>
+                        <span className={`px-2 py-0.5 text-xs font-medium rounded-full uppercase ${getStatusColor(booking.status)}`}>
+                          {booking.status}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-gray-900">{booking.profiles?.name || booking.user?.name || 'Unknown'}</p>
+                        <p className="text-xs text-gray-500">{booking.profiles?.email || booking.user?.email}</p>
+                      </div>
+                      {booking.order_items && booking.order_items.length > 0 && (
+                        <div className="bg-gray-50 p-2 rounded-sm">
+                          {booking.order_items.map((item, idx) => (
+                            <p key={idx} className="text-xs text-gray-700">{item.cars.brand} {item.cars.model} &times;{item.quantity}</p>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-bold text-primary">${(booking.total_amount || 0).toLocaleString()}</span>
+                        <select
+                          value={booking.status}
+                          onChange={(e) => handleStatusChange(booking.id, e.target.value)}
+                          className="bg-white border border-gray-300 text-gray-700 py-2 px-3 min-h-[44px] rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="confirmed">Confirmed</option>
+                          <option value="ready for pickup">Ready for Pickup</option>
+                        </select>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* === DESKTOP TABLE VIEW === */}
+              <div className="hidden md:block overflow-x-auto scrollbar-hide">
+                <table className="w-full min-w-[800px]">
+                  <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
-                        No bookings found.
-                      </td>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Car</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
-                  ) : (
-                    bookings.map((booking) => (
-                      <tr key={booking.id} className="">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          #{booking.id.slice(0, 8)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          <div className="font-medium text-gray-900">
-                            {booking.profiles?.name || booking.user?.name || 'Unknown'}
-                          </div>
-                          <div>{booking.profiles?.email || booking.user?.email}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {booking.shipping_address ? (
-                            typeof booking.shipping_address === 'object' ? (
-                              <div>
-                                <div className="font-medium text-gray-900">{booking.shipping_address.street || booking.shipping_address.address}</div>
-                                <div className="text-xs">{booking.shipping_address.city}, {booking.shipping_address.zipCode}</div>
-                              </div>
-                            ) : (
-                              <span>{booking.shipping_address}</span>
-                            )
-                          ) : (
-                            <span className="text-gray-400">Not provided</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {booking.order_items && booking.order_items.length > 0 ? (
-                            <div>
-                              {booking.order_items.map((item, idx) => (
-                                <div key={idx} className="mb-1">
-                                  {item.cars.brand} {item.cars.model} ({item.quantity}x)
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <span className="text-gray-400">No items</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          ${(booking.total_amount || 0).toLocaleString()}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${getStatusColor(booking.status)}`}>
-                            {booking.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <select
-                            value={booking.status}
-                            onChange={(e) => handleStatusChange(booking.id, e.target.value)}
-                            className="bg-white border border-gray-300 text-gray-700 py-2 px-3 min-h-[48px] md:min-h-0 md:py-1 md:px-2 rounded-sm text-sm md:text-xs focus:outline-none focus:ring-1 focus:ring-black"
-                          >
-                            <option value="pending">Pending</option>
-                            <option value="confirmed">Confirmed</option>
-                            <option value="ready for pickup">Ready for Pickup</option>
-                          </select>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {bookings.length === 0 ? (
+                      <tr>
+                        <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                          No bookings found.
                         </td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    ) : (
+                      bookings.map((booking) => (
+                        <tr key={booking.id} className="">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            #{booking.id.slice(0, 8)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <div className="font-medium text-gray-900">
+                              {booking.profiles?.name || booking.user?.name || 'Unknown'}
+                            </div>
+                            <div>{booking.profiles?.email || booking.user?.email}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {booking.shipping_address ? (
+                              typeof booking.shipping_address === 'object' ? (
+                                <div>
+                                  <div className="font-medium text-gray-900">{booking.shipping_address.street || booking.shipping_address.address}</div>
+                                  <div className="text-xs">{booking.shipping_address.city}, {booking.shipping_address.zipCode}</div>
+                                </div>
+                              ) : (
+                                <span>{booking.shipping_address}</span>
+                              )
+                            ) : (
+                              <span className="text-gray-400">Not provided</span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {booking.order_items && booking.order_items.length > 0 ? (
+                              <div>
+                                {booking.order_items.map((item, idx) => (
+                                  <div key={idx} className="mb-1">
+                                    {item.cars.brand} {item.cars.model} ({item.quantity}x)
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="text-gray-400">No items</span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            ${(booking.total_amount || 0).toLocaleString()}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${getStatusColor(booking.status)}`}>
+                              {booking.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <select
+                              value={booking.status}
+                              onChange={(e) => handleStatusChange(booking.id, e.target.value)}
+                              className="bg-white border border-gray-300 text-gray-700 py-2 px-3 min-h-[48px] md:min-h-0 md:py-1 md:px-2 rounded-sm text-sm md:text-xs focus:outline-none focus:ring-1 focus:ring-black"
+                            >
+                              <option value="pending">Pending</option>
+                              <option value="confirmed">Confirmed</option>
+                              <option value="ready for pickup">Ready for Pickup</option>
+                            </select>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
       </div>

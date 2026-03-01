@@ -180,96 +180,142 @@ const Inventory = () => {
               <p className="text-gray-500 mt-4">Loading inventory...</p>
             </div>
           ) : (
-            <div className="overflow-x-auto scrollbar-hide">
-              <table className="w-full min-w-[800px]">
-                <thead className="bg-gray-50 border-b border-gray-200">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Image
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Model
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Stock
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Price
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {filteredCars.length === 0 ? (
+            <>
+              {/* === MOBILE CARD VIEW === */}
+              <div className="block md:hidden divide-y divide-gray-200">
+                {filteredCars.length === 0 ? (
+                  <div className="p-8 text-center text-gray-500">
+                    {searchTerm ? 'No cars found matching your search.' : 'No cars in inventory.'}
+                  </div>
+                ) : (
+                  filteredCars.map((car) => (
+                    <div key={car.id} className="p-4">
+                      <div className="flex items-start space-x-4 mb-3">
+                        <div className="w-20 h-14 bg-gray-200 rounded-sm overflow-hidden flex-shrink-0">
+                          {car.images && car.images[0] ? (
+                            <img src={car.images[0]} alt={car.model} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full bg-gray-300 flex items-center justify-center text-xs text-gray-500">No Img</div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-bold text-gray-900 uppercase tracking-wider truncate">{car.brand} {car.model}</p>
+                          <p className="text-xs text-gray-500 mt-0.5">{car.year} &bull; {car.category || 'N/A'}</p>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-sm font-bold text-primary">${car.price?.toLocaleString() || '0'}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${car.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                              {car.stock > 0 ? `${car.stock} in stock` : 'Out of stock'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <button onClick={() => handleEdit(car)}
+                          className="flex-1 flex items-center justify-center min-h-[44px] bg-gray-100 text-gray-800 text-xs font-bold uppercase tracking-wider rounded-sm">
+                          <EditIcon /><span className="ml-2">Edit</span>
+                        </button>
+                        <button onClick={() => confirmDelete(car.id)}
+                          className="flex-1 flex items-center justify-center min-h-[44px] bg-red-50 text-red-600 text-xs font-bold uppercase tracking-wider rounded-sm">
+                          <TrashIcon /><span className="ml-2">Delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* === DESKTOP TABLE VIEW === */}
+              <div className="hidden md:block overflow-x-auto scrollbar-hide">
+                <table className="w-full min-w-[800px]">
+                  <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
-                        {searchTerm ? 'No cars found matching your search.' : 'No cars in inventory.'}
-                      </td>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Image
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Model
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Stock
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Price
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Status
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                      </th>
                     </tr>
-                  ) : (
-                    filteredCars.map((car) => (
-                      <tr key={car.id} className="">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="w-16 h-12 bg-gray-200 rounded-sm overflow-hidden">
-                            {car.images && car.images[0] ? (
-                              <img
-                                src={car.images[0]}
-                                alt={car.model}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                                <CarIcon />
-                              </div>
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">
-                              {car.brand} {car.model}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {car.year}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {car.stock || 0}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          ${car.price?.toLocaleString() || '0'}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {getStatusBadge(car.stock === 0 ? 'unavailable' : (car.status || 'available'))}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex items-center space-x-3">
-                            <button
-                              onClick={() => handleEdit(car)}
-                              className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center"
-                            >
-                              <EditIcon />
-                            </button>
-                            <button
-                              onClick={() => confirmDelete(car.id)}
-                              className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center"
-                            >
-                              <TrashIcon />
-                            </button>
-                          </div>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {filteredCars.length === 0 ? (
+                      <tr>
+                        <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                          {searchTerm ? 'No cars found matching your search.' : 'No cars in inventory.'}
                         </td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    ) : (
+                      filteredCars.map((car) => (
+                        <tr key={car.id} className="">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="w-16 h-12 bg-gray-200 rounded-sm overflow-hidden">
+                              {car.images && car.images[0] ? (
+                                <img
+                                  src={car.images[0]}
+                                  alt={car.model}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                                  <CarIcon />
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div>
+                              <div className="text-sm font-medium text-gray-900">
+                                {car.brand} {car.model}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {car.year}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {car.stock || 0}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            ${car.price?.toLocaleString() || '0'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {getStatusBadge(car.stock === 0 ? 'unavailable' : (car.status || 'available'))}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div className="flex items-center space-x-3">
+                              <button
+                                onClick={() => handleEdit(car)}
+                                className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center"
+                              >
+                                <EditIcon />
+                              </button>
+                              <button
+                                onClick={() => confirmDelete(car.id)}
+                                className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center"
+                              >
+                                <TrashIcon />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
       </div>

@@ -131,7 +131,41 @@ const Customers = () => {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto scrollbar-hide">
+              {/* === MOBILE CARD VIEW === */}
+              <div className="block md:hidden divide-y divide-gray-200">
+                {customers.length === 0 ? (
+                  <div className="p-8 text-center text-gray-500">No customers found.</div>
+                ) : (
+                  customers.map((customer) => (
+                    <div key={customer.id} className="p-4 flex items-center space-x-4">
+                      <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-lg flex-shrink-0">
+                        {customer.avatar ? (
+                          <img src={customer.avatar} alt="" className="h-12 w-12 rounded-full object-cover" />
+                        ) : (
+                          customer.name ? customer.name.charAt(0).toUpperCase() : '?'
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-gray-900 truncate">{customer.name || 'N/A'}</p>
+                        <p className="text-xs text-gray-500 truncate">{customer.email}</p>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${customer.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-50 text-blue-700'}`}>{customer.role}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${customer.is_active !== false ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                            {customer.is_active !== false ? 'Active' : 'Blocked'}
+                          </span>
+                        </div>
+                      </div>
+                      <button onClick={() => handleCustomerClick(customer)}
+                        className="min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-400 flex-shrink-0">
+                        <MoreVertical size={20} />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* === DESKTOP TABLE VIEW === */}
+              <div className="hidden md:block overflow-x-auto scrollbar-hide">
                 <table className="w-full min-w-[800px]">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
