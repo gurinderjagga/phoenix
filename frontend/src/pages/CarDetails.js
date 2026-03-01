@@ -103,37 +103,67 @@ const CarDetails = () => {
     if (!car) return <div className="h-screen flex items-center justify-center bg-white text-primary uppercase tracking-widest font-bold">Vehicle Not Found</div>;
 
     return (
-        <div className="bg-white min-h-screen pt-24 pb-12 lg:pb-24">
+        <div className="bg-white min-h-screen pt-16 md:pt-24 pb-20 lg:pb-12">
             <div className="flex flex-col lg:flex-row min-h-[calc(100vh-6rem)]">
 
-                {/* Visuals - 75% width */}
-                <div className="lg:w-3/4 relative bg-white flex flex-col px-6 lg:px-12 pb-6 lg:pb-12 pt-2 lg:pt-4">
+                {/* Visuals - 75% width on desktop */}
+                <div className="lg:w-3/4 relative bg-white flex flex-col px-4 sm:px-6 lg:px-12 pb-4 lg:pb-12 pt-2 lg:pt-4">
                     {/* Main Image Box */}
-                    <div className="relative w-full rounded-2xl overflow-hidden mb-6 h-[40vh] sm:h-[50vh] lg:h-auto min-h-[250px]">
+                    <div className="relative w-full rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6 h-[35vh] sm:h-[45vh] lg:h-auto min-h-[220px]">
                         <img
                             src={car.images[selectedImage]}
                             alt={car.model}
-                            className="w-full h-auto object-cover"
+                            className="w-full h-full lg:h-auto object-cover"
                         />
                     </div>
                     {/* Thumbnails */}
                     {car.images.length > 1 && (
-                        <div className="flex overflow-x-auto space-x-4 pb-2">
+                        <div className="flex overflow-x-auto space-x-2 sm:space-x-4 pb-2">
                             {car.images.map((img, idx) => (
                                 <button
                                     key={idx}
                                     onClick={() => setSelectedImage(idx)}
-                                    className={`relative w-20 h-14 md:w-24 md:h-16 flex-shrink-0 rounded-lg overflow-hidden ${selectedImage === idx ? 'ring-2 ring-black ring-offset-2 ring-offset-white' : 'opacity-50 '}`}
+                                    className={`relative w-16 h-11 sm:w-20 sm:h-14 md:w-24 md:h-16 flex-shrink-0 rounded-lg overflow-hidden ${selectedImage === idx ? 'ring-2 ring-black ring-offset-2 ring-offset-white' : 'opacity-50'}`}
                                 >
                                     <img src={img} alt="" className="w-full h-full object-cover" />
                                 </button>
                             ))}
                         </div>
                     )}
+
+                    {/* ── MOBILE ONLY: Car info + specs inline ── */}
+                    <div className="lg:hidden mt-5 pb-2">
+                        <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-0.5 block">{car.year} Model</span>
+                        <h1 className="text-2xl font-bold uppercase tracking-tighter text-primary leading-none mb-1">
+                            {car.brand} {car.model}
+                        </h1>
+                        <div className="text-xl text-gray-900 font-semibold mb-4">${car.price?.toLocaleString()}</div>
+
+                        {/* Specs — 3 col compact grid */}
+                        <div className="grid grid-cols-3 gap-3 border-t border-b border-gray-100 py-4 mb-4">
+                            {[
+                                { label: 'Engine', value: car.specifications?.engine },
+                                { label: '0–60', value: car.specifications?.acceleration || '3.2s' },
+                                { label: 'Power', value: car.specifications?.horsepower },
+                                { label: 'Top Speed', value: car.specifications?.topSpeed },
+                                { label: 'Fuel', value: car.specifications?.fuelType || car.type },
+                                { label: 'Color', value: car.specifications?.color || car.color },
+                            ].map(({ label, value }) => (
+                                <div key={label} className="bg-gray-50 rounded-lg p-2.5 text-center">
+                                    <span className="block text-[9px] text-gray-400 uppercase tracking-widest mb-0.5">{label}</span>
+                                    <span className="block text-xs font-bold text-primary uppercase truncate">{value || 'N/A'}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {car.description && (
+                            <p className="text-gray-500 text-xs leading-relaxed">{car.description}</p>
+                        )}
+                    </div>
                 </div>
 
-                {/* Specs & configuration - 25% width, minimal */}
-                <div className="lg:w-1/4 p-6 lg:p-8 bg-white border-t lg:border-t-0 lg:border-l border-gray-100 flex flex-col justify-between">
+                {/* Specs & config - 25% width — DESKTOP ONLY */}
+                <div className="hidden lg:flex lg:w-1/4 p-6 lg:p-8 bg-white border-t lg:border-t-0 lg:border-l border-gray-100 flex-col justify-between">
                     <div>
                         <div className="mb-8">
                             <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-1 block">{car.year} Model</span>
@@ -212,8 +242,8 @@ const CarDetails = () => {
 
             {/* Reservation Modal */}
             {isReservationModalOpen && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-                    <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative border-t-4 border-black">
+                <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60">
+                    <div className="bg-white w-full sm:max-w-sm p-6 sm:p-8 shadow-2xl relative border-t-4 border-black rounded-t-2xl sm:rounded-none">
                         <h2 className="text-xl font-bold uppercase tracking-widest text-primary mb-6 text-center">
                             Reservation Details
                         </h2>
@@ -258,7 +288,7 @@ const CarDetails = () => {
 
             {/* Dummy Payment Modal */}
             {isDummyPaymentOpen && (
-                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80">
                     <div className="bg-white w-full max-w-sm p-10 shadow-2xl relative text-center border-t-4 border-black animate-fade-in-up">
                         {paymentStatus === 'processing' ? (
                             <div className="flex flex-col items-center">
@@ -288,8 +318,8 @@ const CarDetails = () => {
 
             {/* EMI Calculator Modal */}
             {isEmiModalOpen && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-                    <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative border-t-4 border-black">
+                <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60">
+                    <div className="bg-white w-full sm:max-w-sm p-6 sm:p-8 shadow-2xl relative border-t-4 border-black rounded-t-2xl sm:rounded-none">
                         <button
                             onClick={() => setIsEmiModalOpen(false)}
                             className="absolute top-4 right-4 text-gray-400"
@@ -367,7 +397,7 @@ const CarDetails = () => {
 
             {/* Custom Alert Modal */}
             {alertModal.isOpen && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60">
                     <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative text-center border-t-4 border-black">
                         <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center border-2 ${alertModal.isError ? 'border-red-500 text-red-500' : 'border-black text-black'}`}>
                             {alertModal.isError ? (
@@ -391,6 +421,25 @@ const CarDetails = () => {
                     </div>
                 </div>
             )}
+            {/* ── MOBILE ONLY: Sticky bottom CTA bar ── */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-gray-200 px-4 py-3 flex gap-3">
+                <button
+                    onClick={() => setIsEmiModalOpen(true)}
+                    className="flex-1 border border-black px-4 min-h-[48px] text-xs font-bold uppercase tracking-[0.12em] bg-transparent text-black"
+                >
+                    EMI
+                </button>
+                <button
+                    onClick={() => {
+                        if (!user) { navigate('/login'); return; }
+                        setIsReservationModalOpen(true);
+                    }}
+                    disabled={car.stock <= 0}
+                    className="flex-[2] bg-black text-white min-h-[48px] text-xs font-bold uppercase tracking-[0.12em] disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                    {car.stock > 0 ? 'Reserve Vehicle' : 'Out of Stock'}
+                </button>
+            </div>
         </div>
     );
 };
