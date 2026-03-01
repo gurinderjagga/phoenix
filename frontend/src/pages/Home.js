@@ -31,7 +31,7 @@ const Home = () => {
     return (
         <div className="bg-secondary overflow-x-hidden">
             {/* Hero Section - The "Phoenix" Moment */}
-            <section className="relative w-screen h-screen flex items-end justify-start pb-32 bg-primary text-secondary overflow-hidden">
+            <section className="relative w-screen h-screen flex items-end justify-start pb-16 sm:pb-24 md:pb-32 bg-primary text-secondary overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <video
                         autoPlay
@@ -48,10 +48,10 @@ const Home = () => {
                 </div>
 
                 <div className="relative z-10 text-left px-6 md:px-12 max-w-[1440px] w-full">
-                    <h1 className="text-7xl sm:text-8xl md:text-[10vw] leading-none font-roboto-slab font-light tracking-tighter mb-4 text-white mix-blend-difference opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                    <h1 className="text-5xl sm:text-7xl md:text-[10vw] leading-none font-roboto-slab font-light tracking-tighter mb-3 sm:mb-4 text-white mix-blend-difference opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
                         PHOENIX
                     </h1>
-                    <p className="text-xl md:text-2xl font-light tracking-[0.3em] uppercase mb-12 opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+                    <p className="text-base sm:text-xl md:text-2xl font-light tracking-[0.3em] uppercase mb-8 sm:mb-12 opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
                         Performance Reborn
                     </p>
                     <div className="flex flex-col md:flex-row gap-6 justify-start opacity-0 animate-slide-up" style={{ animationDelay: '0.6s' }}>
@@ -69,12 +69,12 @@ const Home = () => {
             </section>
 
             {/* Featured Models - "The Collection" */}
-            <section className="py-32 bg-white">
+            <section className="py-16 sm:py-24 md:py-32 bg-white">
                 <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 border-b border-gray-200 pb-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 sm:mb-16 md:mb-24 border-b border-gray-200 pb-6 sm:pb-8">
                         <div>
                             <span className="text-accent font-bold uppercase tracking-widest text-xs mb-2 block">The Collection</span>
-                            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-primary uppercase">
+                            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-primary uppercase">
                                 Models
                             </h2>
                         </div>
@@ -105,12 +105,12 @@ const Home = () => {
             </section>
 
             {/* Brand Values - "Innovation" */}
-            <section className="py-32 bg-surface">
+            <section className="py-16 sm:py-24 md:py-32 bg-surface">
                 <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24 items-center">
                         <div>
                             <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Innovation</span>
-                            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-primary uppercase mb-8 leading-tight">
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-primary uppercase mb-6 md:mb-8 leading-tight">
                                 Engineering <br /> The Future.
                             </h2>
                             <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
@@ -130,7 +130,7 @@ const Home = () => {
             </section>
 
             {/* CTA - "Join the Legacy" */}
-            <section className="py-40 bg-primary text-secondary text-center relative overflow-hidden">
+            <section className="py-20 sm:py-28 md:py-40 bg-primary text-secondary text-center relative overflow-hidden">
                 <div className="relative z-10 max-w-4xl mx-auto px-6">
                     <h2 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter mb-8 text-white">
                         YOUR LEGACY.
