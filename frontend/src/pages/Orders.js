@@ -65,7 +65,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                         <img
                           src={item.cars?.images?.[0] || '/placeholder-car.jpg'}
                           alt={item.cars?.name}
-                          className="w-12 h-12 object-cover grayscale"
+                          className="w-12 h-12 object-cover"
                           onError={(e) => {
                             e.target.src = '/placeholder-car.jpg';
                           }}
@@ -266,7 +266,7 @@ const Orders = () => {
                             <img
                               src={item.cars?.images?.[0] || '/placeholder-car.jpg'}
                               alt={item.cars?.name}
-                              className="w-full h-full object-cover grayscale opacity-80 group- group-"
+                              className="w-full h-full object-cover opacity-80"
                               onError={(e) => { e.target.src = '/placeholder-car.jpg'; }}
                             />
                           </div>

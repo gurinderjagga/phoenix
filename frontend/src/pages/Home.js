@@ -123,7 +123,7 @@ const Home = () => {
                             <img
                                 src="/engine.jpg"
                                 alt="Engine Engineering"
-                                className="w-full h-full object-cover grayscale"
+                                className="w-full h-full object-cover"
                             />
                         </div>
                     </div>

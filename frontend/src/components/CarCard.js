@@ -19,7 +19,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                     <img
                         src={car.images?.[0] || '/placeholder-car.jpg'}
                         alt={`${car.brand || 'Car'} ${car.model || ''}`}
-                        className="w-full h-full object-cover group- filter grayscale group-"
+                        className="w-full h-full object-cover"
                         onError={(e) => {
                             e.target.src = '/placeholder-car.jpg';
                         }}
@@ -42,7 +42,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                     <div>
                         <h3 className="text-lg font-bold text-primary uppercase tracking-widest leading-none mb-2">
                             <Link to={`/cars/${carId}`}>
-                                {car.brand} <br /> <span className="font-light text-gray-500 group-"> {car.model}</span>
+                                {car.brand} <br /> <span className="font-light text-gray-500"> {car.model}</span>
                             </Link>
                         </h3>
                         <p className="text-[10px] text-gray-400 uppercase tracking-widest">
@@ -68,9 +68,9 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                 {/* Action Link -- Text Only */}
                 <Link
                     to={`/cars/${carId}`}
-                    className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-400 group-"
+                    className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-400"
                 >
-                    View Specs <span className="ml-2 group-">→</span>
+                    View Specs <span className="ml-2">→</span>
                 </Link>
             </div>
         </div>
