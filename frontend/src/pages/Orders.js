@@ -38,7 +38,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
             <div className="bg-gray-50 p-6 border border-gray-100">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary">Order #{order.id}</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary">Booking #{order.id}</h3>
                   <p className="text-[10px] uppercase tracking-widest text-gray-500 mt-1">
                     Placed on {new Date(order.created_at).toLocaleDateString()}
                   </p>
