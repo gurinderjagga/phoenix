@@ -24,7 +24,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
       <div className="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-primary animate-fade-in-up">
         <div className="p-8">
           <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
-            <h2 className="text-xl font-bold uppercase tracking-widest text-primary">Order Details</h2>
+            <h2 className="text-xl font-bold uppercase tracking-widest text-primary">Booking Details</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-primary text-2xl font-light transition-colors"
