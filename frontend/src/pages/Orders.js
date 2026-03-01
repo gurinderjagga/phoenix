@@ -86,23 +86,14 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
 
             {/* Address & Payment Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {order.shipping_address && (
-                <div className="bg-gray-50 p-6 border border-gray-100">
-                  <h4 className="text-[10px] uppercase tracking-widest text-gray-400 mb-3">Shipping To</h4>
-                  <div className="text-sm font-medium text-primary">
-                    {typeof order.shipping_address === 'object' ? (
-                      <div>
-                        <p>{order.shipping_address.street || order.shipping_address.address || 'Address not provided'}</p>
-                        <p>{order.shipping_address.city || ''}, {order.shipping_address.state || ''} {order.shipping_address.zipCode || ''}</p>
-                        <p>{order.shipping_address.country || ''}</p>
-                      </div>
-                    ) : (
-                      <p>{order.shipping_address}</p>
-                    )}
-                  </div>
-                </div>
-              )}
-
+              <div className="bg-gray-50 p-6 border border-gray-100">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Booking Status</h4>
+                {order.status ? (
+                  <div className="font-bold text-gray-900 uppercase tracking-widest">{order.status}</div>
+                ) : (
+                  <span className="text-gray-400 italic">Processing</span>
+                )}
+              </div>
               <div className="bg-gray-50 p-6 border border-gray-100">
                 <h4 className="text-[10px] uppercase tracking-widest text-gray-400 mb-3">Payment Details</h4>
                 <div className="text-sm font-medium text-primary">
