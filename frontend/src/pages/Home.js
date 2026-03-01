@@ -29,7 +29,7 @@ const Home = () => {
     return (
         <div className="bg-secondary overflow-x-hidden">
             {/* Hero Section - The "Phoenix" Moment */}
-            <section className="relative w-screen h-screen flex items-end justify-start pb-32 bg-primary text-secondary overflow-hidden">
+            <section className="relative w-screen h-screen flex items-end justify-start pb-20 md:pb-32 bg-primary text-secondary overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <video
                         autoPlay
@@ -47,10 +47,10 @@ const Home = () => {
                 </div>
 
                 <div className="relative z-10 text-left px-6 md:px-12 max-w-[1440px] w-full">
-                    <h1 className="text-7xl sm:text-8xl md:text-[10vw] leading-none font-roboto-slab font-light tracking-tighter mb-4 text-white mix-blend-difference opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                    <h1 className="text-4xl sm:text-6xl md:text-[10vw] leading-none font-roboto-slab font-light tracking-tighter mb-3 md:mb-4 text-white mix-blend-difference opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
                         PHOENIX
                     </h1>
-                    <p className="text-xl md:text-2xl font-light tracking-[0.3em] uppercase mb-12 opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+                    <p className="text-xs sm:text-base md:text-2xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase mb-5 md:mb-12 opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
                         Performance Reborn
                     </p>
                     <div className="flex flex-col md:flex-row gap-6 justify-start opacity-0 animate-slide-up" style={{ animationDelay: '0.6s' }}>
