@@ -20,14 +20,14 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-primary animate-fade-in-up">
-        <div className="p-8">
-          <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
-            <h2 className="text-xl font-bold uppercase tracking-widest text-primary">Booking Details</h2>
+    <div className="fixed inset-0 bg-black/80 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
+      <div className="bg-white w-full sm:max-w-2xl sm:max-h-[90vh] max-h-[92vh] overflow-y-auto border border-primary rounded-t-2xl sm:rounded-none animate-fade-in-up">
+        <div className="p-5 sm:p-8">
+          <div className="flex justify-between items-center mb-6 sm:mb-8 border-b border-gray-100 pb-4">
+            <h2 className="text-base sm:text-xl font-bold uppercase tracking-widest text-primary">Booking Details</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 text-2xl font-light"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-400 text-2xl font-light"
             >
               ×
             </button>
@@ -104,8 +104,8 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
             </div>
           </div>
 
-          <div className="flex justify-end mt-8">
-            <Button onClick={onClose} variant="primary">
+          <div className="flex justify-end mt-6 sm:mt-8">
+            <Button onClick={onClose} variant="primary" className="w-full sm:w-auto">
               Close Detail
             </Button>
           </div>
@@ -203,22 +203,30 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-secondary pt-24 pb-12">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div className="min-h-screen bg-secondary pt-16 md:pt-24 pb-12">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12">
 
         {/* Header */}
-        <div className="mb-16 border-b border-gray-200 pb-8 flex justify-between items-end">
+        <div className="mb-8 md:mb-16 border-b border-gray-200 pb-6 md:pb-8 flex justify-between items-end">
           <div>
-            <span className="text-accent font-bold uppercase tracking-widest text-xs mb-2 block">Owner Area</span>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-primary uppercase">
+            <span className="text-accent font-bold uppercase tracking-widest text-xs mb-1 md:mb-2 block">Owner Area</span>
+            <h1 className="text-2xl md:text-6xl font-bold tracking-tighter text-primary uppercase">
               Your Reserved Vehicle
             </h1>
           </div>
         </div>
 
+        {/* MOBILE: Horizontal quick nav */}
+        <div className="flex gap-2 mb-6 lg:hidden">
+          <Link to="/profile" className="flex-1 text-center py-2.5 border border-gray-200 text-[10px] font-bold uppercase tracking-widest text-gray-600">
+            Account Settings
+          </Link>
+          <span className="flex-1 text-center py-2.5 bg-black text-white text-[10px] font-bold uppercase tracking-widest">Reserved Vehicle</span>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-12">
-          {/* Sidebar Nav */}
-          <div className="w-full lg:w-64 flex-shrink-0 space-y-1">
+          {/* Sidebar Nav — desktop only */}
+          <div className="hidden lg:block w-full lg:w-64 flex-shrink-0 space-y-1">
             <Link to="/profile" className="block p-4 border border-gray-100 text-xs font-bold uppercase tracking-widest">
               Account Settings
             </Link>
@@ -230,22 +238,23 @@ const Orders = () => {
           {/* Main Content */}
           <div className="flex-grow">
             {orders.length === 0 ? (
-              <div className="border border-gray-200 p-12 text-center bg-white">
+              <div className="border border-gray-200 p-8 sm:p-12 text-center bg-white">
                 <div className="text-4xl mb-4">📦</div>
-                <h3 className="text-xl font-bold uppercase tracking-widest text-primary mb-2">No Vehicles Reserved</h3>
-                <p className="text-gray-500 text-xs uppercase tracking-widest mb-8">You haven't reserved a vehicle yet.</p>
+                <h3 className="text-lg sm:text-xl font-bold uppercase tracking-widest text-primary mb-2">No Vehicles Reserved</h3>
+                <p className="text-gray-500 text-xs uppercase tracking-widest mb-6 sm:mb-8">You haven't reserved a vehicle yet.</p>
                 <Link to="/cars">
-                  <Button variant="primary">Browse Models</Button>
+                  <Button variant="primary" className="w-full sm:w-auto">Browse Models</Button>
                 </Link>
               </div>
             ) : (
               <div className="space-y-6">
                 {orders.map((order) => (
-                  <div key={order.id} className="bg-white border border-gray-200 p-6 group">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-4">
+                  <div key={order.id} className="bg-white border border-gray-200 p-4 sm:p-6 group">
+                    {/* Order header row */}
+                    <div className="flex justify-between items-start mb-4 border-b border-gray-100 pb-4">
                       <div>
-                        <div className="flex items-center gap-4">
-                          <h3 className="text-lg font-bold uppercase tracking-widest text-primary">#{order.id.slice(0, 8)}...</h3>
+                        <div className="flex items-center gap-2 sm:gap-4">
+                          <h3 className="text-sm sm:text-lg font-bold uppercase tracking-widest text-primary">#{order.id.slice(0, 8)}...</h3>
                           <span className={`text-[10px] font-bold uppercase tracking-widest ${getStatusColor(order.status)}`}>
                             • {order.status}
                           </span>
@@ -254,15 +263,14 @@ const Orders = () => {
                           {new Date(order.created_at).toLocaleDateString()}
                         </p>
                       </div>
-                      <div className="text-right mt-4 md:mt-0">
-                        <p className="text-xl font-bold text-primary">${order.total_amount.toLocaleString()}</p>
-                      </div>
+                      <p className="text-base sm:text-xl font-bold text-primary">${order.total_amount.toLocaleString()}</p>
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-6 items-center">
-                      <div className="flex-grow grid grid-cols-4 gap-2">
-                        {order.order_items?.slice(0, 4).map((item, idx) => (
-                          <div key={idx} className="relative aspect-square bg-gray-100">
+                    {/* Car image + View button */}
+                    <div className="flex items-center gap-4">
+                      <div className="flex gap-2 flex-grow overflow-hidden">
+                        {order.order_items?.slice(0, 2).map((item, idx) => (
+                          <div key={idx} className="w-16 h-12 sm:w-20 sm:h-14 flex-shrink-0 bg-gray-100">
                             <img
                               src={item.cars?.images?.[0] || '/placeholder-car.jpg'}
                               alt={item.cars?.name}
@@ -271,13 +279,17 @@ const Orders = () => {
                             />
                           </div>
                         ))}
+                        {order.order_items?.length > 2 && (
+                          <div className="w-16 h-12 sm:w-20 sm:h-14 flex-shrink-0 bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                            +{order.order_items.length - 2}
+                          </div>
+                        )}
                       </div>
-
                       <div className="flex-shrink-0">
                         <Button
                           variant="secondary"
                           onClick={() => handleViewOrderDetails(order)}
-                          className="min-w-[140px]"
+                          className="min-w-[120px] sm:min-w-[140px] min-h-[44px]"
                         >
                           View Manifest
                         </Button>
