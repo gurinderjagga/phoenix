@@ -20,6 +20,8 @@ const CarDetails = () => {
     const [interestRate, setInterestRate] = useState(9); // default 9%
 
     const [processingOrder, setProcessingOrder] = useState(false);
+    const [isDummyPaymentOpen, setIsDummyPaymentOpen] = useState(false);
+    const [paymentStatus, setPaymentStatus] = useState('idle'); // idle -> processing -> success
     const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false, goOrders: false });
 
     useEffect(() => {
@@ -36,12 +38,28 @@ const CarDetails = () => {
         fetchCarDetails();
     }, [id, user]);
 
-    const handleBuyNow = async () => {
+    const handlePayNowStep = () => {
         if (!user) {
             navigate('/login');
             return;
         }
+        setIsDummyPaymentOpen(true);
+        setPaymentStatus('processing');
 
+        // Simulate payment processing delay (2.5s)
+        setTimeout(() => {
+            setPaymentStatus('success');
+            // Wait 1 second to show success tick, then process order backend
+            setTimeout(() => {
+                setIsDummyPaymentOpen(false);
+                setIsReservationModalOpen(false);
+                setPaymentStatus('idle');
+                finalizeOrder();
+            }, 1000);
+        }, 2500);
+    };
+
+    const finalizeOrder = async () => {
         setProcessingOrder(true);
         try {
             // Default to bank_transfer without shipping since it's an immediate booking
@@ -217,11 +235,14 @@ const CarDetails = () => {
 
                         <div className="space-y-3">
                             <button
-                                onClick={handleBuyNow}
-                                disabled={processingOrder}
-                                className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                                onClick={handlePayNowStep}
+                                disabled={processingOrder || isDummyPaymentOpen}
+                                className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
-                                {processingOrder ? 'Processing...' : 'Pay Now'}
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                                {processingOrder ? 'Finalizing...' : 'Pay Now Securely'}
                             </button>
                             <button
                                 onClick={() => setIsReservationModalOpen(false)}
@@ -231,6 +252,36 @@ const CarDetails = () => {
                                 Cancel
                             </button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Dummy Payment Modal */}
+            {isDummyPaymentOpen && (
+                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+                    <div className="bg-white w-full max-w-sm p-10 shadow-2xl relative text-center border-t-4 border-black animate-fade-in-up">
+                        {paymentStatus === 'processing' ? (
+                            <div className="flex flex-col items-center">
+                                <div className="w-16 h-16 border-4 border-gray-100 border-t-black animate-spin rounded-full mb-6"></div>
+                                <h2 className="text-lg font-bold uppercase tracking-widest text-primary mb-2">
+                                    Processing Payment
+                                </h2>
+                                <p className="text-sm text-gray-500 font-medium">Securing your configuration...</p>
+                                <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-6">Please do not close window</p>
+                            </div>
+                        ) : paymentStatus === 'success' ? (
+                            <div className="flex flex-col items-center">
+                                <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mb-6 animate-pulse">
+                                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <h2 className="text-lg font-bold uppercase tracking-widest text-primary mb-2">
+                                    Payment Successful
+                                </h2>
+                                <p className="text-sm text-gray-500 font-medium">Redirecting to manifest...</p>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             )}
