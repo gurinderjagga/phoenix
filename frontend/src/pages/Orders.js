@@ -98,7 +98,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                 <h4 className="text-[10px] uppercase tracking-widest text-gray-400 mb-3">Payment Details</h4>
                 <div className="text-sm font-medium text-primary">
                   <p><span className="text-gray-500 font-normal">Method:</span> {order.payment_method || 'Standard'}</p>
-                  <p><span className="text-gray-500 font-normal">Status:</span> {order.payment_status || 'Pending'}</p>
+                  <p><span className="text-gray-500 font-normal">Status:</span> {order.payment_status || 'Successful'}</p>
                 </div>
               </div>
             </div>
