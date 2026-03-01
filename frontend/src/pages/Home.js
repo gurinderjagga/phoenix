@@ -88,9 +88,9 @@ const Home = () => {
                             <div className="w-12 h-12 border-2 border-primary border-t-transparent animate-spin rounded-full"></div>
                         </div>
                     ) : (
-                        <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-16 pb-8 -mx-8 px-8 md:mx-0 md:px-0">
+                        <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 md:gap-x-8 gap-y-16 pb-8 -mx-6 px-6 sm:-mx-8 sm:px-8 md:mx-0 md:px-0">
                             {featuredCars.map((car) => (
-                                <div key={car.id || car._id} className="min-w-[85vw] sm:min-w-[60vw] md:min-w-0 snap-center md:snap-align-none shrink-0">
+                                <div key={car.id || car._id} className="w-[75vw] min-w-[75vw] sm:w-[50vw] sm:min-w-[50vw] md:w-auto md:min-w-0 snap-center md:snap-align-none shrink-0">
                                     <CarCard car={car} />
                                 </div>
                             ))}
