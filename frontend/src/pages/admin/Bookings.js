@@ -59,7 +59,7 @@ const Bookings = () => {
               <p className="text-gray-500 mt-4">Loading bookings...</p>
             </div>
           ) : (
-            <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+            <div className="overflow-x-auto scrollbar-hide">
               <table className="w-full min-w-[800px]">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
