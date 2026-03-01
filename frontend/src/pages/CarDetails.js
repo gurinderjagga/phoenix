@@ -138,7 +138,7 @@ const CarDetails = () => {
                         <h1 className="text-2xl font-bold uppercase tracking-tighter text-primary leading-none mb-1">
                             {car.brand} {car.model}
                         </h1>
-                        <div className="text-xl text-gray-900 font-semibold mb-4">${car.price?.toLocaleString()}</div>
+                        <div className="text-xl text-gray-900 font-semibold mb-4">₹{car.price?.toLocaleString('en-IN')}</div>
 
                         {/* Specs — 3 col compact grid */}
                         <div className="grid grid-cols-3 gap-3 border-t border-b border-gray-100 py-4 mb-4">
@@ -172,7 +172,7 @@ const CarDetails = () => {
                                 {car.brand}<br />{car.model}
                             </h1>
                             <div className="text-xl text-gray-900 font-medium">
-                                ${car.price?.toLocaleString()}
+                                ₹{car.price?.toLocaleString('en-IN')}
                             </div>
                         </div>
 
@@ -252,15 +252,15 @@ const CarDetails = () => {
                         <div className="space-y-4 mb-8">
                             <div className="flex justify-between text-sm">
                                 <span className="text-gray-500 uppercase tracking-widest font-bold text-[10px]">Total Price</span>
-                                <span className="font-bold">${car.price?.toLocaleString()}</span>
+                                <span className="font-bold">₹{car.price?.toLocaleString('en-IN')}</span>
                             </div>
                             <div className="flex justify-between text-sm border-b border-gray-100 pb-4">
                                 <span className="text-gray-500 uppercase tracking-widest font-bold text-[10px]">Booking Amount (5%)</span>
-                                <span className="font-bold">${(car.price * 0.05).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                <span className="font-bold">₹{(car.price * 0.05).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                             </div>
                             <div className="flex justify-between text-base">
                                 <span className="text-black uppercase tracking-widest font-bold text-[11px]">Total Amount</span>
-                                <span className="font-bold text-primary">${(car.price * 0.05).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                <span className="font-bold text-primary">₹{(car.price * 0.05).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                             </div>
                         </div>
 
@@ -337,7 +337,7 @@ const CarDetails = () => {
                         <div className="space-y-4 mb-8">
                             <div>
                                 <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Total Vehicle Price</label>
-                                <div className="text-lg font-bold">${car.price?.toLocaleString()}</div>
+                                <div className="text-lg font-bold">₹{car.price?.toLocaleString('en-IN')}</div>
                             </div>
 
                             <div>
@@ -382,7 +382,7 @@ const CarDetails = () => {
 
                         <div className="bg-gray-50 p-4 border border-gray-100 mb-6 text-center">
                             <div className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1">Estimated Monthly Payment</div>
-                            <div className="text-3xl font-bold text-primary">${calculateEMI().toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                            <div className="text-3xl font-bold text-primary">₹{calculateEMI().toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                             <div className="text-[9px] text-gray-400 mt-2 uppercase tracking-widest">*Excludes taxes & registration fees</div>
                         </div>
 

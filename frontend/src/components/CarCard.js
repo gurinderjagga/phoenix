@@ -63,7 +63,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                     <div>
                         <span className="block text-[10px] md:text-xs text-gray-400 uppercase tracking-wider mb-1">Price</span>
                         <span className="block text-xs md:text-sm font-bold text-primary whitespace-nowrap">
-                            ${car.price?.toLocaleString()}
+                            ₹{car.price?.toLocaleString('en-IN')}
                         </span>
                     </div>
                 </div>

@@ -49,9 +49,9 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                     {order.status}
                   </span>
                   <div className="mt-2 text-right">
-                    <p className="text-xl font-bold text-primary">Total: ${order.total_amount.toLocaleString()}</p>
-                    <p className="text-sm text-gray-700 mt-1">Paid (5%): ${(order.total_amount * 0.05).toLocaleString()}</p>
-                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Pending Balance: ${(order.total_amount * 0.95).toLocaleString()}</p>
+                    <p className="text-xl font-bold text-primary">Total: ₹{order.total_amount.toLocaleString('en-IN')}</p>
+                    <p className="text-sm text-gray-700 mt-1">Paid (5%): ₹{(order.total_amount * 0.05).toLocaleString('en-IN')}</p>
+                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Pending Balance: ₹{(order.total_amount * 0.95).toLocaleString('en-IN')}</p>
                   </div>
                 </div>
               </div>
@@ -77,7 +77,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-bold text-primary">${(item.price * item.quantity).toLocaleString()}</p>
+                        <p className="text-sm font-bold text-primary">₹{(item.price * item.quantity).toLocaleString('en-IN')}</p>
                       </div>
                     </div>
                   ))}
@@ -267,7 +267,7 @@ const Orders = () => {
                           {new Date(order.created_at).toLocaleDateString()}
                         </p>
                       </div>
-                      <p className="text-base sm:text-xl font-bold text-primary">${order.total_amount.toLocaleString()}</p>
+                      <p className="text-base sm:text-xl font-bold text-primary">₹{order.total_amount.toLocaleString('en-IN')}</p>
                     </div>
 
                     {/* Car image + View button */}

@@ -90,7 +90,7 @@ const Bookings = () => {
                         </div>
                       )}
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-primary">${(booking.total_amount || 0).toLocaleString()}</span>
+                        <span className="text-sm font-bold text-primary">₹{(booking.total_amount || 0).toLocaleString('en-IN')}</span>
                         <select
                           value={booking.status}
                           onChange={(e) => handleStatusChange(booking.id, e.target.value)}
@@ -167,7 +167,7 @@ const Bookings = () => {
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${(booking.total_amount || 0).toLocaleString()}
+                            ₹{(booking.total_amount || 0).toLocaleString('en-IN')}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${getStatusColor(booking.status)}`}>

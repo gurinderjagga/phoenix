@@ -66,7 +66,7 @@ const Dashboard = () => {
   const kpiCards = [
     {
       title: 'TOTAL SALES',
-      value: `$${(stats.totalSales || 0).toLocaleString()}`,
+      value: `₹${(stats.totalSales || 0).toLocaleString('en-IN')}`,
       icon: 'TrendingUp',
       // change: '+12.5%' // Removed static change indictator
     },
@@ -183,7 +183,7 @@ const Dashboard = () => {
                   <div className="flex flex-col justify-between text-xs text-gray-500 w-16 items-end pr-4 py-0 h-full">
                     {reversedTicks.map((tick, i) => (
                       <span key={i} className="leading-none -translate-y-1/2" style={{ height: i === 0 || i === reversedTicks.length - 1 ? 'auto' : '0' }}>
-                        ${(tick >= 1000 ? (tick / 1000).toFixed(0) + 'k' : tick)}
+                        ₹{(tick >= 1000 ? (tick / 1000).toFixed(0) + 'k' : tick)}
                       </span>
                     ))}
                   </div>
@@ -253,7 +253,7 @@ const Dashboard = () => {
 
                             {/* Tooltip on Hover */}
                             <div className="opacity-0 group- absolute bottom-4 mb-1 bg-black text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-20">
-                              ${(data.revenue || 0).toLocaleString()}
+                              ₹{(data.revenue || 0).toLocaleString('en-IN')}
                               <div className="text-gray-400">{data.date}</div>
                             </div>
 

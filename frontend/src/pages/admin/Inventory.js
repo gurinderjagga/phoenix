@@ -205,7 +205,7 @@ const Inventory = () => {
                           <p className="text-sm font-bold text-gray-900 uppercase tracking-wider truncate">{car.brand} {car.model}</p>
                           <p className="text-xs text-gray-500 mt-0.5">{car.year} &bull; {car.category || 'N/A'}</p>
                           <div className="flex items-center justify-between mt-2">
-                            <span className="text-sm font-bold text-primary">${car.price?.toLocaleString() || '0'}</span>
+                            <span className="text-sm font-bold text-primary">₹{car.price?.toLocaleString('en-IN') || '0'}</span>
                             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${car.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                               {car.stock > 0 ? `${car.stock} in stock` : 'Out of stock'}
                             </span>
@@ -291,7 +291,7 @@ const Inventory = () => {
                             {car.stock || 0}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            ${car.price?.toLocaleString() || '0'}
+                            ₹{car.price?.toLocaleString('en-IN') || '0'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             {getStatusBadge(car.stock === 0 ? 'unavailable' : (car.status || 'available'))}
