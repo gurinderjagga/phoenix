@@ -8,6 +8,7 @@ const CarListing = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showFilters, setShowFilters] = useState(false);
     const [filters, setFilters] = useState({
         category: searchParams.get('category') || '',
         brand: searchParams.get('brand') || '',
@@ -64,21 +65,101 @@ const CarListing = () => {
     return (
         <div className="bg-white min-h-screen pt-20">
             {/* Header Title */}
-            <div className="bg-white py-16 border-b border-gray-200">
-                <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-primary uppercase">
+            <div className="bg-white py-8 md:py-16 border-b border-gray-200">
+                <div className="max-w-[1440px] mx-auto px-5 md:px-12">
+                    <h1 className="text-2xl md:text-5xl font-bold tracking-tight text-primary uppercase">
                         The Collection
                     </h1>
-                    <p className="text-gray-500 uppercase tracking-widest text-xs mt-4">
+                    <p className="text-gray-500 uppercase tracking-widest text-xs mt-2 md:mt-4">
                         {loading ? 'Loading...' : `${cars.length} Models Available`}
                     </p>
                 </div>
             </div>
 
-            <div className="max-w-[1440px] mx-auto px-8 md:px-12 py-12">
+            <div className="max-w-[1440px] mx-auto px-5 md:px-12 py-6 md:py-12">
+
+                {/* ── MOBILE: Sort + Filter toggle bar ── */}
+                <div className="flex items-center justify-between mb-4 lg:hidden">
+                    <button
+                        onClick={() => setShowFilters(v => !v)}
+                        className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest border border-gray-300 px-4 min-h-[44px] bg-white"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 4h18M7 8h10M11 12h2" />
+                        </svg>
+                        {showFilters ? 'Hide Filters' : 'Filters'}
+                        {(filters.category || filters.brand || filters.search) && (
+                            <span className="ml-1 w-2 h-2 bg-black rounded-full"></span>
+                        )}
+                    </button>
+                    <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className="bg-transparent text-xs font-bold uppercase tracking-widest border border-gray-200 px-3 min-h-[44px] focus:ring-0 focus:border-primary cursor-pointer"
+                    >
+                        <option value="-createdAt">Newest</option>
+                        <option value="price">Price ↑</option>
+                        <option value="-price">Price ↓</option>
+                        <option value="-rating">Top Rated</option>
+                    </select>
+                </div>
+
+                {/* ── MOBILE: Collapsible filters ── */}
+                {showFilters && (
+                    <div className="lg:hidden bg-gray-50 border border-gray-200 p-4 mb-6 space-y-5">
+                        {/* Search */}
+                        <div>
+                            <h3 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Search</h3>
+                            <input
+                                type="text"
+                                value={filters.search}
+                                onChange={(e) => handleFilterChange('search', e.target.value)}
+                                placeholder="MODEL, KEYWORD..."
+                                className="w-full bg-white border border-gray-200 px-3 py-2 text-sm focus:ring-1 focus:ring-primary placeholder-gray-400 uppercase tracking-wide min-h-[44px]"
+                            />
+                        </div>
+                        {/* Category */}
+                        <div>
+                            <h3 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Category</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {['', ...categories].map(cat => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => handleFilterChange('category', cat)}
+                                        className={`px-3 py-1.5 text-xs font-bold uppercase tracking-widest border min-h-[36px] ${filters.category === cat ? 'bg-black text-white border-black' : 'bg-white text-gray-600 border-gray-200'}`}
+                                    >
+                                        {cat || 'All'}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        {/* Brand */}
+                        <div>
+                            <h3 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Make</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {['', ...brands].map(brand => (
+                                    <button
+                                        key={brand}
+                                        onClick={() => handleFilterChange('brand', brand)}
+                                        className={`px-3 py-1.5 text-xs font-bold uppercase tracking-widest border min-h-[36px] ${filters.brand === brand ? 'bg-black text-white border-black' : 'bg-white text-gray-600 border-gray-200'}`}
+                                    >
+                                        {brand || 'All'}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => { setFilters({ category: '', brand: '', minPrice: '', maxPrice: '', search: '' }); setShowFilters(false); }}
+                            className="text-xs font-bold uppercase tracking-widest text-gray-400 underline"
+                        >
+                            Reset
+                        </button>
+                    </div>
+                )}
+
                 <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-                    {/* Filters Sidebar - Minimalist */}
-                    <div className="lg:w-1/4 space-y-8 lg:space-y-12">
+                    {/* Filters Sidebar — hidden on mobile, visible on lg+ */}
+                    <div className="hidden lg:block lg:w-1/4 space-y-12">
                         {/* Search */}
                         <div>
                             <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-6">Search</h3>
@@ -163,8 +244,8 @@ const CarListing = () => {
 
                     {/* Grid */}
                     <div className="lg:w-3/4">
-                        {/* Sort Options */}
-                        <div className="flex justify-end mb-8">
+                        {/* Sort Options — desktop only */}
+                        <div className="hidden lg:flex justify-end mb-8">
                             <select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
@@ -188,7 +269,7 @@ const CarListing = () => {
                                 <p className="text-gray-500 text-sm">Adjust your filters to see more results.</p>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+                            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-6 sm:gap-x-6 sm:gap-y-12">
                                 {cars.map((car) => (
                                     <CarCard key={car._id || car.id} car={car} />
                                 ))}
