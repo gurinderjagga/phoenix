@@ -44,16 +44,16 @@ const CustomerDetailsModal = ({ isOpen, onClose, customer, onUpdate }) => {
         <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div className="fixed inset-0" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gray-500 opacity-75" onClick={onClose}></div>
+                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose}></div>
                 </div>
 
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div className="sm:flex sm:items-start">
-                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-2xl border-t-4 border-black sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div className="bg-white px-6 pt-6 pb-4">
+                        <div className="w-full">
+                            <div className="w-full">
+                                <h3 className="text-lg font-bold text-gray-900 uppercase tracking-widest border-b border-gray-200 pb-4 mb-4" id="modal-title">
                                     Customer Details
                                 </h3>
 
@@ -111,25 +111,25 @@ const CustomerDetailsModal = ({ isOpen, onClose, customer, onUpdate }) => {
                                             <button
                                                 type="button"
                                                 onClick={handleBlockToggle}
-                                                className={`inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white min-h-[48px] focus:outline-none focus:ring-2 focus:ring-offset-2 w-full sm:w-auto mt-3 sm:mt-0 ${formData.is_active ? 'bg-red-600 focus:ring-red-500' : 'bg-green-600 focus:ring-green-500'}`}
+                                                className={`inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-bold uppercase tracking-widest rounded-sm text-white min-h-[48px] focus:outline-none w-full sm:w-auto mt-3 sm:mt-0 ${formData.is_active ? 'bg-red-600 hover:bg-red-700' : 'bg-black hover:bg-gray-800'}`}
                                             >
                                                 {formData.is_active ? 'Block User' : 'Unblock User'}
                                             </button>
                                         </div>
                                     </div>
 
-                                    <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse space-y-3 sm:space-y-0 text-center">
+                                    <div className="mt-6 pt-4 border-t border-gray-200 sm:flex sm:flex-row-reverse space-y-3 sm:space-y-0 text-center">
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="w-full inline-flex items-center justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white min-h-[48px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50"
+                                            className="w-full inline-flex items-center justify-center border border-transparent shadow-sm px-6 py-3 bg-black text-sm font-bold uppercase tracking-widest text-white min-h-[48px] focus:outline-none sm:ml-3 sm:w-auto disabled:opacity-50"
                                         >
                                             {loading ? 'Saving...' : 'Save Changes'}
                                         </button>
                                         <button
                                             type="button"
                                             onClick={onClose}
-                                            className="w-full inline-flex items-center justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+                                            className="w-full inline-flex items-center justify-center border border-gray-300 shadow-sm px-6 py-3 bg-white text-sm font-bold uppercase tracking-widest text-gray-700 min-h-[48px] focus:outline-none sm:w-auto"
                                         >
                                             Cancel
                                         </button>
