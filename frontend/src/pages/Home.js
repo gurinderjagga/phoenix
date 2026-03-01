@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { apiService } from '../utils/api';
 import CarCard from '../components/CarCard';
-import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 
 const Home = () => {
-    const { user } = useAuth();
     const [featuredCars, setFeaturedCars] = useState([]);
     const [loading, setLoading] = useState(true);
 

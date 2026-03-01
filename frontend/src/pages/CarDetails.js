@@ -10,7 +10,7 @@ const CarDetails = () => {
     const [car, setCar] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedImage, setSelectedImage] = useState(0);
-    const [bookingCar, setBookingCar] = useState(false);
+
     const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
 
     // EMI Calculator State
@@ -221,10 +221,10 @@ const CarDetails = () => {
                                 }
                                 setIsReservationModalOpen(true);
                             }}
-                            disabled={bookingCar || car.stock <= 0}
+                            disabled={car.stock <= 0}
                             className="w-full bg-black text-white px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] disabled:bg-gray-300 disabled:cursor-not-allowed"
                         >
-                            {bookingCar ? 'Processing...' : (car.stock > 0 ? 'Reserve Vehicle' : 'Out of Stock')}
+                            {car.stock > 0 ? 'Reserve Vehicle' : 'Out of Stock'}
                         </button>
                         <button
                             onClick={() => setIsEmiModalOpen(true)}
