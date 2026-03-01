@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiService } from '../utils/api';
 import Button from '../components/Button';
+import useBodyScrollLock from '../hooks/useBodyScrollLock';
 
 // Order Details Modal Component - Refactored for Phoenix Aesthetic
 const OrderDetailsModal = ({ order, isOpen, onClose }) => {
@@ -123,6 +124,9 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
 
+  // Lock body scroll when the order modal is open
+  useBodyScrollLock(showOrderModal);
+
   useEffect(() => {
     if (user) {
       fetchOrders();
@@ -203,7 +207,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-secondary pt-16 md:pt-24 pb-12">
+    <div className="min-h-screen bg-secondary pt-28 md:pt-32 pb-12">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12">
 
         {/* Header */}

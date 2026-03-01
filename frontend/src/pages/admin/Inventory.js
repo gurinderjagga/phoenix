@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import AddCarModal from '../../components/admin/AddCarModal';
 import apiService from '../../utils/api';
+import useBodyScrollLock from '../../hooks/useBodyScrollLock';
 
 // Icon Components
 const SearchIcon = () => (
@@ -43,6 +44,8 @@ const Inventory = () => {
   const [selectedCar, setSelectedCar] = useState(null);
   const [confirmModal, setConfirmModal] = useState({ isOpen: false, carId: null });
   const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false });
+
+  useBodyScrollLock(confirmModal.isOpen || alertModal.isOpen);
 
   useEffect(() => {
     fetchCars();

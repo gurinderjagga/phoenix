@@ -104,7 +104,7 @@ const CarDetails = () => {
     if (!car) return <div className="h-screen flex items-center justify-center bg-white text-primary uppercase tracking-widest font-bold">Vehicle Not Found</div>;
 
     return (
-        <div className="bg-white min-h-screen pt-16 md:pt-24 pb-20 lg:pb-12">
+        <div className="bg-white min-h-screen pt-28 md:pt-32 pb-20 lg:pb-12">
             <div className="flex flex-col lg:flex-row min-h-[calc(100vh-6rem)]">
 
                 {/* Visuals - 75% width on desktop */}

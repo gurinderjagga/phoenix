@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiService } from '../utils/api';
 import Button from '../components/Button';
+import useBodyScrollLock from '../hooks/useBodyScrollLock';
 
 const Profile = () => {
     const { user } = useAuth();
@@ -22,6 +23,8 @@ const Profile = () => {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
     const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false });
+
+    useBodyScrollLock(alertModal.isOpen);
 
     useEffect(() => {
         if (user) {
@@ -110,7 +113,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="min-h-screen bg-secondary pt-16 md:pt-24 pb-12">
+        <div className="min-h-screen bg-secondary pt-28 md:pt-32 pb-12">
             <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12">
 
                 {/* Header */}

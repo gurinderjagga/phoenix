@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import apiService from '../../utils/api';
+import useBodyScrollLock from '../../hooks/useBodyScrollLock';
 
 const Settings = () => {
   const [profile, setProfile] = useState({
@@ -12,6 +13,8 @@ const Settings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false });
+
+  useBodyScrollLock(alertModal.isOpen);
 
   useEffect(() => {
     fetchProfile();

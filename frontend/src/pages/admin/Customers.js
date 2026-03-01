@@ -64,11 +64,13 @@ const Customers = () => {
   };
 
   const handleCustomerClick = async (customer) => {
+    // Open immediately with available data to prevent delay
+    setSelectedCustomer(customer);
+    setIsModalOpen(true);
     try {
       // Fetch full details including stats
       const fullDetails = await apiService.getUserById(customer.id);
       setSelectedCustomer(fullDetails);
-      setIsModalOpen(true);
     } catch (error) {
       console.error('Error fetching customer details:', error);
     }

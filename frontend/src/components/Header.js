@@ -235,13 +235,13 @@ const Header = () => {
                     className={`absolute inset-0 bg-black/60 backdrop-blur-sm ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
                     onClick={() => setIsMenuOpen(false)}
                 />
-                <div className={`absolute top-0 left-0 w-[60%] h-full bg-white shadow-2xl flex flex-col transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                    {/* Header spacer to provide the separation space */}
-                    <div className="h-24 flex-shrink-0 w-full"></div>
+                <div className={`absolute top-0 left-0 w-[60%] h-full bg-white shadow-2xl flex transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
 
                     <nav className="flex flex-row flex-1 overflow-y-hidden">
                         <div className="w-[60%] bg-white h-full flex-shrink-0 flex flex-col justify-between px-12 pb-12 overflow-y-auto border-r border-gray-100">
                             <div className="flex flex-col space-y-4 pt-0">
+                                {/* Header spacer to provide the separation space only for the left menu items */}
+                                <div className="h-24 flex-shrink-0 w-full"></div>
                                 {['Models', 'Experience', 'Support'].map((item) => (
                                     <button
                                         key={item}
@@ -272,7 +272,7 @@ const Header = () => {
                         </div>
                         <div className="flex-1 bg-gray-50 h-full p-12 overflow-y-auto">
                             {activeMenu === 'Models' && (
-                                <div className="flex flex-col gap-10 max-w-[280px] w-full animate-fade-in mx-auto pb-4 pt-0">
+                                <div className="flex flex-col gap-10 max-w-[280px] w-full animate-fade-in mx-auto pb-4 pt-12">
                                     {[
                                         { name: 'SUV', image: '/suv.webp' },
                                         { name: 'Sedan', image: '/sedan.webp' },
@@ -289,14 +289,14 @@ const Header = () => {
                                 </div>
                             )}
                             {activeMenu === 'Experience' && (
-                                <div className="flex flex-col items-center justify-center h-full text-center animate-fade-in">
+                                <div className="flex flex-col items-center pt-24 pb-12 text-center animate-fade-in">
                                     <h2 className="text-6xl font-bold text-gray-200 uppercase tracking-tighter mb-4">Project</h2>
                                     <p className="text-xl font-medium text-gray-900 tracking-wide">College Project</p>
                                     <p className="text-sm text-gray-500 mt-4 max-w-md">Demonstrating modern web excellence through a luxury automotive commerce experience.</p>
                                 </div>
                             )}
                             {activeMenu === 'Support' && (
-                                <div className="max-w-xl mx-auto w-full animate-fade-in">
+                                <div className="max-w-xl mx-auto w-full animate-fade-in pt-12">
                                     <h3 className="text-sm font-bold uppercase tracking-widest text-primary mb-8 border-b border-gray-200 pb-4">Contact Us</h3>
                                     <div className="space-y-8">
                                         <div><p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Email</p><a href="mailto:support@phoenix.com" className="text-xl font-medium text-gray-900">support@phoenix.com</a></div>

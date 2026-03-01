@@ -65,7 +65,7 @@ const CustomerDetailsModal = ({ isOpen, onClose, customer, onUpdate }) => {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-500">Email</label>
-                                    <div className="mt-1 text-sm text-gray-900">{customer.email}</div>
+                                    <div className="mt-1 text-sm text-gray-900 break-all">{customer.email}</div>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-500">Joined Date</label>

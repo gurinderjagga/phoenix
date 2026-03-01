@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import { supabase } from '../utils/supabase';
+import useBodyScrollLock from '../hooks/useBodyScrollLock';
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
@@ -9,6 +10,8 @@ const Register = () => {
   const [error, setError] = useState('');
   const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false });
   const navigate = useNavigate();
+
+  useBodyScrollLock(alertModal.isOpen);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
