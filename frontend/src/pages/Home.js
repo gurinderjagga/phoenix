@@ -29,7 +29,7 @@ const Home = () => {
     return (
         <div className="bg-secondary overflow-x-hidden">
             {/* Hero Section - The "Phoenix" Moment */}
-            <section className="relative w-screen h-screen flex items-end justify-start pb-20 md:pb-32 bg-primary text-secondary overflow-hidden">
+            <section className="relative w-screen h-screen flex items-end justify-start pb-40 md:pb-32 bg-primary text-secondary overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <video
                         autoPlay
