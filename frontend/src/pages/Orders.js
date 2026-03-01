@@ -49,7 +49,8 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                   </span>
                   <div className="mt-2 text-right">
                     <p className="text-sm font-bold text-gray-500 line-through">Total: ${order.total_amount.toLocaleString()}</p>
-                    <p className="text-xl font-bold text-primary mt-1">Paid (5%): ${(order.total_amount * 0.05).toLocaleString()}</p>
+                    <p className="text-lg font-bold text-primary mt-1">Paid (5%): ${(order.total_amount * 0.05).toLocaleString()}</p>
+                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Pending Balance: ${(order.total_amount * 0.95).toLocaleString()}</p>
                   </div>
                 </div>
               </div>
