@@ -151,7 +151,7 @@ const Inventory = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search by model, make, or VIN..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 pr-4 py-2 border border-gray-300 focus:ring-0 focus:border-gray-900 w-full sm:w-64 md:w-80"

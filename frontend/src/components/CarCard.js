@@ -19,7 +19,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                     <img
                         src={car.images?.[0] || '/placeholder-car.jpg'}
                         alt={`${car.brand || 'Car'} ${car.model || ''}`}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out"
+                        className="w-full h-full object-cover grayscale-0 md:grayscale group-hover:grayscale-0 md:scale-100 group-hover:scale-110 transition-all duration-700 ease-out"
                         onError={(e) => {
                             e.target.src = '/placeholder-car.jpg';
                         }}
@@ -39,13 +39,13 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
             {/* Info Container - Spec Sheet Style */}
             <div className="pt-6 pb-2 px-1">
                 <div className="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 className="text-lg font-bold text-primary uppercase tracking-widest leading-none mb-2">
-                            <Link to={`/cars/${carId}`}>
-                                {car.brand} <br /> <span className="font-light text-gray-500"> {car.model}</span>
+                    <div className="w-full">
+                        <h3 className="text-lg md:text-xl font-bold text-primary uppercase tracking-widest leading-none mb-1">
+                            <Link to={`/cars/${carId}`} className="flex items-center min-h-[48px] md:min-h-0 md:block">
+                                <span>{car.brand} <span className="font-light text-gray-500"> {car.model}</span></span>
                             </Link>
                         </h3>
-                        <p className="text-[10px] text-gray-400 uppercase tracking-widest">
+                        <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest mt-1">
                             {car.year} | {car.specifications?.fuelType || 'Gasoline'}
                         </p>
                     </div>
@@ -54,12 +54,12 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                 {/* Technical Specs Grid - Hidden until hover? No, always visible but subtle */}
                 <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4 mb-4">
                     <div>
-                        <span className="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">Power</span>
-                        <span className="block text-xs font-bold text-primary uppercase">{car.specifications?.horsepower || 'N/A'}</span>
+                        <span className="block text-[10px] md:text-xs text-gray-400 uppercase tracking-wider mb-1">Power</span>
+                        <span className="block text-xs md:text-sm font-bold text-primary uppercase">{car.specifications?.horsepower || 'N/A'}</span>
                     </div>
                     <div>
-                        <span className="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">Price</span>
-                        <span className="block text-xs font-bold text-primary whitespace-nowrap">
+                        <span className="block text-[10px] md:text-xs text-gray-400 uppercase tracking-wider mb-1">Price</span>
+                        <span className="block text-xs md:text-sm font-bold text-primary whitespace-nowrap">
                             ${car.price?.toLocaleString()}
                         </span>
                     </div>
@@ -68,7 +68,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                 {/* Action Link -- Text Only */}
                 <Link
                     to={`/cars/${carId}`}
-                    className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-400"
+                    className="flex items-center text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-400 group-hover:text-primary transition-colors min-h-[48px] md:min-h-0 md:inline-flex md:mt-2"
                 >
                     View Specs <span className="ml-2">→</span>
                 </Link>
