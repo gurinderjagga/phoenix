@@ -10,8 +10,8 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'pending': return 'bg-gray-200 text-primary';
-      case 'ready for pickup': return 'bg-primary text-white';
+      case 'delivered': return 'bg-primary text-white';
+      case 'processing': return 'bg-gray-200 text-primary';
       case 'shipped': return 'bg-gray-800 text-white';
       case 'confirmed': return 'bg-gray-200 text-primary';
       case 'cancelled': return 'bg-red-600 text-white';
@@ -98,7 +98,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                 <h4 className="text-[10px] uppercase tracking-widest text-gray-400 mb-3">Payment Details</h4>
                 <div className="text-sm font-medium text-primary">
                   <p><span className="text-gray-500 font-normal">Method:</span> {order.payment_method || 'Standard'}</p>
-                  <p><span className="text-gray-500 font-normal">Status:</span> {order.payment_status || 'Successful'}</p>
+                  <p><span className="text-gray-500 font-normal">Status:</span> Successful</p>
                 </div>
               </div>
             </div>
@@ -147,9 +147,8 @@ const Orders = () => {
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'ready for pickup': return 'text-green-600';
-      case 'pending': return 'text-amber-600';
-      case 'confirmed': return 'text-blue-600';
+      case 'delivered': return 'text-green-600';
+      case 'processing': return 'text-amber-600';
       case 'shipped': return 'text-blue-600';
       case 'cancelled': return 'text-red-600';
       default: return 'text-gray-600';
