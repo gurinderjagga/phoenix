@@ -68,7 +68,7 @@ const AdminRoute = ({ children }) => {
                     </p>
                     <button
                         onClick={() => window.location.href = '/'}
-                        className="bg-black text-white px-8 py-3 text-xs font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+                        className="bg-black text-white px-8 py-3 text-xs font-bold uppercase tracking-[0.15em]"
                     >
                         Return Home
                     </button>

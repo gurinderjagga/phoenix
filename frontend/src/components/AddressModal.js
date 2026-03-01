@@ -60,7 +60,7 @@ const AddressModal = ({ isOpen, onClose, onSuccess, initialAddress = {} }) => {
             <div className="bg-white w-full max-w-md p-8 relative shadow-2xl">
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-black"
+                    className="absolute top-4 right-4 text-gray-400"
                 >
                     ✕
                 </button>
@@ -86,7 +86,7 @@ const AddressModal = ({ isOpen, onClose, onSuccess, initialAddress = {} }) => {
                             name="street"
                             value={address.street}
                             onChange={handleChange}
-                            className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black transition-colors"
+                            className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black"
                             placeholder="123 Main St"
                         />
                     </div>
@@ -99,7 +99,7 @@ const AddressModal = ({ isOpen, onClose, onSuccess, initialAddress = {} }) => {
                                 name="city"
                                 value={address.city}
                                 onChange={handleChange}
-                                className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black transition-colors"
+                                className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black"
                                 placeholder="New York"
                             />
                         </div>
@@ -110,7 +110,7 @@ const AddressModal = ({ isOpen, onClose, onSuccess, initialAddress = {} }) => {
                                 name="state"
                                 value={address.state}
                                 onChange={handleChange}
-                                className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black transition-colors"
+                                className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black"
                                 placeholder="NY"
                             />
                         </div>
@@ -123,7 +123,7 @@ const AddressModal = ({ isOpen, onClose, onSuccess, initialAddress = {} }) => {
                             name="zipCode"
                             value={address.zipCode}
                             onChange={handleChange}
-                            className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black transition-colors"
+                            className="w-full border-b border-gray-300 py-2 text-primary font-medium focus:outline-none focus:border-black"
                             placeholder="10001"
                         />
                     </div>

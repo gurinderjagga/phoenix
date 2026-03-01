@@ -121,14 +121,14 @@ const AdminLogin = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full flex justify-center py-3 px-4 border border-transparent text-xs font-bold uppercase tracking-[0.15em] text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:bg-gray-400 transition-colors"
+                                className="w-full flex justify-center py-3 px-4 border border-transparent text-xs font-bold uppercase tracking-[0.15em] text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:bg-gray-400"
                             >
                                 {loading ? 'Authenticating...' : 'Sign in as Admin'}
                             </button>
                         </div>
 
                         <div className="mt-6 text-center">
-                            <Link to="/" className="text-xs font-medium text-gray-500 hover:text-gray-900 uppercase tracking-widest underline decoration-1 underline-offset-4">
+                            <Link to="/" className="text-xs font-medium text-gray-500 uppercase tracking-widest underline decoration-1 underline-offset-4">
                                 Return to Main Site
                             </Link>
                         </div>

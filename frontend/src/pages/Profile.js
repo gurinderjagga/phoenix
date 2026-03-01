@@ -134,7 +134,7 @@ const Profile = () => {
                         <div className="p-4 bg-black text-white text-xs font-bold uppercase tracking-widest mb-4">
                             Account Settings
                         </div>
-                        <Link to="/orders" className="block p-4 border border-gray-100 hover:border-black hover:bg-gray-50 text-xs font-bold uppercase tracking-widest transition-all">
+                        <Link to="/orders" className="block p-4 border border-gray-100 text-xs font-bold uppercase tracking-widest">
                             Your Reserved Vehicle
                         </Link>
                     </div>
@@ -148,7 +148,7 @@ const Profile = () => {
                                 </h2>
                                 <button
                                     onClick={() => setIsEditing(!isEditing)}
-                                    className="text-xs font-bold uppercase tracking-widest text-accent hover:text-black transition-colors"
+                                    className="text-xs font-bold uppercase tracking-widest text-accent"
                                 >
                                     {isEditing ? 'Cancel Editing' : '[ Edit Information ]'}
                                 </button>
@@ -164,7 +164,7 @@ const Profile = () => {
                                                 type="text"
                                                 value={profile.name}
                                                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary transition-colors bg-transparent rounded-none"
+                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                             />
                                         ) : (
                                             <p className="text-lg font-medium text-primary border-b border-transparent py-2">
@@ -188,7 +188,7 @@ const Profile = () => {
                                                 type="tel"
                                                 value={profile.phone}
                                                 onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary transition-colors bg-transparent rounded-none"
+                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                                 placeholder="+1 (555) 000-0000"
                                             />
                                         ) : (
@@ -208,7 +208,7 @@ const Profile = () => {
                                                 type="text"
                                                 value={profile.address.street}
                                                 onChange={(e) => setProfile({ ...profile, address: { ...profile.address, street: e.target.value } })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary transition-colors bg-transparent rounded-none"
+                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                             />
                                         ) : (
                                             <p className="text-lg font-medium text-primary border-b border-transparent py-2">
@@ -225,7 +225,7 @@ const Profile = () => {
                                                     type="text"
                                                     value={profile.address.city}
                                                     onChange={(e) => setProfile({ ...profile, address: { ...profile.address, city: e.target.value } })}
-                                                    className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary transition-colors bg-transparent rounded-none"
+                                                    className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                                 />
                                             ) : (
                                                 <p className="text-lg font-medium text-primary border-b border-transparent py-2">
@@ -240,7 +240,7 @@ const Profile = () => {
                                                     type="text"
                                                     value={profile.address.state}
                                                     onChange={(e) => setProfile({ ...profile, address: { ...profile.address, state: e.target.value } })}
-                                                    className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary transition-colors bg-transparent rounded-none"
+                                                    className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                                 />
                                             ) : (
                                                 <p className="text-lg font-medium text-primary border-b border-transparent py-2">
@@ -257,7 +257,7 @@ const Profile = () => {
                                                 type="text"
                                                 value={profile.address.zipCode}
                                                 onChange={(e) => setProfile({ ...profile, address: { ...profile.address, zipCode: e.target.value } })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary transition-colors bg-transparent rounded-none"
+                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                             />
                                         ) : (
                                             <p className="text-lg font-medium text-primary border-b border-transparent py-2">
@@ -298,7 +298,7 @@ const Profile = () => {
                             {alertModal.message}
                         </p>
                         <button
-                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
                             onClick={() => setAlertModal({ isOpen: false, message: '', isError: false })}
                         >
                             Close

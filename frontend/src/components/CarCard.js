@@ -12,14 +12,14 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
 
 
     return (
-        <div className="group border border-transparent hover:border-primary transition-all duration-500 relative bg-transparent">
+        <div className="group border border-transparent relative bg-transparent">
             {/* Image Container - Monochrome to Color on Hover */}
             <div className="relative overflow-hidden aspect-[16/10] bg-neutral-100">
                 <Link to={`/cars/${carId}`}>
                     <img
                         src={car.images?.[0] || '/placeholder-car.jpg'}
                         alt={`${car.brand || 'Car'} ${car.model || ''}`}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out filter grayscale group-hover:grayscale-0 transition-all"
+                        className="w-full h-full object-cover group- filter grayscale group-"
                         onError={(e) => {
                             e.target.src = '/placeholder-car.jpg';
                         }}
@@ -42,7 +42,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                     <div>
                         <h3 className="text-lg font-bold text-primary uppercase tracking-widest leading-none mb-2">
                             <Link to={`/cars/${carId}`}>
-                                {car.brand} <br /> <span className="font-light text-gray-500 group-hover:text-primary transition-colors"> {car.model}</span>
+                                {car.brand} <br /> <span className="font-light text-gray-500 group-"> {car.model}</span>
                             </Link>
                         </h3>
                         <p className="text-[10px] text-gray-400 uppercase tracking-widest">
@@ -68,9 +68,9 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                 {/* Action Link -- Text Only */}
                 <Link
                     to={`/cars/${carId}`}
-                    className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-accent transition-colors"
+                    className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-400 group-"
                 >
-                    View Specs <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
+                    View Specs <span className="ml-2 group-">→</span>
                 </Link>
             </div>
         </div>

@@ -113,13 +113,13 @@ const AdminLayout = ({ children }) => {
             {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+                    className="fixed inset-0 bg-black/50 z-40 md:hidden"
                     onClick={() => setIsSidebarOpen(false)}
                 />
             )}
 
             {/* Sidebar */}
-            <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-neutral-950 text-white transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-neutral-950 text-white -out md:relative md:translate-x-0 flex flex-col ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 {/* Logo */}
                 <div className="p-6 border-b border-gray-800">
                     <div className="flex items-center space-x-2">
@@ -141,10 +141,7 @@ const AdminLayout = ({ children }) => {
                                             navigate(item.path);
                                             setIsSidebarOpen(false);
                                         }}
-                                        className={`w-full flex items-center px-4 py-3 text-left transition-colors duration-200 ${isActive
-                                            ? 'text-white border-l-2 border-red-500 bg-gray-900'
-                                            : 'text-gray-400 hover:text-white hover:bg-gray-900'
-                                            }`}
+                                        className={`w-full flex items-center px-4 py-3 text-left ${isActive ? 'text-white border-l-2 border-red-500 bg-gray-900' : 'text-gray-400 ' }`}
                                     >
                                         {item.icon === 'LayoutDashboard' && <LayoutDashboardIcon />}
                                         {item.icon === 'Package' && <PackageIcon />}
@@ -170,7 +167,7 @@ const AdminLayout = ({ children }) => {
                             {/* Hamburger Menu for Mobile */}
                             <button
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="md:hidden text-gray-700 hover:text-black focus:outline-none"
+                                className="md:hidden text-gray-700 focus:outline-none"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -184,10 +181,7 @@ const AdminLayout = ({ children }) => {
                                         {index > 0 && <span className="text-gray-400">/</span>}
                                         <button
                                             onClick={() => navigate(crumb.path)}
-                                            className={`text-sm ${crumb.isLast
-                                                ? 'text-gray-900 font-medium'
-                                                : 'text-gray-500 hover:text-gray-700'
-                                                }`}
+                                            className={`text-sm ${crumb.isLast ? 'text-gray-900 font-medium' : 'text-gray-500 ' }`}
                                         >
                                             {crumb.label}
                                         </button>
@@ -200,7 +194,7 @@ const AdminLayout = ({ children }) => {
                         <div className="relative">
                             <button
                                 onClick={() => setShowUserMenu(!showUserMenu)}
-                                className="flex items-center space-x-3 text-gray-700 hover:text-gray-900 focus:outline-none"
+                                className="flex items-center space-x-3 text-gray-700 focus:outline-none"
                             >
                                 <div className="flex flex-col text-right">
                                     <span className="text-sm font-bold uppercase tracking-widest text-primary">
@@ -217,7 +211,7 @@ const AdminLayout = ({ children }) => {
                                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-sm shadow-lg z-10">
                                     <button
                                         onClick={handleLogout}
-                                        className="w-full flex items-center px-4 py-3 text-left text-gray-700 hover:bg-gray-50"
+                                        className="w-full flex items-center px-4 py-3 text-left text-gray-700"
                                     >
                                         <LogOutIcon />
                                         Sign Out

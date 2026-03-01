@@ -185,7 +185,7 @@ const Settings = () => {
             <button
               type="submit"
               disabled={saving}
-              className="px-6 py-2 bg-black text-white uppercase tracking-widest text-sm font-bold hover:bg-gray-800 disabled:opacity-50"
+              className="px-6 py-2 bg-black text-white uppercase tracking-widest text-sm font-bold disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Changes'}
             </button>
@@ -211,7 +211,7 @@ const Settings = () => {
               {alertModal.message}
             </p>
             <button
-              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
               onClick={() => setAlertModal({ isOpen: false, message: '', isError: false })}
             >
               Close

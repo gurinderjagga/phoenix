@@ -147,7 +147,7 @@ const Register = () => {
 
             <div className="text-center mt-6">
               <span className="text-gray-400 text-xs">Already a member? </span>
-              <Link to="/login" className="text-primary text-xs font-bold uppercase tracking-wide border-b border-primary pb-0.5 hover:text-accent hover:border-accent transition-colors">
+              <Link to="/login" className="text-primary text-xs font-bold uppercase tracking-wide border-b border-primary pb-0.5">
                 Sign In
               </Link>
             </div>
@@ -169,7 +169,7 @@ const Register = () => {
               {alertModal.message}
             </p>
             <button
-              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
               onClick={() => {
                 setAlertModal({ isOpen: false, message: '', isError: false });
                 navigate('/login');

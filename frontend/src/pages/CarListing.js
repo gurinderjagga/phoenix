@@ -103,8 +103,8 @@ const CarListing = () => {
                                         onChange={() => handleFilterChange('category', '')}
                                         className="hidden"
                                     />
-                                    <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 transition-colors ${filters.category === '' ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
-                                    <span className={`text-sm tracking-wide uppercase transition-colors truncate ${filters.category === '' ? 'text-primary font-bold' : 'text-gray-500 group-hover:text-primary'}`}>All</span>
+                                    <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 ${filters.category === '' ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
+                                    <span className={`text-sm tracking-wide uppercase truncate ${filters.category === '' ? 'text-primary font-bold' : 'text-gray-500 group-'}`}>All</span>
                                 </label>
                                 {categories.map(category => (
                                     <label key={category} className="flex items-center cursor-pointer group">
@@ -115,8 +115,8 @@ const CarListing = () => {
                                             onChange={() => handleFilterChange('category', category)}
                                             className="hidden"
                                         />
-                                        <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 transition-colors ${filters.category === category ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
-                                        <span className={`text-sm tracking-wide uppercase transition-colors truncate ${filters.category === category ? 'text-primary font-bold' : 'text-gray-500 group-hover:text-primary'}`}>{category}</span>
+                                        <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 ${filters.category === category ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
+                                        <span className={`text-sm tracking-wide uppercase truncate ${filters.category === category ? 'text-primary font-bold' : 'text-gray-500 group-'}`}>{category}</span>
                                     </label>
                                 ))}
                             </div>
@@ -134,8 +134,8 @@ const CarListing = () => {
                                         onChange={() => handleFilterChange('brand', '')}
                                         className="hidden"
                                     />
-                                    <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 transition-colors ${filters.brand === '' ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
-                                    <span className={`text-sm tracking-wide uppercase transition-colors truncate ${filters.brand === '' ? 'text-primary font-bold' : 'text-gray-500 group-hover:text-primary'}`}>All Makes</span>
+                                    <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 ${filters.brand === '' ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
+                                    <span className={`text-sm tracking-wide uppercase truncate ${filters.brand === '' ? 'text-primary font-bold' : 'text-gray-500 group-'}`}>All Makes</span>
                                 </label>
                                 {brands.map(brand => (
                                     <label key={brand} className="flex items-center cursor-pointer group">
@@ -146,8 +146,8 @@ const CarListing = () => {
                                             onChange={() => handleFilterChange('brand', brand)}
                                             className="hidden"
                                         />
-                                        <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 transition-colors ${filters.brand === brand ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
-                                        <span className={`text-sm tracking-wide uppercase transition-colors truncate ${filters.brand === brand ? 'text-primary font-bold' : 'text-gray-500 group-hover:text-primary'}`}>{brand}</span>
+                                        <span className={`w-3 h-3 flex-shrink-0 border border-gray-300 mr-3 ${filters.brand === brand ? 'bg-primary border-primary' : 'bg-transparent'}`}></span>
+                                        <span className={`text-sm tracking-wide uppercase truncate ${filters.brand === brand ? 'text-primary font-bold' : 'text-gray-500 group-'}`}>{brand}</span>
                                     </label>
                                 ))}
                             </div>
@@ -155,7 +155,7 @@ const CarListing = () => {
 
                         <button
                             onClick={() => setFilters({ category: '', brand: '', minPrice: '', maxPrice: '', search: '' })}
-                            className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-accent transition-colors border-b border-gray-200 pb-1"
+                            className="text-xs font-bold uppercase tracking-widest text-gray-400 border-b border-gray-200 pb-1"
                         >
                             Reset Filters
                         </button>

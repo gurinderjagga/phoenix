@@ -252,7 +252,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                     </h2>
                     <button
                         onClick={handleClose}
-                        className="text-gray-400 hover:text-gray-600"
+                        className="text-gray-400"
                     >
                         <XIcon />
                     </button>
@@ -532,7 +532,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                                     <button
                                         type="button"
                                         onClick={() => removeExistingImage(index)}
-                                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-"
                                     >
                                         <XIcon />
                                     </button>
@@ -546,7 +546,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                                     <button
                                         type="button"
                                         onClick={() => removeFile(index)}
-                                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-"
                                     >
                                         <XIcon />
                                     </button>
@@ -554,7 +554,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                             ))}
                         </div>
 
-                        <div className="border-2 border-dashed border-gray-300 rounded-sm p-8 text-center hover:border-gray-400 transition-colors">
+                        <div className="border-2 border-dashed border-gray-300 rounded-sm p-8 text-center">
                             <input
                                 type="file"
                                 ref={fileInputRef}
@@ -571,7 +571,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                             <button
                                 type="button"
                                 onClick={() => fileInputRef.current.click()}
-                                className="mt-4 bg-gray-100 text-gray-700 px-4 py-2 hover:bg-gray-200 transition-colors"
+                                className="mt-4 bg-gray-100 text-gray-700 px-4 py-2"
                             >
                                 Browse Files
                             </button>
@@ -588,14 +588,14 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                            className="px-4 py-2 text-gray-700"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-black text-white px-6 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isSubmitting ? 'Saving...' : 'Save Car'}
                         </button>
@@ -621,7 +621,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                             {alertModal.message}
                         </p>
                         <button
-                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
                             onClick={() => setAlertModal({ isOpen: false, message: '', isError: false })}
                         >
                             Close

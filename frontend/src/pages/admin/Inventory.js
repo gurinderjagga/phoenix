@@ -146,7 +146,7 @@ const Inventory = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                   <SearchIcon />
                 </div>
                 <input
@@ -164,7 +164,7 @@ const Inventory = () => {
 
             <button
               onClick={handleAdd}
-              className="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-colors duration-200 flex items-center space-x-2"
+              className="bg-black text-white px-4 py-2 flex items-center space-x-2"
             >
               <PlusIcon />
               <span>Add New Car</span>
@@ -213,7 +213,7 @@ const Inventory = () => {
                     </tr>
                   ) : (
                     filteredCars.map((car) => (
-                      <tr key={car.id} className="hover:bg-gray-50 transition-colors duration-150">
+                      <tr key={car.id} className="">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="w-16 h-12 bg-gray-200 rounded-sm overflow-hidden">
                             {car.images && car.images[0] ? (
@@ -252,13 +252,13 @@ const Inventory = () => {
                           <div className="flex items-center space-x-3">
                             <button
                               onClick={() => handleEdit(car)}
-                              className="text-gray-400 hover:text-gray-600"
+                              className="text-gray-400"
                             >
                               <EditIcon />
                             </button>
                             <button
                               onClick={() => confirmDelete(car.id)}
-                              className="text-gray-400 hover:text-red-600"
+                              className="text-gray-400"
                             >
                               <TrashIcon />
                             </button>
@@ -292,13 +292,13 @@ const Inventory = () => {
             </p>
             <div className="flex space-x-4">
               <button
-                className="flex-1 border border-gray-300 text-gray-700 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-50 transition-colors"
+                className="flex-1 border border-gray-300 text-gray-700 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.15em]"
                 onClick={() => setConfirmModal({ isOpen: false, carId: null })}
               >
                 Cancel
               </button>
               <button
-                className="flex-1 bg-red-600 text-white px-6 py-3 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-red-700 transition-colors"
+                className="flex-1 bg-red-600 text-white px-6 py-3 text-[10px] font-bold uppercase tracking-[0.15em]"
                 onClick={executeDelete}
               >
                 Delete
@@ -326,7 +326,7 @@ const Inventory = () => {
               {alertModal.message}
             </p>
             <button
-              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
               onClick={() => setAlertModal({ isOpen: false, message: '', isError: false })}
             >
               Close

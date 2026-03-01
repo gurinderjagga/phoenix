@@ -27,7 +27,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
             <h2 className="text-xl font-bold uppercase tracking-widest text-primary">Booking Details</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-primary text-2xl font-light transition-colors"
+              className="text-gray-400 text-2xl font-light"
             >
               ×
             </button>
@@ -219,7 +219,7 @@ const Orders = () => {
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Sidebar Nav */}
           <div className="w-full lg:w-64 flex-shrink-0 space-y-1">
-            <Link to="/profile" className="block p-4 border border-gray-100 hover:border-black hover:bg-gray-50 text-xs font-bold uppercase tracking-widest transition-all">
+            <Link to="/profile" className="block p-4 border border-gray-100 text-xs font-bold uppercase tracking-widest">
               Account Settings
             </Link>
             <div className="p-4 bg-black text-white text-xs font-bold uppercase tracking-widest mb-4">
@@ -241,7 +241,7 @@ const Orders = () => {
             ) : (
               <div className="space-y-6">
                 {orders.map((order) => (
-                  <div key={order.id} className="bg-white border border-gray-200 p-6 hover:border-black transition-colors group">
+                  <div key={order.id} className="bg-white border border-gray-200 p-6 group">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-4">
                       <div>
                         <div className="flex items-center gap-4">
@@ -266,7 +266,7 @@ const Orders = () => {
                             <img
                               src={item.cars?.images?.[0] || '/placeholder-car.jpg'}
                               alt={item.cars?.name}
-                              className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                              className="w-full h-full object-cover grayscale opacity-80 group- group-"
                               onError={(e) => { e.target.src = '/placeholder-car.jpg'; }}
                             />
                           </div>

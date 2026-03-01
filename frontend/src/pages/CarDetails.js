@@ -123,7 +123,7 @@ const CarDetails = () => {
                                 <button
                                     key={idx}
                                     onClick={() => setSelectedImage(idx)}
-                                    className={`relative w-20 h-14 md:w-24 md:h-16 flex-shrink-0 rounded-lg overflow-hidden transition-all duration-300 ${selectedImage === idx ? 'ring-2 ring-black ring-offset-2 ring-offset-white' : 'opacity-50 hover:opacity-100'}`}
+                                    className={`relative w-20 h-14 md:w-24 md:h-16 flex-shrink-0 rounded-lg overflow-hidden ${selectedImage === idx ? 'ring-2 ring-black ring-offset-2 ring-offset-white' : 'opacity-50 '}`}
                                 >
                                     <img src={img} alt="" className="w-full h-full object-cover" />
                                 </button>
@@ -192,14 +192,14 @@ const CarDetails = () => {
                                 setIsReservationModalOpen(true);
                             }}
                             disabled={bookingCar || car.stock <= 0}
-                            className="w-full bg-black text-white px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                            className="w-full bg-black text-white px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] disabled:bg-gray-300 disabled:cursor-not-allowed"
                         >
                             {bookingCar ? 'Processing...' : (car.stock > 0 ? 'Reserve Vehicle' : 'Out of Stock')}
                         </button>
                         <button
                             onClick={() => setIsEmiModalOpen(true)}
                             disabled={loading || processingOrder}
-                            className={`w-full border border-black px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] transition-colors hover:bg-black hover:text-white bg-transparent text-black`}
+                            className={`w-full border border-black px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] bg-transparent text-black`}
                         >
                             EMI Calculator
                         </button>
@@ -237,7 +237,7 @@ const CarDetails = () => {
                             <button
                                 onClick={handlePayNowStep}
                                 disabled={processingOrder || isDummyPaymentOpen}
-                                className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -247,7 +247,7 @@ const CarDetails = () => {
                             <button
                                 onClick={() => setIsReservationModalOpen(false)}
                                 disabled={processingOrder}
-                                className="w-full bg-transparent text-black border border-black px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-50 transition-colors"
+                                className="w-full bg-transparent text-black border border-black px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
                             >
                                 Cancel
                             </button>
@@ -292,7 +292,7 @@ const CarDetails = () => {
                     <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative border-t-4 border-black">
                         <button
                             onClick={() => setIsEmiModalOpen(false)}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors"
+                            className="absolute top-4 right-4 text-gray-400"
                         >
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -357,7 +357,7 @@ const CarDetails = () => {
 
                         <button
                             onClick={() => setIsEmiModalOpen(false)}
-                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
                         >
                             Close Calculator
                         </button>
@@ -383,7 +383,7 @@ const CarDetails = () => {
                             {alertModal.message}
                         </p>
                         <button
-                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+                            className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
                             onClick={handleCloseAlert}
                         >
                             {alertModal.isError ? 'Try Again' : 'View Orders'}

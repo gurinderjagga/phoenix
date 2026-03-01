@@ -180,7 +180,7 @@ const Dashboard = () => {
                   {/* Y-Axis Labels */}
                   <div className="flex flex-col justify-between text-xs text-gray-500 w-16 items-end pr-4 py-0 h-full">
                     {reversedTicks.map((tick, i) => (
-                      <span key={i} className="leading-none transform -translate-y-1/2" style={{ height: i === 0 || i === reversedTicks.length - 1 ? 'auto' : '0' }}>
+                      <span key={i} className="leading-none -translate-y-1/2" style={{ height: i === 0 || i === reversedTicks.length - 1 ? 'auto' : '0' }}>
                         ${(tick >= 1000 ? (tick / 1000).toFixed(0) + 'k' : tick)}
                       </span>
                     ))}
@@ -247,10 +247,10 @@ const Dashboard = () => {
                             }}
                           >
                             {/* Dot */}
-                            <div className="w-2 h-2 bg-white border-2 border-[#22d3ee] rounded-full transition-all hover:w-3 hover:h-3 hover:bg-[#22d3ee] z-10" />
+                            <div className="w-2 h-2 bg-white border-2 border-[#22d3ee] rounded-full z-10" />
 
                             {/* Tooltip on Hover */}
-                            <div className="opacity-0 group-hover:opacity-100 absolute bottom-4 mb-1 bg-black text-white text-[10px] py-1 px-2 rounded transition-opacity whitespace-nowrap z-20">
+                            <div className="opacity-0 group- absolute bottom-4 mb-1 bg-black text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-20">
                               ${(data.revenue || 0).toLocaleString()}
                               <div className="text-gray-400">{data.date}</div>
                             </div>

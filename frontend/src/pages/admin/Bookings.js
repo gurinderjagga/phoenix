@@ -81,7 +81,7 @@ const Bookings = () => {
                     </tr>
                   ) : (
                     bookings.map((booking) => (
-                      <tr key={booking.id} className="hover:bg-gray-50">
+                      <tr key={booking.id} className="">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           #{booking.id.slice(0, 8)}
                         </td>
@@ -165,7 +165,7 @@ const Bookings = () => {
               {alertModal.message}
             </p>
             <button
-              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors"
+              className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
               onClick={() => setAlertModal({ isOpen: false, message: '', isError: false })}
             >
               Close

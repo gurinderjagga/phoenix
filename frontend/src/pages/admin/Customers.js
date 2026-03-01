@@ -151,7 +151,7 @@ const Customers = () => {
                       </tr>
                     ) : (
                       customers.map((customer) => (
-                        <tr key={customer.id} className="hover:bg-gray-50 transition-colors">
+                        <tr key={customer.id} className="">
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold shrink-0">
@@ -168,18 +168,12 @@ const Customers = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${customer.role === 'admin'
-                              ? 'bg-purple-100 text-purple-800 border border-purple-200'
-                              : 'bg-blue-50 text-blue-700 border border-blue-100'
-                              }`}>
+                            <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${customer.role === 'admin' ? 'bg-purple-100 text-purple-800 border border-purple-200' : 'bg-blue-50 text-blue-700 border border-blue-100' }`}>
                               {customer.role}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${customer.is_active !== false
-                              ? 'bg-green-100 text-green-800' // Default true
-                              : 'bg-red-100 text-red-800'
-                              }`}>
+                            <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${customer.is_active !== false ? 'bg-green-100 text-green-800' // Default true : 'bg-red-100 text-red-800' }`}>
                               {customer.is_active !== false ? 'Active' : 'Blocked'}
                             </span>
                           </td>
@@ -189,7 +183,7 @@ const Customers = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
                               onClick={() => handleCustomerClick(customer)}
-                              className="text-gray-400 hover:text-black transition-colors"
+                              className="text-gray-400"
                             >
                               <MoreVertical size={20} />
                             </button>
@@ -211,14 +205,14 @@ const Customers = () => {
                     <button
                       onClick={() => handlePageChange(filters.page - 1)}
                       disabled={filters.page === 1}
-                      className="p-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="p-2 border border-gray-300 rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronLeft size={16} />
                     </button>
                     <button
                       onClick={() => handlePageChange(filters.page + 1)}
                       disabled={filters.page === pagination.totalPages}
-                      className="p-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="p-2 border border-gray-300 rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ChevronRight size={16} />
                     </button>

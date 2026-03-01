@@ -57,12 +57,12 @@ const Home = () => {
                     <div className="flex flex-col md:flex-row gap-6 justify-start opacity-0 animate-slide-up" style={{ animationDelay: '0.6s' }}>
 
                         <Link to="/cars">
-                            <Button className="min-w-[200px] bg-gray-200 text-black border-none hover:bg-gray-200 hover:text-black">Discover</Button>
+                            <Button className="min-w-[200px] bg-gray-200 text-black border-none">Discover</Button>
                         </Link>
                     </div>
                 </div>
 
-                <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce">
                     <span className="text-[10px] uppercase tracking-widest text-gray-500 block mb-2 text-center">Scroll</span>
                     <div className="w-[1px] h-12 bg-gray-700 mx-auto"></div>
                 </div>
@@ -78,7 +78,7 @@ const Home = () => {
                                 Models
                             </h2>
                         </div>
-                        <Link to="/cars" className="hidden md:flex items-center text-sm font-bold uppercase tracking-widest hover:text-accent transition-colors mt-8 md:mt-0">
+                        <Link to="/cars" className="hidden md:flex items-center text-sm font-bold uppercase tracking-widest mt-8 md:mt-0">
                             All Models <span className="ml-2">→</span>
                         </Link>
                     </div>
@@ -123,7 +123,7 @@ const Home = () => {
                             <img
                                 src="/engine.jpg"
                                 alt="Engine Engineering"
-                                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out"
+                                className="w-full h-full object-cover grayscale"
                             />
                         </div>
                     </div>

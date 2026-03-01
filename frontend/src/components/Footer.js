@@ -23,7 +23,7 @@ const Footer = () => {
                         <ul className="flex flex-wrap gap-x-8 gap-y-4 md:justify-end">
                             {['SUV', 'Sedan', 'Electric', 'Hybrid'].map(item => (
                                 <li key={item}>
-                                    <Link to={`/cars?category=${item}`} className="text-gray-500 hover:text-white transition-colors duration-200 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium">
+                                    <Link to={`/cars?category=${item}`} className="text-gray-500 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium">
                                         {item}
                                     </Link>
                                 </li>

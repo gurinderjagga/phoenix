@@ -106,7 +106,7 @@ const Login = () => {
 
             <div className="text-center mt-6">
               <span className="text-gray-400 text-xs">New to Phoenix? </span>
-              <Link to="/register" className="text-primary text-xs font-bold uppercase tracking-wide border-b border-primary pb-0.5 hover:text-accent hover:border-accent transition-colors">
+              <Link to="/register" className="text-primary text-xs font-bold uppercase tracking-wide border-b border-primary pb-0.5">
                 Create Account
               </Link>
             </div>
