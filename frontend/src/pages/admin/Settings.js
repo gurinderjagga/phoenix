@@ -80,44 +80,44 @@ const Settings = () => {
     <AdminLayout>
       <div className="max-w-2xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 uppercase tracking-widest">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 uppercase tracking-widest">
             Settings
           </h1>
-          <p className="text-gray-600 mt-2">Manage your dealership profile and preferences</p>
+          <p className="text-gray-500 text-sm mt-1">Manage your dealership profile and preferences</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-4 sm:p-6 space-y-6">
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-gray-900 uppercase">Profile Information</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                 <input
                   type="text"
                   name="name"
                   value={profile.name}
                   onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 p-2 focus:ring-black focus:border-black"
+                  className="block w-full border border-gray-300 px-3 min-h-[48px] focus:ring-black focus:border-black text-sm"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Email (Read Only)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email <span className="text-gray-400 font-normal text-xs">(read only)</span></label>
                 <input
                   type="email"
                   value={profile.email}
                   readOnly
-                  className="mt-1 block w-full border border-gray-200 bg-gray-50 p-2 text-gray-500 cursor-not-allowed"
+                  className="block w-full border border-gray-200 bg-gray-50 px-3 min-h-[48px] text-gray-500 cursor-not-allowed text-sm"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                 <input
                   type="text"
                   name="phone"
                   value={profile.phone}
                   onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 p-2 focus:ring-black focus:border-black"
+                  className="block w-full border border-gray-300 px-3 min-h-[48px] focus:ring-black focus:border-black text-sm"
                 />
               </div>
             </div>
@@ -127,56 +127,36 @@ const Settings = () => {
             <h2 className="text-xl font-bold text-gray-900 uppercase">Dealership Address</h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Street Address</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
               <input
                 type="text"
                 name="address.street"
                 value={profile.address?.street}
                 onChange={handleChange}
-                className="mt-1 block w-full border border-gray-300 p-2 focus:ring-black focus:border-black"
+                className="block w-full border border-gray-300 px-3 min-h-[48px] focus:ring-black focus:border-black text-sm"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">City</label>
-                <input
-                  type="text"
-                  name="address.city"
-                  value={profile.address?.city}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 p-2 focus:ring-black focus:border-black"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <input type="text" name="address.city" value={profile.address?.city} onChange={handleChange}
+                  className="block w-full border border-gray-300 px-3 min-h-[48px] focus:ring-black focus:border-black text-sm" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">State / Province</label>
-                <input
-                  type="text"
-                  name="address.state"
-                  value={profile.address?.state}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 p-2 focus:ring-black focus:border-black"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">State / Province</label>
+                <input type="text" name="address.state" value={profile.address?.state} onChange={handleChange}
+                  className="block w-full border border-gray-300 px-3 min-h-[48px] focus:ring-black focus:border-black text-sm" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Zip / Postal Code</label>
-                <input
-                  type="text"
-                  name="address.zipCode"
-                  value={profile.address?.zipCode}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 p-2 focus:ring-black focus:border-black"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Zip / Postal Code</label>
+                <input type="text" name="address.zipCode" value={profile.address?.zipCode} onChange={handleChange}
+                  className="block w-full border border-gray-300 px-3 min-h-[48px] focus:ring-black focus:border-black text-sm" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Country</label>
-                <input
-                  type="text"
-                  name="address.country"
-                  value={profile.address?.country}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 p-2 focus:ring-black focus:border-black"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                <input type="text" name="address.country" value={profile.address?.country} onChange={handleChange}
+                  className="block w-full border border-gray-300 px-3 min-h-[48px] focus:ring-black focus:border-black text-sm" />
               </div>
             </div>
           </div>
@@ -185,7 +165,7 @@ const Settings = () => {
             <button
               type="submit"
               disabled={saving}
-              className="px-6 py-2 bg-black text-white uppercase tracking-widest text-sm font-bold disabled:opacity-50"
+              className="w-full sm:w-auto px-8 min-h-[48px] bg-black text-white uppercase tracking-widest text-sm font-bold disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Changes'}
             </button>
@@ -195,7 +175,7 @@ const Settings = () => {
 
       {/* Alert Modal */}
       {alertModal.isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60">
           <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative text-center border-t-4 border-black">
             <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center border-2 ${alertModal.isError ? 'border-red-500 text-red-500' : 'border-green-500 text-green-500'}`}>
               {alertModal.isError ? (
