@@ -113,7 +113,7 @@ class OrderService {
           total_amount: totalAmount,
           shipping_address: shippingAddress || { address: 'To be provided', city: 'TBD', country: 'TBD' },
           payment_method: paymentMethod || 'bank_transfer',
-          payment_status: 'Successful', // 5% payment done successfully on frontend
+          payment_status: 'paid', // 5% payment done successfully on frontend
           order_notes: orderNotes || `Booking for ${car.name}`,
           status: 'pending' // Default booking status is pending
         }])
@@ -196,7 +196,7 @@ class OrderService {
           total_amount: totalAmount,
           shipping_address: shippingAddress,
           payment_method: paymentMethod,
-          payment_status: 'Successful', // 5% payment done successfully on frontend
+          payment_status: 'paid', // 5% payment done successfully on frontend
           order_notes: orderNotes,
           status: 'pending'
         }])
