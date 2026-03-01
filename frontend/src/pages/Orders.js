@@ -10,8 +10,8 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'delivered': return 'bg-primary text-white';
-      case 'processing': return 'bg-gray-200 text-primary';
+      case 'pending': return 'bg-gray-200 text-primary';
+      case 'ready for pickup': return 'bg-primary text-white';
       case 'shipped': return 'bg-gray-800 text-white';
       case 'confirmed': return 'bg-gray-200 text-primary';
       case 'cancelled': return 'bg-red-600 text-white';
@@ -147,8 +147,9 @@ const Orders = () => {
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'delivered': return 'text-green-600';
-      case 'processing': return 'text-amber-600';
+      case 'ready for pickup': return 'text-green-600';
+      case 'pending': return 'text-amber-600';
+      case 'confirmed': return 'text-blue-600';
       case 'shipped': return 'text-blue-600';
       case 'cancelled': return 'text-red-600';
       default: return 'text-gray-600';
