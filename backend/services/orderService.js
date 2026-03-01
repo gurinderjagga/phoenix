@@ -114,7 +114,7 @@ class OrderService {
           shipping_address: shippingAddress || { address: 'To be provided', city: 'TBD', country: 'TBD' },
           payment_method: paymentMethod || 'bank_transfer',
           order_notes: orderNotes || `Booking for ${car.name}`,
-          status: 'confirmed' // Booked cars are automatically confirmed
+          status: 'pending' // Default booking status is pending
         }])
         .select()
         .single();
@@ -196,7 +196,7 @@ class OrderService {
           shipping_address: shippingAddress,
           payment_method: paymentMethod,
           order_notes: orderNotes,
-          status: 'confirmed'
+          status: 'pending'
         }])
         .select()
         .single();
