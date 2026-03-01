@@ -12,7 +12,7 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
 
 
     return (
-        <div className="group border border-transparent hover:border-black hover:shadow-xl transition-all duration-500 relative bg-transparent overflow-hidden">
+        <div className="group border border-gray-100 flex flex-col hover:border-black hover:shadow-xl transition-all duration-500 relative bg-white overflow-hidden h-full">
             {/* Image Container - Monochrome to Color on Hover */}
             <div className="relative overflow-hidden aspect-[16/10] bg-neutral-100">
                 <Link to={`/cars/${carId}`}>
@@ -37,15 +37,16 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
             </div>
 
             {/* Info Container - Spec Sheet Style */}
-            <div className="pt-6 pb-2 px-1">
+            <div className="p-5 sm:p-6 flex flex-col flex-1">
                 <div className="flex justify-between items-start mb-4">
                     <div className="w-full">
-                        <h3 className="text-lg md:text-xl font-bold text-primary uppercase tracking-widest leading-none mb-1">
-                            <Link to={`/cars/${carId}`} className="flex items-center min-h-[48px] md:min-h-0 md:block">
-                                <span>{car.brand} <span className="font-light text-gray-500"> {car.model}</span></span>
+                        <h3 className="text-lg md:text-xl font-bold text-primary uppercase tracking-widest leading-none mb-2">
+                            <Link to={`/cars/${carId}`} className="flex flex-col justify-center min-h-[48px] md:min-h-0 mt-1">
+                                <span className="block text-primary truncate">{car.brand}</span>
+                                <span className="block font-light text-gray-500 text-sm md:text-base mt-1 truncate">{car.model}</span>
                             </Link>
                         </h3>
-                        <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest mt-1">
+                        <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest mt-3 border-l-2 border-red-500 pl-2">
                             {car.year} | {car.specifications?.fuelType || 'Gasoline'}
                         </p>
                     </div>
@@ -66,12 +67,14 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                 </div>
 
                 {/* Action Link -- Text Only */}
-                <Link
-                    to={`/cars/${carId}`}
-                    className="flex items-center text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-400 group-hover:text-primary transition-colors min-h-[48px] md:min-h-0 md:inline-flex md:mt-2"
-                >
-                    View Specs <span className="ml-2">→</span>
-                </Link>
+                <div className="mt-auto">
+                    <Link
+                        to={`/cars/${carId}`}
+                        className="flex items-center text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-400 group-hover:text-primary transition-colors min-h-[48px] md:min-h-0 md:inline-flex md:mt-2"
+                    >
+                        View Specs <span className="ml-2">→</span>
+                    </Link>
+                </div>
             </div>
         </div>
     );
