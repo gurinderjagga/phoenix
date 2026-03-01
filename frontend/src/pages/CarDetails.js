@@ -19,29 +19,14 @@ const CarDetails = () => {
     const [loanTerm, setLoanTerm] = useState(60); // default 60 months
     const [interestRate, setInterestRate] = useState(9); // default 9%
 
-    const [isWishlisted, setIsWishlisted] = useState(false); // Acts as "In Cart" check
-    const [cartItemId, setCartItemId] = useState(null);
-    const [processingCart, setProcessingCart] = useState(false);
-    const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false });
+    const [processingOrder, setProcessingOrder] = useState(false);
+    const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false, goOrders: false });
 
     useEffect(() => {
         const fetchCarDetails = async () => {
             try {
                 const carData = await apiService.getCarById(id);
                 setCar(carData);
-
-                if (user) {
-                    // Check if car is in cart (Wishlist page uses Cart API)
-                    const cart = await apiService.getCart();
-                    const cartItem = cart.find(item => item.car.id === carData.id);
-                    if (cartItem) {
-                        setIsWishlisted(true);
-                        setCartItemId(cartItem.id);
-                    } else {
-                        setIsWishlisted(false);
-                        setCartItemId(null);
-                    }
-                }
             } catch (error) {
                 console.error('Error fetching car details:', error);
             } finally {
@@ -57,26 +42,28 @@ const CarDetails = () => {
             return;
         }
 
-        setBookingCar(true);
+        setProcessingOrder(true);
         try {
-            if (!isWishlisted) {
-                const response = await apiService.addToCart(car.id);
-                setIsWishlisted(true);
-                if (response.item) {
-                    setCartItemId(response.item.id);
-                }
-            }
-            navigate(`/wishlist?checkout=${car.id}`);
+            // Default to bank_transfer without shipping since it's an immediate booking
+            await apiService.bookCar(car.id, 1, 'In-Store Pickup', 'bank_transfer', 'Immediate Booking via Car Details');
+
+            // Note: In a real app we might prompt the user for address or shipping details, but this ensures a seamless transition for now based on the previous simple setup 
+            setAlertModal({ isOpen: true, message: 'Reservation created successfully!', isError: false, goOrders: true });
+            setIsReservationModalOpen(false);
         } catch (error) {
-            console.error('Error proceeding to cart:', error);
-            setAlertModal({ isOpen: true, message: 'Failed to add to cart.', isError: true });
+            console.error('Error proceeding with order:', error);
+            setAlertModal({ isOpen: true, message: 'Failed to create reservation.', isError: true });
         } finally {
-            setBookingCar(false);
+            setProcessingOrder(false);
         }
     };
 
     const handleCloseAlert = () => {
-        setAlertModal({ isOpen: false, message: '', isError: false });
+        if (alertModal.goOrders && !alertModal.isError) {
+            navigate('/orders');
+        } else {
+            setAlertModal({ isOpen: false, message: '', isError: false, goOrders: false });
+        }
     };
 
     const calculateEMI = () => {
@@ -193,7 +180,7 @@ const CarDetails = () => {
                         </button>
                         <button
                             onClick={() => setIsEmiModalOpen(true)}
-                            disabled={loading || processingCart}
+                            disabled={loading || processingOrder}
                             className={`w-full border border-black px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] transition-colors hover:bg-black hover:text-white bg-transparent text-black`}
                         >
                             EMI Calculator
@@ -230,18 +217,15 @@ const CarDetails = () => {
 
                         <div className="space-y-3">
                             <button
-                                onClick={() => {
-                                    setIsReservationModalOpen(false);
-                                    handleBuyNow();
-                                }}
-                                disabled={bookingCar}
+                                onClick={handleBuyNow}
+                                disabled={processingOrder}
                                 className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
                             >
-                                {bookingCar ? 'Processing...' : 'Pay Now'}
+                                {processingOrder ? 'Processing...' : 'Pay Now'}
                             </button>
                             <button
                                 onClick={() => setIsReservationModalOpen(false)}
-                                disabled={bookingCar}
+                                disabled={processingOrder}
                                 className="w-full bg-transparent text-black border border-black px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] hover:bg-gray-50 transition-colors"
                             >
                                 Cancel

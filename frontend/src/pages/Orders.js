@@ -230,9 +230,6 @@ const Orders = () => {
             <div className="p-4 bg-black text-white text-xs font-bold uppercase tracking-widest mb-4">
               Order History
             </div>
-            <Link to="/wishlist" className="block p-4 border border-gray-100 hover:border-black hover:bg-gray-50 text-xs font-bold uppercase tracking-widest transition-all">
-              Saved Configuration
-            </Link>
           </div>
 
           {/* Main Content */}

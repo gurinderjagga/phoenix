@@ -33,7 +33,7 @@ const Header = () => {
 
     const handleLogout = async () => { await signOut(); navigate('/'); };
 
-    const useDarkIcons = location.pathname.startsWith('/cars') || location.pathname.startsWith('/wishlist') || location.pathname.startsWith('/login') || location.pathname.startsWith('/profile') || location.pathname.startsWith('/orders');
+    const useDarkIcons = location.pathname.startsWith('/cars') || location.pathname.startsWith('/login') || location.pathname.startsWith('/profile') || location.pathname.startsWith('/orders');
 
 
     return (
@@ -208,9 +208,6 @@ const Header = () => {
                                             </div>
 
                                             <div className="space-y-6 flex flex-col items-start w-full">
-                                                <Link to="/wishlist" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900 hover:text-primary transition-colors">
-                                                    Saved
-                                                </Link>
                                                 <Link to="/profile" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900 hover:text-primary transition-colors">
                                                     Profile Settings
                                                 </Link>

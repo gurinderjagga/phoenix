@@ -6,7 +6,6 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import CarListing from './pages/CarListing';
 import CarDetails from './pages/CarDetails';
-import Wishlist from './pages/Wishlist';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -50,7 +49,6 @@ function App() {
           <Route path="/" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/cars" element={<MainLayout><CarListing /></MainLayout>} />
           <Route path="/cars/:id" element={<MainLayout><CarDetails /></MainLayout>} />
-          <Route path="/wishlist" element={<MainLayout><Wishlist /></MainLayout>} />
           <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
           <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
           <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />

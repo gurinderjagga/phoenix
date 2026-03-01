@@ -137,9 +137,6 @@ const Profile = () => {
                         <Link to="/orders" className="block p-4 border border-gray-100 hover:border-black hover:bg-gray-50 text-xs font-bold uppercase tracking-widest transition-all">
                             Order History
                         </Link>
-                        <Link to="/wishlist" className="block p-4 border border-gray-100 hover:border-black hover:bg-gray-50 text-xs font-bold uppercase tracking-widest transition-all">
-                            Saved Configuration
-                        </Link>
                     </div>
 
                     {/* Main Content */}

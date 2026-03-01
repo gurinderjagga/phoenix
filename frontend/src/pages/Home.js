@@ -26,18 +26,7 @@ const Home = () => {
         fetchBufferedCars();
     }, []);
 
-    const handleToggleWishlist = async (carId) => {
-        if (!user) {
-            window.location.href = '/login';
-            return;
-        }
-        try {
-            const result = await apiService.toggleWishlist(carId);
-            console.log(result.message);
-        } catch (error) {
-            console.error('Error updating wishlist:', error);
-        }
-    };
+    // Wishlist functionality removed.
 
     return (
         <div className="bg-secondary overflow-x-hidden">
@@ -104,8 +93,6 @@ const Home = () => {
                                 <CarCard
                                     key={car.id || car._id}
                                     car={car}
-                                    isInWishlist={false}
-                                    onToggleWishlist={() => handleToggleWishlist(car.id || car._id)}
                                 />
                             ))}
                         </div>

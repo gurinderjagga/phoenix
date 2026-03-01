@@ -101,51 +101,6 @@ class ApiService {
     });
   }
 
-  async toggleWishlist(carId) {
-    return this.request(`/auth/wishlist/${carId}`, {
-      method: 'POST',
-    });
-  }
-
-  async getWishlist() {
-    return this.request('/auth/wishlist');
-  }
-
-  // Cart API
-  async getCart() {
-    return this.request('/cart');
-  }
-
-  async getCartSummary() {
-    return this.request('/cart/summary');
-  }
-
-  async addToCart(carId, quantity = 1) {
-    return this.request(`/cart/add/${carId}`, {
-      method: 'POST',
-      body: JSON.stringify({ quantity }),
-    });
-  }
-
-  async updateCartItem(cartItemId, quantity) {
-    return this.request(`/cart/item/${cartItemId}`, {
-      method: 'PUT',
-      body: JSON.stringify({ quantity }),
-    });
-  }
-
-  async removeFromCart(cartItemId) {
-    return this.request(`/cart/item/${cartItemId}`, {
-      method: 'DELETE',
-    });
-  }
-
-  async clearCart() {
-    return this.request('/cart/clear', {
-      method: 'DELETE',
-    });
-  }
-
   // Profile management
   async createProfile() {
     return this.request('/auth/create-profile', {
