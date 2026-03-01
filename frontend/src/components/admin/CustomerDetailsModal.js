@@ -94,7 +94,7 @@ const CustomerDetailsModal = ({ isOpen, onClose, customer, onUpdate }) => {
                                                 id="role"
                                                 value={formData.role}
                                                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                                                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
+                                                className="mt-1 block w-full py-2 px-3 min-h-[48px] border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
                                             >
                                                 <option value="user">User</option>
                                                 <option value="admin">Admin</option>
@@ -111,25 +111,25 @@ const CustomerDetailsModal = ({ isOpen, onClose, customer, onUpdate }) => {
                                             <button
                                                 type="button"
                                                 onClick={handleBlockToggle}
-                                                className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${formData.is_active ? 'bg-red-600 focus:ring-red-500' : 'bg-green-600 focus:ring-green-500' }`}
+                                                className={`inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white min-h-[48px] focus:outline-none focus:ring-2 focus:ring-offset-2 w-full sm:w-auto mt-3 sm:mt-0 ${formData.is_active ? 'bg-red-600 focus:ring-red-500' : 'bg-green-600 focus:ring-green-500'}`}
                                             >
                                                 {formData.is_active ? 'Block User' : 'Unblock User'}
                                             </button>
                                         </div>
                                     </div>
 
-                                    <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                                    <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse space-y-3 sm:space-y-0 text-center">
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50"
+                                            className="w-full inline-flex items-center justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white min-h-[48px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50"
                                         >
                                             {loading ? 'Saving...' : 'Save Changes'}
                                         </button>
                                         <button
                                             type="button"
                                             onClick={onClose}
-                                            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+                                            className="w-full inline-flex items-center justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
                                         >
                                             Cancel
                                         </button>

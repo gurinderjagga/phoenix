@@ -252,7 +252,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                     </h2>
                     <button
                         onClick={handleClose}
-                        className="text-gray-400"
+                        className="text-gray-400 min-h-[48px] min-w-[48px] flex items-center justify-center -mr-2"
                     >
                         <XIcon />
                     </button>
@@ -571,7 +571,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                             <button
                                 type="button"
                                 onClick={() => fileInputRef.current.click()}
-                                className="mt-4 bg-gray-100 text-gray-700 px-4 py-2"
+                                className="mt-4 bg-gray-100 text-gray-700 px-4 py-2 min-h-[48px]"
                             >
                                 Browse Files
                             </button>
@@ -588,14 +588,14 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="px-4 py-2 text-gray-700"
+                            className="px-4 py-2 text-gray-700 min-h-[48px] w-full sm:w-auto"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="bg-black text-white px-6 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-black text-white px-6 py-2 min-h-[48px] w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isSubmitting ? 'Saving...' : 'Save Car'}
                         </button>
