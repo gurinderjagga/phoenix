@@ -421,13 +421,13 @@ const CarDetails = () => {
                     </div>
                 </div>
             )}
-            {/* ── MOBILE ONLY: Sticky bottom CTA bar ── */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-gray-200 px-4 py-3 flex gap-3">
+            {/* ── MOBILE ONLY: CTA bar above footer ── */}
+            <div className="lg:hidden bg-white border-t border-gray-200 px-4 py-3 flex gap-3 sticky bottom-0 z-30">
                 <button
                     onClick={() => setIsEmiModalOpen(true)}
                     className="flex-1 border border-black px-4 min-h-[48px] text-xs font-bold uppercase tracking-[0.12em] bg-transparent text-black"
                 >
-                    EMI
+                    EMI Calculator
                 </button>
                 <button
                     onClick={() => {

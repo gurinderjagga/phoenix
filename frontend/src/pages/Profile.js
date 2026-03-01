@@ -110,27 +110,34 @@ const Profile = () => {
     }
 
     return (
-        <div className="min-h-screen bg-secondary pt-24 pb-12">
-            <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+        <div className="min-h-screen bg-secondary pt-16 md:pt-24 pb-12">
+            <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12">
 
                 {/* Header */}
-                <div className="mb-16 border-b border-gray-200 pb-8 flex justify-between items-end">
+                <div className="mb-8 md:mb-16 border-b border-gray-200 pb-6 md:pb-8 flex justify-between items-end">
                     <div>
-                        <span className="text-accent font-bold uppercase tracking-widest text-xs mb-2 block">Owner Area</span>
-                        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-primary uppercase">
+                        <span className="text-accent font-bold uppercase tracking-widest text-xs mb-1 md:mb-2 block">Owner Area</span>
+                        <h1 className="text-3xl md:text-6xl font-bold tracking-tighter text-primary uppercase">
                             Profile
                         </h1>
                     </div>
-
                     <div className="text-right hidden md:block">
                         <p className="text-xs uppercase tracking-widest text-gray-500">Member ID</p>
                         <p className="text-sm font-bold text-primary font-mono">{user.id.slice(0, 8)}</p>
                     </div>
                 </div>
 
+                {/* MOBILE: Horizontal quick nav */}
+                <div className="flex gap-2 mb-6 lg:hidden">
+                    <span className="flex-1 text-center py-2.5 bg-black text-white text-[10px] font-bold uppercase tracking-widest">Account Settings</span>
+                    <Link to="/orders" className="flex-1 text-center py-2.5 border border-gray-200 text-[10px] font-bold uppercase tracking-widest text-gray-600">
+                        Reserved Vehicle
+                    </Link>
+                </div>
+
                 <div className="flex flex-col lg:flex-row gap-12">
-                    {/* Sidebar Nav */}
-                    <div className="w-full lg:w-64 flex-shrink-0 space-y-1">
+                    {/* Sidebar Nav — desktop only */}
+                    <div className="hidden lg:block w-full lg:w-64 flex-shrink-0 space-y-1">
                         <div className="p-4 bg-black text-white text-xs font-bold uppercase tracking-widest mb-4">
                             Account Settings
                         </div>
@@ -141,8 +148,8 @@ const Profile = () => {
 
                     {/* Main Content */}
                     <div className="flex-grow">
-                        <div className="border border-gray-200 p-8 md:p-12">
-                            <div className="flex justify-between items-center mb-12">
+                        <div className="border border-gray-200 p-4 sm:p-6 md:p-8 lg:p-12">
+                            <div className="flex justify-between items-center mb-8 md:mb-12">
                                 <h2 className="text-xl font-bold uppercase tracking-widest text-primary">
                                     Personal Details
                                 </h2>
@@ -164,7 +171,7 @@ const Profile = () => {
                                                 type="text"
                                                 value={profile.name}
                                                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
+                                                className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                             />
                                         ) : (
                                             <p className="text-lg font-medium text-primary border-b border-transparent py-2">
@@ -188,7 +195,7 @@ const Profile = () => {
                                                 type="tel"
                                                 value={profile.phone}
                                                 onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
+                                                className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                                 placeholder="+1 (555) 000-0000"
                                             />
                                         ) : (
@@ -208,7 +215,7 @@ const Profile = () => {
                                                 type="text"
                                                 value={profile.address.street}
                                                 onChange={(e) => setProfile({ ...profile, address: { ...profile.address, street: e.target.value } })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
+                                                className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
                                             />
                                         ) : (
                                             <p className="text-lg font-medium text-primary border-b border-transparent py-2">
@@ -269,8 +276,8 @@ const Profile = () => {
                             </div>
 
                             {isEditing && (
-                                <div className="mt-12 flex justify-end">
-                                    <Button onClick={handleSave} disabled={saving}>
+                                <div className="mt-8 md:mt-12 flex justify-end">
+                                    <Button onClick={handleSave} disabled={saving} className="w-full md:w-auto">
                                         {saving ? 'Saving...' : 'Save Profile'}
                                     </Button>
                                 </div>
@@ -282,7 +289,7 @@ const Profile = () => {
 
             {/* Alert Modal */}
             {alertModal.isOpen && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60">
                     <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative text-center border-t-4 border-black">
                         <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center border-2 ${alertModal.isError ? 'border-red-500 text-red-500' : 'border-black text-black'}`}>
                             {alertModal.isError ? (
