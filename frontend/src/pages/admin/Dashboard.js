@@ -117,35 +117,37 @@ const Dashboard = () => {
       <div className="space-y-8">
         {/* Page Title */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 uppercase tracking-widest">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 uppercase tracking-widest">
             Dashboard Overview
           </h1>
-          <p className="text-gray-600 mt-2">Monitor your dealership performance</p>
+          <p className="text-gray-500 text-sm mt-1">Monitor your dealership performance</p>
         </div>
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {kpiCards.map((card, index) => {
             return (
-              <div key={index} className="bg-white border border-gray-200 p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 uppercase tracking-widest">
+              <div key={index} className="bg-white border border-gray-200 p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest truncate">
                       {card.title}
                     </p>
-                    <p className="text-3xl font-bold text-gray-900 mt-2">
+                    <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">
                       {card.value}
                     </p>
                     {card.change && (
-                      <p className={`text-sm mt-1 ${card.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
-                        {card.change} from last month
+                      <p className={`text-xs mt-1 ${card.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
+                        {card.change}
                       </p>
                     )}
                   </div>
-                  {card.icon === 'TrendingUp' && <TrendingUpIcon />}
-                  {card.icon === 'Car' && <CarIcon />}
-                  {card.icon === 'Calendar' && <CalendarIcon />}
-                  {card.icon === 'Users' && <UsersIcon />}
+                  <div className="hidden sm:block mt-2 sm:mt-0 shrink-0 opacity-40">
+                    {card.icon === 'TrendingUp' && <TrendingUpIcon />}
+                    {card.icon === 'Car' && <CarIcon />}
+                    {card.icon === 'Calendar' && <CalendarIcon />}
+                    {card.icon === 'Users' && <UsersIcon />}
+                  </div>
                 </div>
               </div>
             );
@@ -153,9 +155,9 @@ const Dashboard = () => {
         </div>
 
         {/* Revenue Chart */}
-        <div className="bg-white border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900 uppercase tracking-widest">
+        <div className="bg-white border border-gray-200 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h2 className="text-base sm:text-xl font-bold text-gray-900 uppercase tracking-widest">
               Sales Trend
             </h2>
             <span className="text-sm text-gray-500">Last 30 days</span>
