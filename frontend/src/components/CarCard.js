@@ -12,14 +12,14 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
 
 
     return (
-        <div className="group border border-transparent relative bg-transparent">
+        <div className="group border border-transparent hover:border-black hover:shadow-xl transition-all duration-500 relative bg-transparent overflow-hidden">
             {/* Image Container - Monochrome to Color on Hover */}
             <div className="relative overflow-hidden aspect-[16/10] bg-neutral-100">
                 <Link to={`/cars/${carId}`}>
                     <img
                         src={car.images?.[0] || '/placeholder-car.jpg'}
                         alt={`${car.brand || 'Car'} ${car.model || ''}`}
-                        className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                        className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-out"
                         onError={(e) => {
                             e.target.src = '/placeholder-car.jpg';
                         }}
