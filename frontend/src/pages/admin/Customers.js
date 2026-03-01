@@ -168,12 +168,12 @@ const Customers = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${customer.role === 'admin' ? 'bg-purple-100 text-purple-800 border border-purple-200' : 'bg-blue-50 text-blue-700 border border-blue-100' }`}>
+                            <span className={`px-2 py-1 text-xs font-medium rounded-full uppercase ${customer.role === 'admin' ? 'bg-purple-100 text-purple-800 border border-purple-200' : 'bg-blue-50 text-blue-700 border border-blue-100'}`}>
                               {customer.role}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${customer.is_active !== false ? 'bg-green-100 text-green-800' // Default true : 'bg-red-100 text-red-800' }`}>
+                            <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${customer.is_active !== false ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                               {customer.is_active !== false ? 'Active' : 'Blocked'}
                             </span>
                           </td>
