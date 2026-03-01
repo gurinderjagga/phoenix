@@ -176,7 +176,7 @@ const Orders = () => {
         <div className="text-center">
           <h2 className="text-3xl font-bold uppercase tracking-tighter text-primary mb-4">Access Restricted</h2>
           <p className="text-gray-500 mb-8 uppercase tracking-widest text-xs">
-            Please authenticate to view your order history.
+            Please authenticate to view your reserved vehicle.
           </p>
           <div className="flex gap-4 justify-center">
             <Link to="/login">
@@ -192,7 +192,7 @@ const Orders = () => {
     return (
       <div className="min-h-screen bg-secondary flex justify-center items-center">
         <div className="text-red-500 border border-red-200 bg-white p-6">
-          <h3 className="uppercase tracking-widest font-bold mb-2">Error Loading Orders</h3>
+          <h3 className="uppercase tracking-widest font-bold mb-2">Error Loading Data</h3>
           <p className="text-sm">{error}</p>
         </div>
       </div>
@@ -216,7 +216,7 @@ const Orders = () => {
           <div>
             <span className="text-accent font-bold uppercase tracking-widest text-xs mb-2 block">Owner Area</span>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-primary uppercase">
-              Orders
+              Your Reserved Vehicle
             </h1>
           </div>
         </div>
@@ -228,7 +228,7 @@ const Orders = () => {
               Account Settings
             </Link>
             <div className="p-4 bg-black text-white text-xs font-bold uppercase tracking-widest mb-4">
-              Order History
+              Your Reserved Vehicle
             </div>
           </div>
 
@@ -237,8 +237,8 @@ const Orders = () => {
             {orders.length === 0 ? (
               <div className="border border-gray-200 p-12 text-center bg-white">
                 <div className="text-4xl mb-4">📦</div>
-                <h3 className="text-xl font-bold uppercase tracking-widest text-primary mb-2">No Orders Found</h3>
-                <p className="text-gray-500 text-xs uppercase tracking-widest mb-8">You haven't placed any orders yet.</p>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-primary mb-2">No Vehicles Reserved</h3>
+                <p className="text-gray-500 text-xs uppercase tracking-widest mb-8">You haven't reserved a vehicle yet.</p>
                 <Link to="/cars">
                   <Button variant="primary">Browse Models</Button>
                 </Link>

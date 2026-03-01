@@ -212,7 +212,7 @@ const Header = () => {
                                                     Profile Settings
                                                 </Link>
                                                 <Link to="/orders" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900 hover:text-primary transition-colors">
-                                                    Orders
+                                                    Your Reserved Vehicle
                                                 </Link>
 
                                                 <div className="w-full h-px bg-gray-100 my-4"></div>

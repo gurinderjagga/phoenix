@@ -135,7 +135,7 @@ const Profile = () => {
                             Account Settings
                         </div>
                         <Link to="/orders" className="block p-4 border border-gray-100 hover:border-black hover:bg-gray-50 text-xs font-bold uppercase tracking-widest transition-all">
-                            Order History
+                            Your Reserved Vehicle
                         </Link>
                     </div>
 
