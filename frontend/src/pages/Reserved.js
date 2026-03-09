@@ -68,7 +68,6 @@ const ReservationDetailsModal = ({ reservation, isOpen, onClose }) => {
                       />
                       <div className="ml-4">
                         <h5 className="text-xs font-bold uppercase text-primary">{reservation.cars?.brand} {reservation.cars?.model}</h5>
-                        <p className="text-[10px] uppercase tracking-widest text-gray-500">Qty: {reservation.quantity || 1}</p>
                       </div>
                     </div>
                     <div className="text-right">

@@ -55,14 +55,14 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
                 </div>
 
                 {/* Technical Specs Grid - Hidden until hover? No, always visible but subtle */}
-                <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4 mb-4">
-                    <div>
+                <div className="grid grid-cols-[auto_1fr] gap-4 border-t border-gray-100 pt-4 mb-4">
+                    <div className="min-w-0 pr-2">
                         <span className="block text-[10px] md:text-xs text-gray-400 uppercase tracking-wider mb-1">Power</span>
                         <span className="block text-xs md:text-sm font-bold text-primary uppercase">{car.specifications?.horsepower || 'N/A'}</span>
                     </div>
-                    <div>
+                    <div className="min-w-0 text-right">
                         <span className="block text-[10px] md:text-xs text-gray-400 uppercase tracking-wider mb-1">Price</span>
-                        <span className="block text-xs md:text-sm font-bold text-primary whitespace-nowrap">
+                        <span className="block text-[10px] sm:text-xs md:text-sm font-bold text-primary whitespace-nowrap tracking-tight">
                             ₹{car.price?.toLocaleString('en-IN')}
                         </span>
                     </div>

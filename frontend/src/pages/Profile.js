@@ -199,7 +199,7 @@ const Profile = () => {
                                                 value={profile.phone}
                                                 onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
                                                 className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
-                                                placeholder="+1 (555) 000-0000"
+                                                placeholder="+91 00000-00000"
                                             />
                                         ) : (
                                             <p className="text-lg font-medium text-primary border-b border-transparent py-2">

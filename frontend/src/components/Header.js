@@ -67,7 +67,7 @@ const Header = () => {
                     </div>
 
                     {/* Right Actions */}
-                    <div className={`flex items-center space-x-4 md:space-x-8 z-50 transition-opacity duration-300 ${isMenuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                    <div className={`flex items-center space-x-4 md:space-x-8 z-50 transition-opacity duration-300 ${isMenuOpen ? 'opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto' : 'opacity-100'}`}>
                         {/* User Auth */}
                         {location.pathname !== '/login' && (
                             user ? (
@@ -215,11 +215,11 @@ const Header = () => {
                                     </>
                                 ) : (
                                     <>
-                                        <div className="mb-8">
-                                            <Link to="/login" onClick={() => setIsMenuOpen(false)} className="block text-center w-full bg-black text-white px-8 py-4 text-xs font-bold uppercase tracking-widest rounded-lg">Log in</Link>
+                                        <div className="mb-8 w-full">
+                                            <Link to="/login" onClick={() => setIsMenuOpen(false)} className="block text-center w-full bg-black text-white px-8 py-4 text-xs font-bold uppercase tracking-widest rounded-lg pointer-events-auto">Log in</Link>
                                         </div>
-                                        <div className="space-y-4 flex flex-col items-center">
-                                            <Link to="/login" state={{ from: 'profile-settings' }} onClick={() => setIsMenuOpen(false)} className="text-sm font-medium text-gray-600 underline">Sign up for an account</Link>
+                                        <div className="space-y-4 flex flex-col items-center w-full">
+                                            <Link to="/register" state={{ from: 'profile-settings' }} onClick={() => setIsMenuOpen(false)} className="text-sm font-medium text-gray-600 underline pointer-events-auto">Sign up for an account</Link>
                                         </div>
                                     </>
                                 )}
@@ -230,15 +230,24 @@ const Header = () => {
             </div>
 
             {/* ── DESKTOP MENU: side drawer ── */}
-            <div className={`hidden md:block fixed inset-0 z-40 ${isMenuOpen ? 'visible' : 'invisible'}`}>
+            <div className={`hidden md:block fixed inset-0 z-[60] ${isMenuOpen ? 'visible' : 'invisible'}`}>
                 <div
-                    className={`absolute inset-0 bg-black/60 backdrop-blur-sm ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+                    className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                     onClick={() => setIsMenuOpen(false)}
                 />
-                <div className={`absolute top-0 left-0 w-[60%] h-full bg-white shadow-2xl flex transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <div className={`absolute top-0 left-0 w-[60%] h-full bg-white shadow-2xl flex transition-transform duration-300 z-[60] ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
 
                     <nav className="flex flex-row flex-1 overflow-y-hidden">
-                        <div className="w-[60%] bg-white h-full flex-shrink-0 flex flex-col justify-between px-12 pb-12 overflow-y-auto border-r border-gray-100">
+                        <div className="w-[60%] bg-white h-full flex-shrink-0 flex flex-col justify-between px-12 pb-12 overflow-y-auto border-r border-gray-100 relative">
+                            {/* Precisely absolutely positioned Close Button matching the main Header layout */}
+                            <div className="absolute top-0 left-0 w-full h-24 px-6 lg:px-12 flex items-center">
+                                <button onClick={toggleMenu} className="text-black z-[70] min-w-[44px] min-h-[44px] flex items-center justify-center hover:opacity-75 transition-opacity pointer-events-auto">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+
                             <div className="flex flex-col space-y-4 pt-0">
                                 {/* Header spacer to provide the separation space only for the left menu items */}
                                 <div className="h-24 flex-shrink-0 w-full"></div>
@@ -306,7 +315,7 @@ const Header = () => {
                                 </div>
                             )}
                             {activeMenu === 'Account' && (
-                                <div className="max-w-xl mx-auto w-full animate-fade-in pl-8">
+                                <div className="max-w-xl mx-auto w-full animate-fade-in pl-8 relative z-10 pt-12">
                                     {user ? (
                                         <>
                                             <div className="mb-12">
@@ -314,19 +323,19 @@ const Header = () => {
                                                 <p className="text-3xl font-bold uppercase tracking-wide text-black">{user.user_metadata?.name || user.email?.split('@')[0]}</p>
                                             </div>
                                             <div className="space-y-6 flex flex-col items-start w-full">
-                                                <Link to="/profile" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900">Profile Settings</Link>
-                                                <Link to="/reserved" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900">Reserved</Link>
+                                                <Link to="/profile" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900 w-full block">Profile Settings</Link>
+                                                <Link to="/reserved" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900 w-full block">Reserved</Link>
                                                 <div className="w-full h-px bg-gray-100 my-4"></div>
-                                                <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="bg-black text-white px-8 py-3 text-sm font-bold uppercase tracking-[0.15em] hover:bg-gray-900 transition-colors">Sign Out</button>
+                                                <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="bg-black text-white px-8 py-3 text-sm font-bold uppercase tracking-[0.15em] hover:bg-gray-900 transition-colors pointer-events-auto">Sign Out</button>
                                             </div>
                                         </>
                                     ) : (
                                         <>
-                                            <div className="mb-12">
-                                                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="inline-block bg-black text-white px-8 py-3 text-sm font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors">Log in</Link>
+                                            <div className="mb-8 w-full">
+                                                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="inline-block bg-black text-white px-8 py-3 text-sm font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors pointer-events-auto mb-2">Log in</Link>
                                             </div>
-                                            <div className="space-y-6 flex flex-col items-start">
-                                                <Link to="/login" state={{ from: 'profile-settings' }} onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900 hover:text-black transition-colors">Sign up for an account</Link>
+                                            <div className="space-y-6 flex flex-col items-start w-full">
+                                                <Link to="/register" state={{ from: 'profile-settings' }} onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900 hover:text-black transition-colors pointer-events-auto">Sign up for an account</Link>
                                             </div>
                                         </>
                                     )}

@@ -341,12 +341,12 @@ const CarDetails = () => {
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Down Payment ($)</label>
+                                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Down Payment (₹)</label>
                                 <input
                                     type="number"
                                     value={downPayment}
                                     onChange={(e) => setDownPayment(e.target.value)}
-                                    placeholder="e.g. 5000"
+                                    placeholder="e.g. 5000000"
                                     className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
                                 />
                             </div>

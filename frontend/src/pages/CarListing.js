@@ -20,6 +20,38 @@ const CarListing = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    // Sync state with URL params when accessed via links (e.g. Header/Footer)
+    useEffect(() => {
+        const newCategory = searchParams.get('category') || '';
+        const newBrand = searchParams.get('brand') || '';
+        const newMinPrice = searchParams.get('minPrice') || '';
+        const newMaxPrice = searchParams.get('maxPrice') || '';
+        const newSearch = searchParams.get('search') || '';
+        const newSort = searchParams.get('sort') || 'createdAt';
+
+        if (
+            filters.category !== newCategory ||
+            filters.brand !== newBrand ||
+            filters.minPrice !== newMinPrice ||
+            filters.maxPrice !== newMaxPrice ||
+            filters.search !== newSearch
+        ) {
+            setFilters({
+                category: newCategory,
+                brand: newBrand,
+                minPrice: newMinPrice,
+                maxPrice: newMaxPrice,
+                search: newSearch
+            });
+            setCurrentPage(1);
+        }
+
+        if (sortBy !== newSort) {
+            setSortBy(newSort);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams]);
+
     useEffect(() => {
         fetchCars();
         // eslint-disable-next-line react-hooks/exhaustive-deps

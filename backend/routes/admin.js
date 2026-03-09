@@ -17,19 +17,23 @@ router.get('/stats', async (req, res) => {
     const [
       { count: salesCount, error: salesError },
       { count: bookingsCount, error: bookingsError },
-      { count: carsCount, error: carsError },
       { count: testDrivesCount, error: testDrivesError }
     ] = await Promise.all([
       supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['confirmed', 'delivered']),
       supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['pending', 'confirmed']),
-      supabase.from('cars').select('*', { count: 'exact', head: true }).gt('stock', 0),
       supabase.from('reservations').select('*', { count: 'exact', head: true }).eq('status', 'pending')
     ]);
 
     if (salesError) throw salesError;
     if (bookingsError) throw bookingsError;
-    if (carsError) throw carsError;
     if (testDrivesError) throw testDrivesError;
+
+    // 1b. Sum total stock across all cars
+    const { data: allCars, error: carsError } = await supabase
+      .from('cars')
+      .select('stock');
+    if (carsError) throw carsError;
+    const totalStock = (allCars || []).reduce((sum, car) => sum + (car.stock || 0), 0);
 
     // 2. Calculate Total Revenue (All time)
     const { data: allSales, error: revenueError } = await supabase
@@ -132,13 +136,34 @@ router.get('/stats', async (req, res) => {
       });
     }
 
+    // 4. Recent Bookings (last 5) — with car join + fallback
+    let recentBookingsData = [];
+    const { data: recentWithCars, error: recentError } = await supabase
+      .from('reservations')
+      .select('id, total_amount, status, created_at, cars ( id, name, brand, model )')
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    if (!recentError && recentWithCars) {
+      recentBookingsData = recentWithCars;
+    } else {
+      // Fallback without car join
+      const { data: recentFallback } = await supabase
+        .from('reservations')
+        .select('id, total_amount, status, created_at')
+        .order('created_at', { ascending: false })
+        .limit(5);
+      recentBookingsData = recentFallback || [];
+    }
+
     res.json({
       totalSales: totalSalesValue,
       salesCount: salesCount || 0,
       activeBookings: bookingsCount || 0,
-      carsInStock: carsCount || 0,
+      carsInStock: totalStock,
       pendingTestDrives: testDrivesCount || 0,
-      revenueTrend
+      revenueTrend,
+      recentBookings: recentBookingsData
     });
   } catch (error) {
     console.error('Error fetching admin stats:', error);
