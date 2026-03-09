@@ -59,9 +59,6 @@ class CarService {
       } else if (sort === '-price') {
         sortField = 'price';
         ascending = false;
-      } else if (sort === 'rating') {
-        sortField = 'rating';
-        ascending = false;
       }
 
       query = query.order(sortField, { ascending });
@@ -110,18 +107,7 @@ class CarService {
     try {
       const { data, error } = await supabase
         .from('cars')
-        .select(`
-          *,
-          reviews (
-            id,
-            rating,
-            comment,
-            created_at,
-            profiles (
-              name
-            )
-          )
-        `)
+        .select('*')
         .eq('id', id)
         .single();
 
@@ -181,48 +167,6 @@ class CarService {
       return { message: 'Car deleted successfully' };
     } catch (error) {
       throw new Error('Failed to delete car');
-    }
-  }
-
-  // Add review to car
-  async addReview(carId, userId, { rating, comment }) {
-    try {
-      // Check if user already reviewed this car
-      const { data: existingReview, error: checkError } = await supabase
-        .from('reviews')
-        .select('*')
-        .eq('car_id', carId)
-        .eq('user_id', userId)
-        .single();
-
-      if (checkError && checkError.code !== 'PGRST116') {
-        throw checkError;
-      }
-
-      if (existingReview) {
-        throw new Error('You have already reviewed this car');
-      }
-
-      // Add review
-      const { data, error } = await supabase
-        .from('reviews')
-        .insert([{
-          car_id: carId,
-          user_id: userId,
-          rating,
-          comment
-        }])
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      // Get updated car with reviews
-      const updatedCar = await this.getCarById(carId);
-
-      return updatedCar;
-    } catch (error) {
-      throw new Error(error.message || 'Failed to add review');
     }
   }
 

@@ -82,13 +82,6 @@ class ApiService {
     return this.request('/cars/featured/all');
   }
 
-  async addCarReview(carId, reviewData) {
-    return this.request(`/cars/${carId}/reviews`, {
-      method: 'POST',
-      body: JSON.stringify(reviewData),
-    });
-  }
-
   // Auth API
   async getProfile() {
     return this.request('/auth/profile');
@@ -108,24 +101,24 @@ class ApiService {
     });
   }
 
-  // Orders API
-  async getMyOrders() {
-    return this.request('/orders/my-orders');
+  // Reservations API
+  async getMyReservations() {
+    return this.request('/reserved/my-reservations');
   }
 
-  async getOrderById(orderId) {
-    return this.request(`/orders/${orderId}`);
+  async getReservationById(reservationId) {
+    return this.request(`/reserved/${reservationId}`);
   }
 
-  async createOrder(orderData) {
-    return this.request('/orders', {
+  async createReservation(reservationData) {
+    return this.request('/reserved', {
       method: 'POST',
-      body: JSON.stringify(orderData),
+      body: JSON.stringify(reservationData),
     });
   }
 
   async bookCar(carId, quantity = 1, shippingAddress = null, paymentMethod = 'bank_transfer', orderNotes = null) {
-    return this.request('/orders/book', {
+    return this.request('/reserved/book', {
       method: 'POST',
       body: JSON.stringify({
         carId,
@@ -137,8 +130,8 @@ class ApiService {
     });
   }
 
-  async cancelOrder(orderId) {
-    return this.request(`/orders/${orderId}/cancel`, {
+  async cancelReservation(reservationId) {
+    return this.request(`/reserved/${reservationId}/cancel`, {
       method: 'PUT',
     });
   }
@@ -178,8 +171,8 @@ class ApiService {
     return this.request('/admin/bookings');
   }
 
-  async updateBookingStatus(orderId, status) {
-    return this.request(`/admin/bookings/${orderId}/status`, {
+  async updateBookingStatus(reservationId, status) {
+    return this.request(`/admin/bookings/${reservationId}/status`, {
       method: 'PUT',
       body: JSON.stringify({ status })
     });

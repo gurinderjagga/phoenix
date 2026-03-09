@@ -35,10 +35,8 @@ const seedData = async () => {
     console.log('🧹 Clearing existing data...');
 
     // Delete in correct order due to foreign key constraints
-    await supabase.from('reviews').delete().neq('id', '00000000-0000-0000-0000-000000000000');
     await supabase.from('wishlist').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-    await supabase.from('order_items').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-    await supabase.from('orders').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+    await supabase.from('reservations').delete().neq('id', '00000000-0000-0000-0000-000000000000');
     await supabase.from('cars').delete().neq('id', '00000000-0000-0000-0000-000000000000');
     await supabase.from('profiles').delete().neq('id', '00000000-0000-0000-0000-000000000000');
 
@@ -188,34 +186,6 @@ const seedData = async () => {
     if (carsError) throw carsError;
     console.log(`✅ Seeded ${createdCars.length} cars`);
 
-    // Seed reviews for some cars
-    const reviewsData = [
-      {
-        car_id: createdCars[0].id,
-        user_id: null, // Will be set after user creation
-        rating: 5,
-        comment: 'Amazing car! Smooth ride and great performance.'
-      },
-      {
-        car_id: createdCars[0].id,
-        user_id: null,
-        rating: 4,
-        comment: 'Very comfortable and feature-rich. Highly recommended.'
-      },
-      {
-        car_id: createdCars[1].id,
-        user_id: null,
-        rating: 5,
-        comment: 'Stunning design and incredible comfort.'
-      },
-      {
-        car_id: createdCars[3].id,
-        user_id: null,
-        rating: 5,
-        comment: 'Amazing technology and performance. Love the autopilot!'
-      }
-    ];
-
     // Create users via Supabase Auth (we'll create profiles after)
     console.log('👤 Creating users...');
 
@@ -258,28 +228,12 @@ const seedData = async () => {
       console.log(`✅ Created ${createdUsers?.length || 0} user profiles`);
     }
 
-    // Add reviews with real user IDs
+    // Add wishlist items
     if (createdUsers && createdUsers.length >= 2) {
       const john = createdUsers.find(u => u.email === 'john@example.com');
       const jane = createdUsers.find(u => u.email === 'jane@example.com');
 
       if (john && jane) {
-        reviewsData[0].user_id = john.id;
-        reviewsData[1].user_id = jane.id;
-        reviewsData[2].user_id = jane.id;
-        reviewsData[3].user_id = john.id;
-
-        const { error: reviewsError } = await supabase
-          .from('reviews')
-          .insert(reviewsData);
-
-        if (reviewsError) {
-          console.log('⚠️  Error adding reviews:', reviewsError.message);
-        } else {
-          console.log('✅ Added reviews');
-        }
-
-        // Add wishlist items
         const wishlistData = [
           { user_id: john.id, car_id: createdCars[0].id },
           { user_id: john.id, car_id: createdCars[2].id },
@@ -304,7 +258,6 @@ const seedData = async () => {
     console.log('\n📊 Sample Data Created:');
     console.log('👤 Users: admin@carcommerce.com, john@example.com, jane@example.com');
     console.log('🚗 Cars: 6 premium cars (BMW, Mercedes, Audi, Tesla, Porsche, Ford)');
-    console.log('⭐ Reviews: Sample reviews with ratings');
     console.log('💝 Wishlist: Users have cars in their wishlist');
 
     console.log('\n⚠️  Note: User authentication will need to be set up through Supabase Auth');

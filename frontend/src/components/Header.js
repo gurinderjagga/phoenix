@@ -41,7 +41,7 @@ const Header = () => {
 
     const handleLogout = async () => { await signOut(); navigate('/'); };
 
-    const useDarkIcons = location.pathname.startsWith('/cars') || location.pathname.startsWith('/login') || location.pathname.startsWith('/profile') || location.pathname.startsWith('/orders');
+    const useDarkIcons = location.pathname.startsWith('/cars') || location.pathname.startsWith('/login') || location.pathname.startsWith('/profile') || location.pathname.startsWith('/reserved');
 
 
     return (
@@ -208,7 +208,7 @@ const Header = () => {
                                         </div>
                                         <div className="space-y-4 flex flex-col items-start w-full">
                                             <Link to="/profile" onClick={() => setIsMenuOpen(false)} className="text-base font-medium text-gray-900">Profile Settings</Link>
-                                            <Link to="/orders" onClick={() => setIsMenuOpen(false)} className="text-base font-medium text-gray-900">Orders</Link>
+                                            <Link to="/reserved" onClick={() => setIsMenuOpen(false)} className="text-base font-medium text-gray-900">Reserved</Link>
                                             <div className="w-full h-px bg-gray-200 my-2"></div>
                                             <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="bg-black text-white px-6 py-3 w-full text-xs font-bold uppercase tracking-[0.15em] rounded-lg">Sign Out</button>
                                         </div>
@@ -315,7 +315,7 @@ const Header = () => {
                                             </div>
                                             <div className="space-y-6 flex flex-col items-start w-full">
                                                 <Link to="/profile" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900">Profile Settings</Link>
-                                                <Link to="/orders" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900">Orders</Link>
+                                                <Link to="/reserved" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-gray-900">Reserved</Link>
                                                 <div className="w-full h-px bg-gray-100 my-4"></div>
                                                 <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="bg-black text-white px-8 py-3 text-sm font-bold uppercase tracking-[0.15em] hover:bg-gray-900 transition-colors">Sign Out</button>
                                             </div>

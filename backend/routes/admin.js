@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
-const orderService = require('../services/orderService');
+const reservationService = require('../services/reservationService');
 
 // Middleware to ensure all routes here are admin-only
 router.use(authenticateToken);
 router.use(requireAdmin);
 
-// GET /stats - Dashboard statistics
-// GET /stats - Dashboard statistics
 // GET /stats - Dashboard statistics
 router.get('/stats', async (req, res) => {
   try {
@@ -22,10 +20,10 @@ router.get('/stats', async (req, res) => {
       { count: carsCount, error: carsError },
       { count: testDrivesCount, error: testDrivesError }
     ] = await Promise.all([
-      supabase.from('orders').select('*', { count: 'exact', head: true }).in('status', ['confirmed', 'delivered']),
-      supabase.from('orders').select('*', { count: 'exact', head: true }).in('status', ['pending', 'confirmed']),
+      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['confirmed', 'delivered']),
+      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['pending', 'confirmed']),
       supabase.from('cars').select('*', { count: 'exact', head: true }).gt('stock', 0),
-      supabase.from('orders').select('*', { count: 'exact', head: true }).eq('status', 'pending')
+      supabase.from('reservations').select('*', { count: 'exact', head: true }).eq('status', 'pending')
     ]);
 
     if (salesError) throw salesError;
@@ -35,13 +33,13 @@ router.get('/stats', async (req, res) => {
 
     // 2. Calculate Total Revenue (All time)
     const { data: allSales, error: revenueError } = await supabase
-      .from('orders')
+      .from('reservations')
       .select('total_amount')
       .in('status', ['confirmed', 'delivered']);
 
     let totalSalesValue = 0;
     if (!revenueError && allSales) {
-      totalSalesValue = allSales.reduce((sum, order) => sum + (order.total_amount || 0), 0);
+      totalSalesValue = allSales.reduce((sum, reservation) => sum + (reservation.total_amount || 0), 0);
     }
 
     // 3. Calculate Revenue Trend
@@ -62,8 +60,8 @@ router.get('/stats', async (req, res) => {
       startDate.setDate(now.getDate() - 30);
     }
 
-    const { data: trendOrders, error: trendError } = await supabase
-      .from('orders')
+    const { data: trendReservations, error: trendError } = await supabase
+      .from('reservations')
       .select('total_amount, created_at')
       .in('status', ['confirmed', 'delivered'])
       .gte('created_at', startDate.toISOString())
@@ -98,9 +96,9 @@ router.get('/stats', async (req, res) => {
       displayMap[key] = label;
     }
 
-    if (trendOrders) {
-      trendOrders.forEach(order => {
-        const date = new Date(order.created_at);
+    if (trendReservations) {
+      trendReservations.forEach(reservation => {
+        const date = new Date(reservation.created_at);
         let key;
         if (groupBy === 'hour') {
           // Matching hour roughly
@@ -110,11 +108,7 @@ router.get('/stats', async (req, res) => {
         }
 
         if (revenueMap[key] !== undefined) {
-          revenueMap[key] += (order.total_amount || 0);
-        } else {
-          // Fallback for timezone offsets (e.g. server UTC vs generated local date)
-          // If ISO string doesn't match, it might be due to day boundary.
-          // We'll try to find the closest key? No, let's assume UTC alignment for now.
+          revenueMap[key] += (reservation.total_amount || 0);
         }
       });
     }
@@ -202,17 +196,17 @@ router.get('/users/:id', async (req, res) => {
 
     if (userError) throw userError;
 
-    // Fetch user's orders summary
-    const { count: orderCount, error: orderError } = await supabase
-      .from('orders')
+    // Fetch user's reservations summary
+    const { count: reservationCount, error: reservationError } = await supabase
+      .from('reservations')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', id);
 
-    if (orderError) console.warn('Error fetching user order count:', orderError);
+    if (reservationError) console.warn('Error fetching user reservation count:', reservationError);
 
     res.json({
       ...user,
-      totalOrders: orderCount || 0
+      totalReservations: reservationCount || 0
     });
   } catch (error) {
     console.error('Error fetching user details:', error);
@@ -247,20 +241,18 @@ router.put('/users/:id', async (req, res) => {
   }
 });
 
-// GET /bookings - List all bookings/orders
+// GET /bookings - List all bookings/reservations
 router.get('/bookings', async (req, res) => {
   try {
     const { page = 1, limit = 50, status } = req.query;
     const pageInt = parseInt(page);
     const limitInt = parseInt(limit);
 
-    // Use the service which correctly handles the schema (orders -> order_items -> cars)
-    const result = await orderService.getAllOrders(pageInt, limitInt, status);
+    // Use the service which correctly handles the schema
+    const result = await reservationService.getAllReservations(pageInt, limitInt, status);
 
-    // The service returns { orders, count, ... }, but the frontend currently expects an array.
-    // We return just the array for now to maintain compatibility with the current frontend expectation.
-    // In a future refactor, we should update frontend to handle pagination metadata.
-    res.json(result.orders);
+    // Default to returning just the array for backward compatibility
+    res.json(result.reservations);
   } catch (error) {
     console.error('Error fetching bookings:', error);
     res.status(500).json({ message: `Failed to fetch bookings: ${error.message}` });
@@ -273,13 +265,13 @@ router.put('/bookings/:id/status', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    const validStatuses = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];
+    const validStatuses = ['pending', 'confirmed', 'ready for pickup'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ message: 'Invalid status' });
     }
 
     const { data, error } = await supabase
-      .from('orders')
+      .from('reservations')
       .update({ status })
       .eq('id', id)
       .select()
@@ -290,7 +282,7 @@ router.put('/bookings/:id/status', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error updating booking status:', error);
-    res.status(500).json({ message: 'Failed to update booking status' });
+    res.status(500).json({ message: `Failed to update booking status: ${error.message || error}` });
   }
 });
 

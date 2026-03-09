@@ -5,18 +5,14 @@ import { apiService } from '../utils/api';
 import Button from '../components/Button';
 import useBodyScrollLock from '../hooks/useBodyScrollLock';
 
-// Order Details Modal Component - Refactored for Phoenix Aesthetic
-const OrderDetailsModal = ({ order, isOpen, onClose }) => {
-  if (!isOpen || !order) return null;
+// Reservation Details Modal Component - Refactored for Phoenix Aesthetic
+const ReservationDetailsModal = ({ reservation, isOpen, onClose }) => {
+  if (!isOpen || !reservation) return null;
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'delivered': return 'bg-primary text-white';
-      case 'processing': return 'bg-gray-200 text-primary';
-      case 'shipped': return 'bg-gray-800 text-white';
-      case 'confirmed': return 'bg-gray-200 text-primary';
-      case 'cancelled': return 'bg-red-600 text-white';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'ready for pickup': return 'bg-gray-800 text-white';
+      default: return 'bg-gray-100 text-gray-800'; // pending
     }
   };
 
@@ -35,52 +31,50 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
           </div>
 
           <div className="space-y-8">
-            {/* Order Header */}
+            {/* Reservation Header */}
             <div className="bg-gray-50 p-6 border border-gray-100">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary">Booking #{order.id}</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary">Booking #{reservation.id}</h3>
                   <p className="text-[10px] uppercase tracking-widest text-gray-500 mt-1">
-                    Placed on {new Date(order.created_at).toLocaleDateString()}
+                    Placed on {new Date(reservation.created_at).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="text-right">
-                  <span className={`inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${getStatusColor(order.status)}`}>
-                    {order.status}
+                  <span className={`inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${getStatusColor(reservation.status)}`}>
+                    {reservation.status}
                   </span>
                   <div className="mt-2 text-right">
-                    <p className="text-xl font-bold text-primary">Total: ₹{order.total_amount.toLocaleString('en-IN')}</p>
-                    <p className="text-sm text-gray-700 mt-1">Paid (5%): ₹{(order.total_amount * 0.05).toLocaleString('en-IN')}</p>
-                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Pending Balance: ₹{(order.total_amount * 0.95).toLocaleString('en-IN')}</p>
+                    <p className="text-xl font-bold text-primary">Total: ₹{reservation.total_amount.toLocaleString('en-IN')}</p>
+                    <p className="text-sm text-gray-700 mt-1">Paid (5%): ₹{(reservation.total_amount * 0.05).toLocaleString('en-IN')}</p>
+                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Pending Balance: ₹{(reservation.total_amount * 0.95).toLocaleString('en-IN')}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Order Items */}
+              {/* Car Item */}
               <div>
-                <h4 className="text-[10px] uppercase tracking-widest text-gray-400 mb-4">Items</h4>
+                <h4 className="text-[10px] uppercase tracking-widest text-gray-400 mb-4">Vehicle</h4>
                 <div className="space-y-4">
-                  {order.order_items.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center bg-white p-4 border border-gray-100">
-                      <div className="flex items-center">
-                        <img
-                          src={item.cars?.images?.[0] || '/placeholder-car.jpg'}
-                          alt={item.cars?.name}
-                          className="w-12 h-12 object-cover"
-                          onError={(e) => {
-                            e.target.src = '/placeholder-car.jpg';
-                          }}
-                        />
-                        <div className="ml-4">
-                          <h5 className="text-xs font-bold uppercase text-primary">{item.cars?.brand} {item.cars?.model}</h5>
-                          <p className="text-[10px] uppercase tracking-widest text-gray-500">Qty: {item.quantity}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-bold text-primary">₹{(item.price * item.quantity).toLocaleString('en-IN')}</p>
+                  <div className="flex justify-between items-center bg-white p-4 border border-gray-100">
+                    <div className="flex items-center">
+                      <img
+                        src={reservation.cars?.images?.[0] || '/placeholder-car.jpg'}
+                        alt={reservation.cars?.name}
+                        className="w-12 h-12 object-cover"
+                        onError={(e) => {
+                          e.target.src = '/placeholder-car.jpg';
+                        }}
+                      />
+                      <div className="ml-4">
+                        <h5 className="text-xs font-bold uppercase text-primary">{reservation.cars?.brand} {reservation.cars?.model}</h5>
+                        <p className="text-[10px] uppercase tracking-widest text-gray-500">Qty: {reservation.quantity || 1}</p>
                       </div>
                     </div>
-                  ))}
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-primary">₹{(reservation.price * (reservation.quantity || 1)).toLocaleString('en-IN')}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -89,8 +83,8 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gray-50 p-6 border border-gray-100">
                 <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Booking Status</h4>
-                {order.status ? (
-                  <div className="font-bold text-gray-900 uppercase tracking-widest">{order.status}</div>
+                {reservation.status ? (
+                  <div className="font-bold text-gray-900 uppercase tracking-widest">{reservation.status}</div>
                 ) : (
                   <span className="text-gray-400 italic">Processing</span>
                 )}
@@ -98,7 +92,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
               <div className="bg-gray-50 p-6 border border-gray-100">
                 <h4 className="text-[10px] uppercase tracking-widest text-gray-400 mb-3">Payment Details</h4>
                 <div className="text-sm font-medium text-primary">
-                  <p><span className="text-gray-500 font-normal">Method:</span> {order.payment_method || 'Standard'}</p>
+                  <p><span className="text-gray-500 font-normal">Method:</span> {reservation.payment_method || 'Standard'}</p>
                   <p><span className="text-gray-500 font-normal">Status:</span> Successful</p>
                 </div>
               </div>
@@ -116,33 +110,33 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
   );
 };
 
-const Orders = () => {
+const Reserved = () => {
   const { user } = useAuth();
-  const [orders, setOrders] = useState([]);
+  const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState(null);
+  const [showReservationModal, setShowReservationModal] = useState(false);
 
-  // Lock body scroll when the order modal is open
-  useBodyScrollLock(showOrderModal);
+  // Lock body scroll when the reservation modal is open
+  useBodyScrollLock(showReservationModal);
 
   useEffect(() => {
     if (user) {
-      fetchOrders();
+      fetchReservations();
     } else {
       setLoading(false);
     }
   }, [user]);
 
-  const fetchOrders = async () => {
+  const fetchReservations = async () => {
     try {
       setLoading(true);
       setError(null);
-      const result = await apiService.getMyOrders();
-      setOrders(result.orders);
+      const result = await apiService.getMyReservations();
+      setReservations(result.reservations);
     } catch (error) {
-      console.error('Orders loading failed:', error.message);
+      console.error('Reservations loading failed:', error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -152,21 +146,19 @@ const Orders = () => {
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
       case 'delivered': return 'text-green-600';
-      case 'processing': return 'text-amber-600';
-      case 'shipped': return 'text-blue-600';
-      case 'cancelled': return 'text-red-600';
-      default: return 'text-gray-600';
+      case 'ready for pickup': return 'text-green-600';
+      default: return 'text-gray-600'; // pending
     }
   };
 
-  const handleViewOrderDetails = (order) => {
-    setSelectedOrder(order);
-    setShowOrderModal(true);
+  const handleViewDetails = (reservation) => {
+    setSelectedReservation(reservation);
+    setShowReservationModal(true);
   };
 
   const handleCloseModal = () => {
-    setShowOrderModal(false);
-    setSelectedOrder(null);
+    setShowReservationModal(false);
+    setSelectedReservation(null);
   };
 
   if (!user) {
@@ -241,7 +233,7 @@ const Orders = () => {
 
           {/* Main Content */}
           <div className="flex-grow">
-            {orders.length === 0 ? (
+            {reservations.length === 0 ? (
               <div className="border border-gray-200 p-8 sm:p-12 text-center bg-white">
                 <div className="text-4xl mb-4">📦</div>
                 <h3 className="text-lg sm:text-xl font-bold uppercase tracking-widest text-primary mb-2">No Vehicles Reserved</h3>
@@ -252,47 +244,42 @@ const Orders = () => {
               </div>
             ) : (
               <div className="space-y-6">
-                {orders.map((order) => (
-                  <div key={order.id} className="bg-white border border-gray-200 p-4 sm:p-6 group">
-                    {/* Order header row */}
+                {reservations.map((reservation) => (
+                  <div key={reservation.id} className="bg-white border border-gray-200 p-4 sm:p-6 group">
+                    {/* Reservation header row */}
                     <div className="flex justify-between items-start mb-4 border-b border-gray-100 pb-4">
                       <div>
                         <div className="flex items-center gap-2 sm:gap-4">
-                          <h3 className="text-sm sm:text-lg font-bold uppercase tracking-widest text-primary">#{order.id.slice(0, 8)}...</h3>
-                          <span className={`text-[10px] font-bold uppercase tracking-widest ${getStatusColor(order.status)}`}>
-                            • {order.status}
+                          <h3 className="text-sm sm:text-lg font-bold uppercase tracking-widest text-primary">#{reservation.id.slice(0, 8)}...</h3>
+                          <span className={`text-[10px] font-bold uppercase tracking-widest ${getStatusColor(reservation.status)}`}>
+                            • {reservation.status}
                           </span>
                         </div>
                         <p className="text-[10px] uppercase tracking-widest text-gray-400 mt-1">
-                          {new Date(order.created_at).toLocaleDateString()}
+                          {new Date(reservation.created_at).toLocaleDateString()}
                         </p>
                       </div>
-                      <p className="text-base sm:text-xl font-bold text-primary">₹{order.total_amount.toLocaleString('en-IN')}</p>
+                      <p className="text-base sm:text-xl font-bold text-primary">₹{reservation.total_amount.toLocaleString('en-IN')}</p>
                     </div>
 
                     {/* Car image + View button */}
                     <div className="flex items-center gap-4">
                       <div className="flex gap-2 flex-grow overflow-hidden">
-                        {order.order_items?.slice(0, 2).map((item, idx) => (
-                          <div key={idx} className="w-16 h-12 sm:w-20 sm:h-14 flex-shrink-0 bg-gray-100">
+                        {reservation.cars && (
+                          <div className="w-16 h-12 sm:w-20 sm:h-14 flex-shrink-0 bg-gray-100">
                             <img
-                              src={item.cars?.images?.[0] || '/placeholder-car.jpg'}
-                              alt={item.cars?.name}
+                              src={reservation.cars?.images?.[0] || '/placeholder-car.jpg'}
+                              alt={reservation.cars?.name}
                               className="w-full h-full object-cover opacity-80"
                               onError={(e) => { e.target.src = '/placeholder-car.jpg'; }}
                             />
-                          </div>
-                        ))}
-                        {order.order_items?.length > 2 && (
-                          <div className="w-16 h-12 sm:w-20 sm:h-14 flex-shrink-0 bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
-                            +{order.order_items.length - 2}
                           </div>
                         )}
                       </div>
                       <div className="flex-shrink-0">
                         <Button
                           variant="secondary"
-                          onClick={() => handleViewOrderDetails(order)}
+                          onClick={() => handleViewDetails(reservation)}
                           className="min-w-[120px] sm:min-w-[140px] min-h-[44px]"
                         >
                           View Manifest
@@ -307,9 +294,9 @@ const Orders = () => {
         </div>
 
         {/* Modal */}
-        <OrderDetailsModal
-          order={selectedOrder}
-          isOpen={showOrderModal}
+        <ReservationDetailsModal
+          reservation={selectedReservation}
+          isOpen={showReservationModal}
           onClose={handleCloseModal}
         />
       </div>
@@ -317,4 +304,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Reserved;

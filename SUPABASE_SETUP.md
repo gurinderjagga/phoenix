@@ -59,7 +59,6 @@ CREATE TABLE public.cars (
   stock INTEGER NOT NULL DEFAULT 1 CHECK (stock >= 0),
   category TEXT NOT NULL,
   featured BOOLEAN DEFAULT false,
-  rating DECIMAL(3,2) DEFAULT 0,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );

@@ -32,20 +32,8 @@ CREATE TABLE public.cars (
   stock INTEGER NOT NULL DEFAULT 1 CHECK (stock >= 0),
   category TEXT NOT NULL CHECK (category IN ('SUV', 'Sedan', 'Hatchback', 'Coupe', 'Convertible', 'Truck', 'Van', 'Wagon', 'Sports Car')),
   featured BOOLEAN DEFAULT false,
-  rating DECIMAL(3,2) DEFAULT 0 CHECK (rating >= 0 AND rating <= 5),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
-);
-
--- Reviews table
-CREATE TABLE public.reviews (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  car_id UUID REFERENCES public.cars(id) ON DELETE CASCADE NOT NULL,
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
-  comment TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
-  UNIQUE(car_id, user_id) -- One review per user per car
 );
 
 -- Wishlist table
@@ -68,11 +56,14 @@ CREATE TABLE public.cart (
   UNIQUE(user_id, car_id) -- One cart entry per user per car
 );
 
--- Orders table
-CREATE TABLE public.orders (
+-- Reservations table
+CREATE TABLE public.reservations (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled')),
+  car_id UUID REFERENCES public.cars(id) ON DELETE SET NULL,
+  quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity > 0),
+  price DECIMAL(12,2) NOT NULL DEFAULT 0 CHECK (price >= 0),
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'ready for pickup')),
   total_amount DECIMAL(12,2) NOT NULL CHECK (total_amount >= 0),
   shipping_address JSONB NOT NULL,
   payment_method TEXT NOT NULL CHECK (payment_method IN ('credit_card', 'debit_card', 'paypal', 'bank_transfer')),
@@ -82,15 +73,6 @@ CREATE TABLE public.orders (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
--- Order items table
-CREATE TABLE public.order_items (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  order_id UUID REFERENCES public.orders(id) ON DELETE CASCADE NOT NULL,
-  car_id UUID REFERENCES public.cars(id) ON DELETE CASCADE NOT NULL,
-  quantity INTEGER NOT NULL CHECK (quantity > 0),
-  price DECIMAL(12,2) NOT NULL CHECK (price >= 0),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
-);
 
 -- Create indexes for better performance
 CREATE INDEX idx_cars_brand ON public.cars(brand);
@@ -98,14 +80,11 @@ CREATE INDEX idx_cars_category ON public.cars(category);
 CREATE INDEX idx_cars_featured ON public.cars(featured);
 CREATE INDEX idx_cars_price ON public.cars(price);
 CREATE INDEX idx_cars_year ON public.cars(year);
-CREATE INDEX idx_reviews_car_id ON public.reviews(car_id);
-CREATE INDEX idx_reviews_user_id ON public.reviews(user_id);
 CREATE INDEX idx_wishlist_user_id ON public.wishlist(user_id);
 CREATE INDEX idx_cart_user_id ON public.cart(user_id);
 CREATE INDEX idx_cart_updated_at ON public.cart(updated_at);
-CREATE INDEX idx_orders_user_id ON public.orders(user_id);
-CREATE INDEX idx_orders_status ON public.orders(status);
-CREATE INDEX idx_order_items_order_id ON public.order_items(order_id);
+CREATE INDEX idx_reservations_user_id ON public.reservations(user_id);
+CREATE INDEX idx_reservations_status ON public.reservations(status);
 
 -- Full-text search index for cars
 CREATE INDEX idx_cars_search ON public.cars USING gin(to_tsvector('english', name || ' ' || brand || ' ' || model || ' ' || description));
@@ -122,50 +101,18 @@ $$ language 'plpgsql';
 -- Triggers to automatically update updated_at
 CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_cars_updated_at BEFORE UPDATE ON public.cars FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_orders_updated_at BEFORE UPDATE ON public.orders FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_reservations_updated_at BEFORE UPDATE ON public.reservations FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_cart_updated_at BEFORE UPDATE ON public.cart FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Function to calculate car rating from reviews
-CREATE OR REPLACE FUNCTION calculate_car_rating(car_uuid UUID)
-RETURNS DECIMAL(3,2) AS $$
-DECLARE
-  avg_rating DECIMAL(3,2);
-BEGIN
-  SELECT COALESCE(AVG(rating), 0)::DECIMAL(3,2) INTO avg_rating
-  FROM public.reviews
-  WHERE car_id = car_uuid;
-
-  RETURN avg_rating;
-END;
-$$ LANGUAGE plpgsql;
-
--- Function to update car rating when reviews change
-CREATE OR REPLACE FUNCTION update_car_rating()
-RETURNS TRIGGER AS $$
-BEGIN
-  UPDATE public.cars
-  SET rating = calculate_car_rating(NEW.car_id)
-  WHERE id = NEW.car_id;
-
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Triggers to update car ratings
-CREATE TRIGGER update_car_rating_on_insert AFTER INSERT ON public.reviews FOR EACH ROW EXECUTE FUNCTION update_car_rating();
-CREATE TRIGGER update_car_rating_on_update AFTER UPDATE ON public.reviews FOR EACH ROW EXECUTE FUNCTION update_car_rating();
-CREATE TRIGGER update_car_rating_on_delete AFTER DELETE ON public.reviews FOR EACH ROW EXECUTE FUNCTION update_car_rating();
 
 -- Row Level Security (RLS) Policies
 
 -- Enable RLS on all tables
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cars ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.wishlist ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cart ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.reservations ENABLE ROW LEVEL SECURITY;
 
 -- Profiles policies
 CREATE POLICY "Users can view all profiles" ON public.profiles FOR SELECT USING (true);
@@ -184,12 +131,6 @@ CREATE POLICY "Admins can delete cars" ON public.cars FOR DELETE USING (
   EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
 );
 
--- Reviews policies
-CREATE POLICY "Anyone can view reviews" ON public.reviews FOR SELECT USING (true);
-CREATE POLICY "Authenticated users can insert reviews" ON public.reviews FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "Users can update their own reviews" ON public.reviews FOR UPDATE USING (auth.uid() = user_id);
-CREATE POLICY "Users can delete their own reviews" ON public.reviews FOR DELETE USING (auth.uid() = user_id);
-
 -- Wishlist policies
 CREATE POLICY "Users can view their own wishlist" ON public.wishlist FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert into their own wishlist" ON public.wishlist FOR INSERT WITH CHECK (auth.uid() = user_id);
@@ -201,23 +142,13 @@ CREATE POLICY "Users can insert into their own cart" ON public.cart FOR INSERT W
 CREATE POLICY "Users can update their own cart" ON public.cart FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "Users can delete from their own cart" ON public.cart FOR DELETE USING (auth.uid() = user_id);
 
--- Orders policies
-CREATE POLICY "Users can view their own orders" ON public.orders FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can insert their own orders" ON public.orders FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "Admins can view all orders" ON public.orders FOR SELECT USING (
+-- Reservations policies
+CREATE POLICY "Users can view their own reservations" ON public.reservations FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert their own reservations" ON public.reservations FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Admins can view all reservations" ON public.reservations FOR SELECT USING (
   EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
 );
-CREATE POLICY "Admins can update all orders" ON public.orders FOR UPDATE USING (
+CREATE POLICY "Admins can update all reservations" ON public.reservations FOR UPDATE USING (
   EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
 );
 
--- Order items policies
-CREATE POLICY "Users can view their own order items" ON public.order_items FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND user_id = auth.uid())
-);
-CREATE POLICY "Users can insert their own order items" ON public.order_items FOR INSERT WITH CHECK (
-  EXISTS (SELECT 1 FROM public.orders WHERE id = order_id AND user_id = auth.uid())
-);
-CREATE POLICY "Admins can view all order items" ON public.order_items FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
-);

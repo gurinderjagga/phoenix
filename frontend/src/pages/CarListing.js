@@ -100,7 +100,6 @@ const CarListing = () => {
                         <option value="-createdAt">Newest</option>
                         <option value="price">Price ↑</option>
                         <option value="-price">Price ↓</option>
-                        <option value="-rating">Top Rated</option>
                     </select>
                 </div>
 
@@ -254,7 +253,6 @@ const CarListing = () => {
                                 <option value="-createdAt">Newest Arrivals</option>
                                 <option value="price">Price: Low to High</option>
                                 <option value="-price">Price: High to Low</option>
-                                <option value="-rating">Highest Rated</option>
                             </select>
                         </div>
 

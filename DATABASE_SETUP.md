@@ -28,7 +28,6 @@ Your project includes the following MongoDB collections:
 - **stock**: Number (required, default: 1)
 - **category**: String (SUV, Sedan, etc.)
 - **featured**: Boolean (default: false)
-- **rating**: Number (calculated from reviews)
 - **reviews**: Array of review objects
 - **timestamps**: createdAt, updatedAt
 
@@ -172,7 +171,6 @@ backend/
 - ✅ Advanced filtering and search
 - ✅ Image galleries
 - ✅ Detailed specifications
-- ✅ Review and rating system
 - ✅ Stock management
 
 ### Order Processing

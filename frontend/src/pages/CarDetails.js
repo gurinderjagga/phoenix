@@ -79,7 +79,7 @@ const CarDetails = () => {
 
     const handleCloseAlert = () => {
         if (alertModal.goOrders && !alertModal.isError) {
-            navigate('/orders');
+            navigate('/reserved');
         } else {
             setAlertModal({ isOpen: false, message: '', isError: false, goOrders: false });
         }
@@ -417,7 +417,7 @@ const CarDetails = () => {
                             className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
                             onClick={handleCloseAlert}
                         >
-                            {alertModal.isError ? 'Try Again' : 'View Orders'}
+                            {alertModal.isError ? 'Try Again' : 'View Reserved Vehicles'}
                         </button>
                     </div>
                 </div>

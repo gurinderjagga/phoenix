@@ -74,8 +74,8 @@ const CustomerDetailsModal = ({ isOpen, onClose, customer, onUpdate }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-500">Total Orders</label>
-                                    <div className="mt-1 text-sm text-gray-900">{customer.totalOrders || 0}</div>
+                                    <label className="block text-sm font-medium text-gray-500">Total Reservations</label>
+                                    <div className="mt-1 text-sm text-gray-900">{customer.totalReservations || 0}</div>
                                 </div>
                             </div>
 

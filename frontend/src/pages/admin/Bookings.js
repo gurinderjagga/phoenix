@@ -40,8 +40,6 @@ const Bookings = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'confirmed': return 'bg-blue-100 text-blue-800';
-      case 'processing': return 'bg-green-100 text-green-800';
-      case 'shipped': return 'bg-green-100 text-green-800';
       case 'ready for pickup': return 'bg-green-100 text-green-800';
       default: return 'bg-yellow-100 text-yellow-800'; // pending
     }
@@ -82,11 +80,9 @@ const Bookings = () => {
                         <p className="text-sm font-bold text-gray-900">{booking.profiles?.name || booking.user?.name || 'Unknown'}</p>
                         <p className="text-xs text-gray-500">{booking.profiles?.email || booking.user?.email}</p>
                       </div>
-                      {booking.order_items && booking.order_items.length > 0 && (
+                      {booking.cars && (
                         <div className="bg-gray-50 p-2 rounded-sm">
-                          {booking.order_items.map((item, idx) => (
-                            <p key={idx} className="text-xs text-gray-700">{item.cars.brand} {item.cars.model} &times;{item.quantity}</p>
-                          ))}
+                          <p className="text-xs text-gray-700">{booking.cars.brand} {booking.cars.model} ×{booking.quantity || 1}</p>
                         </div>
                       )}
                       <div className="flex items-center justify-between">
@@ -98,7 +94,7 @@ const Bookings = () => {
                         >
                           <option value="pending">Pending</option>
                           <option value="confirmed">Confirmed</option>
-                          <option value="shipped">Ready for Pickup</option>
+                          <option value="ready for pickup">Ready for Pickup</option>
                         </select>
                       </div>
                     </div>
@@ -111,7 +107,7 @@ const Bookings = () => {
                 <table className="w-full min-w-[800px]">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reservation ID</th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Car</th>
@@ -154,16 +150,12 @@ const Bookings = () => {
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {booking.order_items && booking.order_items.length > 0 ? (
+                            {booking.cars ? (
                               <div>
-                                {booking.order_items.map((item, idx) => (
-                                  <div key={idx} className="mb-1">
-                                    {item.cars.brand} {item.cars.model} ({item.quantity}x)
-                                  </div>
-                                ))}
+                                {booking.cars.brand} {booking.cars.model} ({booking.quantity || 1}x)
                               </div>
                             ) : (
-                              <span className="text-gray-400">No items</span>
+                              <span className="text-gray-400">No vehicle</span>
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -182,7 +174,7 @@ const Bookings = () => {
                             >
                               <option value="pending">Pending</option>
                               <option value="confirmed">Confirmed</option>
-                              <option value="shipped">Ready for Pickup</option>
+                              <option value="ready for pickup">Ready for Pickup</option>
                             </select>
                           </td>
                         </tr>

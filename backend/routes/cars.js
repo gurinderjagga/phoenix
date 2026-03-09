@@ -14,12 +14,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get featured cars — must be BEFORE /:id to avoid route conflict
+router.get('/featured/all', async (req, res) => {
+  try {
+    const featuredCars = await carService.getFeaturedCars();
+    res.json(featuredCars);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Get single car by ID
 router.get('/:id', async (req, res) => {
   try {
     const car = await carService.getCarById(req.params.id);
     res.json(car);
   } catch (error) {
+    console.error('getCarById error for id:', req.params.id, error.message);
     res.status(404).json({ message: error.message });
   }
 });
@@ -49,32 +60,6 @@ router.delete('/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const result = await carService.deleteCar(req.params.id);
     res.json(result);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Add review to car
-router.post('/:id/reviews', authenticateToken, async (req, res) => {
-  try {
-    const { rating, comment } = req.body;
-
-    if (!rating || rating < 1 || rating > 5) {
-      return res.status(400).json({ message: 'Rating must be between 1 and 5' });
-    }
-
-    const updatedCar = await carService.addReview(req.params.id, req.user.id, { rating, comment });
-    res.status(201).json(updatedCar);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Get featured cars
-router.get('/featured/all', async (req, res) => {
-  try {
-    const featuredCars = await carService.getFeaturedCars();
-    res.json(featuredCars);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

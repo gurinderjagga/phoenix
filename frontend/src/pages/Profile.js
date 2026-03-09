@@ -133,7 +133,7 @@ const Profile = () => {
                 {/* MOBILE: Horizontal quick nav */}
                 <div className="flex gap-2 mb-6 lg:hidden">
                     <span className="flex-1 text-center py-2.5 bg-black text-white text-[10px] font-bold uppercase tracking-widest">Account Settings</span>
-                    <Link to="/orders" className="flex-1 text-center py-2.5 border border-gray-200 text-[10px] font-bold uppercase tracking-widest text-gray-600">
+                    <Link to="/reserved" className="flex-1 text-center py-2.5 border border-gray-200 text-[10px] font-bold uppercase tracking-widest text-gray-600">
                         Reserved Vehicle
                     </Link>
                 </div>
@@ -144,7 +144,7 @@ const Profile = () => {
                         <div className="p-4 bg-black text-white text-xs font-bold uppercase tracking-widest mb-4">
                             Account Settings
                         </div>
-                        <Link to="/orders" className="block p-4 border border-gray-100 text-xs font-bold uppercase tracking-widest">
+                        <Link to="/reserved" className="block p-4 border border-gray-100 text-xs font-bold uppercase tracking-widest">
                             Your Reserved Vehicle
                         </Link>
                     </div>

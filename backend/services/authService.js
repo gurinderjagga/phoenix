@@ -180,8 +180,7 @@ class AuthService {
             images,
             specifications,
             stock,
-            category,
-            rating
+            category
           )
         `)
         .eq('user_id', userId);
