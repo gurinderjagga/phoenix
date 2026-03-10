@@ -14,29 +14,25 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
     return (
         <div className="group border border-gray-100 flex flex-col hover:border-black hover:shadow-xl transition-all duration-500 relative bg-white overflow-hidden h-full rounded-none">
             {/* Image Container - Monochrome to Color on Hover */}
-            <div className="relative overflow-hidden aspect-[16/10] w-full bg-neutral-100">
-                <Link to={`/cars/${carId}`} className="absolute inset-0 w-full h-full block">
-                    <img
-                        src={car.images?.[0] || '/placeholder-car.jpg'}
-                        alt={`${car.brand || 'Car'} ${car.model || ''}`}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover grayscale-0 md:grayscale group-hover:grayscale-0 md:scale-100 group-hover:scale-110 transition-all duration-700 ease-out"
-                        onError={(e) => {
-                            e.target.src = '/placeholder-car.jpg';
-                        }}
-                    />
-                </Link>
-
-
+            <Link to={`/cars/${carId}`} className="relative block w-full aspect-[16/10] bg-neutral-100 overflow-hidden shrink-0">
+                <img
+                    src={car.images?.[0] || '/placeholder-car.jpg'}
+                    alt={`${car.brand || 'Car'} ${car.model || ''}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover grayscale-0 md:grayscale group-hover:grayscale-0 md:scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
+                    onError={(e) => {
+                        e.target.src = '/placeholder-car.jpg';
+                    }}
+                />
 
                 {/* Featured Badge - Technical */}
                 {car.featured && (
-                    <div className="absolute top-0 left-0 bg-primary text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
+                    <div className="absolute top-0 left-0 bg-primary text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest z-10">
                         Featured
                     </div>
                 )}
-            </div>
+            </Link>
 
             {/* Info Container - Spec Sheet Style */}
             <div className="p-5 sm:p-6 flex flex-col flex-1">

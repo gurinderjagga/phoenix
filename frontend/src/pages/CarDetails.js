@@ -109,12 +109,12 @@ const CarDetails = () => {
 
                 {/* Visuals - 75% width on desktop */}
                 <div className="lg:w-3/4 relative bg-white flex flex-col px-4 sm:px-6 lg:px-12 pb-4 lg:pb-12 pt-2 lg:pt-4">
-                    {/* Main Image Box */}
-                    <div className="relative w-full rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6 h-[35vh] sm:h-[45vh] lg:h-auto min-h-[220px]">
+                    {/* Main Image Box - Locked to 16:9 aspect ratio */}
+                    <div className="relative w-full rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6" style={{ paddingBottom: '56.25%' }}>
                         <img
                             src={car.images[selectedImage]}
                             alt={car.model}
-                            className="w-full h-full lg:h-auto object-cover"
+                            className="absolute inset-0 w-full h-full object-cover"
                         />
                     </div>
                     {/* Thumbnails */}

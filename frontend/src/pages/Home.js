@@ -68,7 +68,7 @@ const Home = () => {
             </section>
 
             {/* Featured Models - "The Collection" */}
-            <section className="py-16 md:py-32 bg-white">
+            <section className="pt-16 md:pt-32 pb-8 md:pb-16 bg-white">
                 <div className="max-w-[1440px] mx-auto px-8 md:px-12">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 border-b border-gray-200 pb-8">
                         <div>
@@ -104,11 +104,18 @@ const Home = () => {
             </section>
 
             {/* Discover Section */}
-            <section className="py-12 md:py-24 bg-white overflow-hidden">
+            <section className="pt-4 md:pt-8 pb-12 md:pb-24 bg-white overflow-hidden">
                 <div className="max-w-[1440px] mx-auto">
-                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-center mb-8 md:mb-16 text-primary uppercase px-6 md:px-12">
-                        Discover
-                    </h2>
+                    <div className="text-left px-6 md:px-12 mb-6 md:mb-8">
+                        <span className="text-accent font-bold uppercase tracking-[0.2em] text-xs mb-3 block">The Experience</span>
+                        <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-black uppercase mb-4">
+                            Discover
+                        </h2>
+                        <p className="text-gray-500 font-light max-w-xl text-base md:text-lg leading-relaxed md:px-0">
+                            A vehicle is more than its engineering; it's a reflection of ambition. Explore the history,
+                            vision, and limitless personalization that defines every machine we build.
+                        </p>
+                    </div>
                     {/* Mobile: horizontal scroll carousel | Desktop: 3-col grid */}
                     <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 pb-4 px-6 md:px-12 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0">
                         {/* Card 1 */}
