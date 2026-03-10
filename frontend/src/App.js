@@ -16,6 +16,9 @@ const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Reserved = lazy(() => import('./pages/Reserved'));
+const Experience = lazy(() => import('./pages/Experience'));
+const EPerformance = lazy(() => import('./pages/EPerformance'));
+const Finder = lazy(() => import('./pages/Finder'));
 
 // Admin pages — heavy, never needed on first load
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
@@ -66,6 +69,9 @@ function App() {
             <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
             <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
             <Route path="/reserved" element={<MainLayout><Reserved /></MainLayout>} />
+            <Route path="/experience" element={<MainLayout><Experience /></MainLayout>} />
+            <Route path="/e-performance" element={<MainLayout><EPerformance /></MainLayout>} />
+            <Route path="/finder" element={<MainLayout><Finder /></MainLayout>} />
           </Routes>
         </Suspense>
       </Router>

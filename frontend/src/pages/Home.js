@@ -68,16 +68,16 @@ const Home = () => {
             </section>
 
             {/* Featured Models - "The Collection" */}
-            <section className="py-32 bg-white">
+            <section className="py-16 md:py-32 bg-white">
                 <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 border-b border-gray-200 pb-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 border-b border-gray-200 pb-8">
                         <div>
                             <span className="text-accent font-bold uppercase tracking-widest text-xs mb-2 block">The Collection</span>
                             <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-primary uppercase">
                                 Models
                             </h2>
                         </div>
-                        <Link to="/cars" className="hidden md:flex items-center text-sm font-bold uppercase tracking-widest mt-8 md:mt-0">
+                        <Link to="/cars" className="hidden md:flex items-center text-sm font-bold uppercase tracking-widest mt-8 md:mt-0 hover:text-red-500 transition-colors">
                             All Models <span className="ml-2">→</span>
                         </Link>
                     </div>
@@ -89,61 +89,83 @@ const Home = () => {
                     ) : (
                         <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 md:gap-x-8 gap-y-16 pb-8 -mx-6 px-6 sm:-mx-8 sm:px-8 md:mx-0 md:px-0">
                             {featuredCars.map((car) => (
-                                <div key={car.id || car._id} className="w-[75vw] min-w-[75vw] sm:w-[50vw] sm:min-w-[50vw] md:w-auto md:min-w-0 snap-center md:snap-align-none shrink-0">
+                                <div key={car.id || car._id} className="w-[75vw] min-w-[75vw] sm:w-[50vw] sm:min-w-[50vw] md:w-auto md:min-w-0 snap-center md:snap-align-none shrink-0 h-full">
                                     <CarCard car={car} />
                                 </div>
                             ))}
                         </div>
                     )}
-                    <div className="mt-16 text-center md:hidden">
+                    <div className="mt-8 md:mt-16 text-center md:hidden">
                         <Link to="/cars">
-                            <Button variant="primary" className="w-full">View All Models</Button>
+                            <Button variant="primary" className="w-[85%] md:w-full">View All Models</Button>
                         </Link>
                     </div>
                 </div>
             </section>
 
-            {/* Brand Values - "Innovation" */}
-            <section className="py-32 bg-surface">
-                <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-                        <div>
-                            <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Innovation</span>
-                            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-primary uppercase mb-8 leading-tight">
-                                Engineering <br /> The Future.
-                            </h2>
-                            <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                                Phoenix isn't just a car; it's a statement. We combine heritage-inspired design with cutting-edge electric performance. Every curve is wind-tunnel tested, every line has a purpose.
-                            </p>
+            {/* Discover Section */}
+            <section className="py-12 md:py-24 bg-white overflow-hidden">
+                <div className="max-w-[1440px] mx-auto">
+                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-center mb-8 md:mb-16 text-primary uppercase px-6 md:px-12">
+                        Discover
+                    </h2>
+                    {/* Mobile: horizontal scroll carousel | Desktop: 3-col grid */}
+                    <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 pb-4 px-6 md:px-12 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0">
+                        {/* Card 1 */}
+                        <Link to="/experience" className="relative group overflow-hidden rounded-[20px] aspect-[3/4] w-[78vw] min-w-[78vw] sm:w-[55vw] sm:min-w-[55vw] md:w-auto md:min-w-0 md:aspect-[4/3] snap-center shrink-0 block">
+                            <img src="/experience.webp" alt="Phoenix Experience" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-5 md:p-8 flex justify-between items-end">
+                                <h3 className="text-white text-xl md:text-2xl font-medium pr-8">Phoenix Experience.</h3>
+                                <span className="text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                </span>
+                            </div>
+                        </Link>
 
-                        </div>
-                        <div className="relative aspect-square bg-gray-200 overflow-hidden group">
-                            <img
-                                src="/engine.webp"
-                                alt="Engine Engineering"
-                                loading="lazy"
-                                decoding="async"
-                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                            />
-                        </div>
+                        {/* Card 2 */}
+                        <Link to="/e-performance" className="relative group overflow-hidden rounded-[20px] aspect-[3/4] w-[78vw] min-w-[78vw] sm:w-[55vw] sm:min-w-[55vw] md:w-auto md:min-w-0 md:aspect-[4/3] snap-center shrink-0 block">
+                            <img src="/mobility.webp" alt="E-Performance" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-5 md:p-8 flex justify-between items-end">
+                                <div className="text-white text-xl md:text-2xl pr-8">
+                                    <span className="block font-medium">E-Performance —</span>
+                                    <span className="block font-medium">Sustainable mobility</span>
+                                </div>
+                                <span className="text-white opacity-80 group-hover:opacity-100 transition-opacity pb-1">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                </span>
+                            </div>
+                        </Link>
+
+                        {/* Card 3 */}
+                        <Link to="/finder" className="relative group overflow-hidden rounded-[20px] aspect-[3/4] w-[78vw] min-w-[78vw] sm:w-[55vw] sm:min-w-[55vw] md:w-auto md:min-w-0 md:aspect-[4/3] snap-center shrink-0 block">
+                            <img src="/finder.webp" alt="Phoenix Finder" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-5 md:p-8 flex justify-between items-end">
+                                <h3 className="text-white text-xl md:text-2xl font-medium pr-8">Phoenix Finder.</h3>
+                                <span className="text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                </span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </section>
 
             {/* CTA - "Join the Legacy" */}
-            <section className="py-40 bg-primary text-secondary text-center relative overflow-hidden">
+            <section className="py-20 md:py-40 bg-primary text-secondary text-center relative overflow-hidden">
                 <div className="relative z-10 max-w-4xl mx-auto px-6">
-                    <h2 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter mb-8 text-white">
+                    <h2 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter mb-6 md:mb-8 text-white">
                         YOUR LEGACY.
                     </h2>
-                    <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">
+                    <p className="text-lg md:text-xl text-gray-400 font-light mb-10 md:mb-12 max-w-2xl mx-auto">
                         The road awaits. Take the wheel of the ultimate driving machine.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center">
                         <Link to="/cars">
-                            <Button variant="white" className="min-w-[240px]">Become an Owner</Button>
+                            <Button variant="white" className="w-[85%] sm:w-auto min-w-[240px]">Become an Owner</Button>
                         </Link>
-
                     </div>
                 </div>
             </section>

@@ -46,7 +46,7 @@ const Header = () => {
 
     return (
         <>
-            <header className={`absolute top-0 left-0 right-0 z-50 h-24 flex items-center transition-colors ${(location.pathname !== '/' && !isMenuOpen) ? 'bg-white/80 backdrop-blur-md border-b border-gray-200' : 'bg-transparent border-transparent'}`}>
+            <header className={`absolute top-0 left-0 right-0 z-50 h-24 flex items-center transition-colors ${(!['/', '/experience', '/e-performance', '/finder'].includes(location.pathname) && !isMenuOpen) ? 'bg-white/80 backdrop-blur-md border-b border-gray-200' : 'bg-transparent border-transparent'}`}>
                 <div className="w-full mx-auto px-6 lg:px-12 flex justify-between items-center relative">
 
                     {/* Left - Hamburger Menu (Always Visible) */}

@@ -12,9 +12,9 @@ const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
 
 
     return (
-        <div className="group border border-gray-100 flex flex-col hover:border-black hover:shadow-xl transition-all duration-500 relative bg-white overflow-hidden h-full">
+        <div className="group border border-gray-100 flex flex-col hover:border-black hover:shadow-xl transition-all duration-500 relative bg-white overflow-hidden h-full rounded-[2rem]">
             {/* Image Container - Monochrome to Color on Hover */}
-            <div className="relative overflow-hidden aspect-[16/10] bg-neutral-100">
+            <div className="relative overflow-hidden aspect-[16/10] bg-neutral-100 rounded-t-[2rem]">
                 <Link to={`/cars/${carId}`}>
                     <img
                         src={car.images?.[0] || '/placeholder-car.jpg'}
