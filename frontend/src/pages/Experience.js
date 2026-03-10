@@ -60,7 +60,7 @@ const Experience = () => {
                         <img
                             src="/engine.webp"
                             alt="Engine Specifications"
-                            className="w-full h-full object-cover transition-all duration-700 md:scale-105 md:hover:scale-100"
+                            className="w-full h-full object-cover"
                         />
                     </div>
                 </div>
