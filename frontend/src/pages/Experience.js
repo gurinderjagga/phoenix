@@ -56,11 +56,11 @@ const Experience = () => {
                             to completely immerse you in the ultimate driving experience.
                         </p>
                     </div>
-                    <div className="order-1 md:order-2 aspect-[4/3] bg-gray-200 rounded-[24px] overflow-hidden group">
+                    <div className="order-1 md:order-2 aspect-[4/3] bg-gray-200 rounded-[24px] overflow-hidden">
                         <img
                             src="/engine.webp"
                             alt="Engine Specifications"
-                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 md:scale-105 md:group-hover:scale-100"
+                            className="w-full h-full object-cover transition-all duration-700 md:scale-105 md:hover:scale-100"
                         />
                     </div>
                 </div>
