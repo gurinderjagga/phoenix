@@ -170,7 +170,7 @@ router.post('/create-profile', async (req, res) => {
 // Update user profile
 router.put('/profile', authenticateToken, async (req, res) => {
   try {
-    const allowedFields = ['name', 'phone', 'address', 'avatar'];
+    const allowedFields = ['name', 'phone', 'avatar'];
     const updates = {};
 
     // Only allow updating specific fields

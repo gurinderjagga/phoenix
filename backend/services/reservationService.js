@@ -79,7 +79,7 @@ class ReservationService {
   // Book a car directly (single car booking)
   async bookCar(userId, bookingData) {
     try {
-      const { carId, quantity = 1, shippingAddress, paymentMethod, orderNotes: reservationNotes } = bookingData;
+      const { carId, quantity = 1, paymentMethod, orderNotes: reservationNotes } = bookingData;
 
       // Get car details and validate stock
       const { data: car, error: carError } = await supabase
@@ -107,7 +107,6 @@ class ReservationService {
           quantity: quantity,
           price: car.price,
           total_amount: totalAmount,
-          shipping_address: shippingAddress || { address: 'To be provided', city: 'TBD', country: 'TBD' },
           payment_method: paymentMethod || 'bank_transfer',
           payment_status: 'paid',
           order_notes: reservationNotes || `Reservation for ${car.name}`,

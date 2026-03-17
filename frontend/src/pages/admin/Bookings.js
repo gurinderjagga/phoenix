@@ -104,12 +104,11 @@ const Bookings = () => {
 
               {/* === DESKTOP TABLE VIEW === */}
               <div className="hidden md:block overflow-x-auto scrollbar-hide">
-                <table className="w-full min-w-[800px]">
+                <table className="w-full min-w-[700px]">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reservation ID</th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Car</th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -125,7 +124,7 @@ const Bookings = () => {
                       </tr>
                     ) : (
                       bookings.map((booking) => (
-                        <tr key={booking.id} className="">
+                        <tr key={booking.id}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             #{booking.id.slice(0, 8)}
                           </td>
@@ -134,20 +133,6 @@ const Bookings = () => {
                               {booking.profiles?.name || booking.user?.name || 'Unknown'}
                             </div>
                             <div>{booking.profiles?.email || booking.user?.email}</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {booking.shipping_address ? (
-                              typeof booking.shipping_address === 'object' ? (
-                                <div>
-                                  <div className="font-medium text-gray-900">{booking.shipping_address.street || booking.shipping_address.address}</div>
-                                  <div className="text-xs">{booking.shipping_address.city}, {booking.shipping_address.zipCode}</div>
-                                </div>
-                              ) : (
-                                <span>{booking.shipping_address}</span>
-                              )
-                            ) : (
-                              <span className="text-gray-400">Not provided</span>
-                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {booking.cars ? (

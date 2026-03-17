@@ -10,13 +10,7 @@ const Profile = () => {
     const [profile, setProfile] = useState({
         name: '',
         email: '',
-        phone: '',
-        address: {
-            street: '',
-            city: '',
-            state: '',
-            zipCode: ''
-        }
+        phone: ''
     });
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -42,13 +36,7 @@ const Profile = () => {
             setProfile({
                 name: data.name || user.user_metadata?.name || '',
                 email: data.email || user.email || '',
-                phone: data.phone || '',
-                address: data.address || {
-                    street: '',
-                    city: '',
-                    state: '',
-                    zipCode: ''
-                }
+                phone: data.phone || ''
             });
         } catch (error) {
             console.error('Error fetching profile:', error);
@@ -164,117 +152,46 @@ const Profile = () => {
                                 </button>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
-                                {/* Left Column */}
-                                <div className="space-y-8">
-                                    <div className="space-y-2">
-                                        <label className="block text-[10px] uppercase tracking-widest text-gray-400">Full Name</label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={profile.name}
-                                                onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                                                className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
-                                            />
-                                        ) : (
-                                            <p className="text-lg font-medium text-primary border-b border-transparent py-2">
-                                                {profile.name || '—'}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="block text-[10px] uppercase tracking-widest text-gray-400">Email Address</label>
-                                        <p className="text-lg font-medium text-gray-500 border-b border-transparent py-2">
-                                            {profile.email}
-                                            <span className="text-[10px] text-gray-300 ml-2 uppercase tracking-normal">(Read Only)</span>
+                            <div className="space-y-8 max-w-sm">
+                                <div className="space-y-2">
+                                    <label className="block text-[10px] uppercase tracking-widest text-gray-400">Full Name</label>
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            value={profile.name}
+                                            onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                                            className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
+                                        />
+                                    ) : (
+                                        <p className="text-lg font-medium text-primary border-b border-transparent py-2">
+                                            {profile.name || '—'}
                                         </p>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="block text-[10px] uppercase tracking-widest text-gray-400">Phone</label>
-                                        {isEditing ? (
-                                            <input
-                                                type="tel"
-                                                value={profile.phone}
-                                                onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                                                className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
-                                                placeholder="+91 00000-00000"
-                                            />
-                                        ) : (
-                                            <p className="text-lg font-medium text-primary border-b border-transparent py-2">
-                                                {profile.phone || '—'}
-                                            </p>
-                                        )}
-                                    </div>
+                                    )}
                                 </div>
 
-                                {/* Right Column - Address */}
-                                <div className="space-y-8">
-                                    <div className="space-y-2">
-                                        <label className="block text-[10px] uppercase tracking-widest text-gray-400">Street Address</label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={profile.address.street}
-                                                onChange={(e) => setProfile({ ...profile, address: { ...profile.address, street: e.target.value } })}
-                                                className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
-                                            />
-                                        ) : (
-                                            <p className="text-lg font-medium text-primary border-b border-transparent py-2">
-                                                {profile.address.street || '—'}
-                                            </p>
-                                        )}
-                                    </div>
+                                <div className="space-y-2">
+                                    <label className="block text-[10px] uppercase tracking-widest text-gray-400">Email Address</label>
+                                    <p className="text-lg font-medium text-gray-500 border-b border-transparent py-2">
+                                        {profile.email}
+                                        <span className="text-[10px] text-gray-300 ml-2 uppercase tracking-normal">(Read Only)</span>
+                                    </p>
+                                </div>
 
-                                    <div className="grid grid-cols-2 gap-8">
-                                        <div className="space-y-2">
-                                            <label className="block text-[10px] uppercase tracking-widest text-gray-400">City</label>
-                                            {isEditing ? (
-                                                <input
-                                                    type="text"
-                                                    value={profile.address.city}
-                                                    onChange={(e) => setProfile({ ...profile, address: { ...profile.address, city: e.target.value } })}
-                                                    className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
-                                                />
-                                            ) : (
-                                                <p className="text-lg font-medium text-primary border-b border-transparent py-2">
-                                                    {profile.address.city || '—'}
-                                                </p>
-                                            )}
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="block text-[10px] uppercase tracking-widest text-gray-400">State / Province</label>
-                                            {isEditing ? (
-                                                <input
-                                                    type="text"
-                                                    value={profile.address.state}
-                                                    onChange={(e) => setProfile({ ...profile, address: { ...profile.address, state: e.target.value } })}
-                                                    className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
-                                                />
-                                            ) : (
-                                                <p className="text-lg font-medium text-primary border-b border-transparent py-2">
-                                                    {profile.address.state || '—'}
-                                                </p>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label className="block text-[10px] uppercase tracking-widest text-gray-400">Zip / Postal Code</label>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={profile.address.zipCode}
-                                                onChange={(e) => setProfile({ ...profile, address: { ...profile.address, zipCode: e.target.value } })}
-                                                className="w-full border-b border-gray-300 py-2 text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
-                                            />
-                                        ) : (
-                                            <p className="text-lg font-medium text-primary border-b border-transparent py-2">
-                                                {profile.address.zipCode || '—'}
-                                            </p>
-                                        )}
-                                    </div>
+                                <div className="space-y-2">
+                                    <label className="block text-[10px] uppercase tracking-widest text-gray-400">Phone</label>
+                                    {isEditing ? (
+                                        <input
+                                            type="tel"
+                                            value={profile.phone}
+                                            onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                                            className="w-full border-b border-gray-300 py-2 min-h-[48px] text-primary font-bold focus:outline-none focus:border-primary bg-transparent rounded-none"
+                                            placeholder="+91 00000-00000"
+                                        />
+                                    ) : (
+                                        <p className="text-lg font-medium text-primary border-b border-transparent py-2">
+                                            {profile.phone || '—'}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 

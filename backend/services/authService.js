@@ -11,7 +11,6 @@ class AuthService {
           name: userMetadata.name || email.split('@')[0],
           email,
           phone: userMetadata.phone || null,
-          address: userMetadata.address || null,
           role: 'user'
         }])
         .select()
@@ -41,7 +40,7 @@ class AuthService {
   }
 
   // Register user (redirect to Supabase Auth - this is for API compatibility)
-  async register({ email, password, name, phone, address }) {
+  async register({ email, password, name, phone }) {
     try {
       // This would typically redirect to Supabase Auth
       // For API compatibility, we'll simulate the response

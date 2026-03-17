@@ -19,6 +19,7 @@ const Reserved = lazy(() => import('./pages/Reserved'));
 const Experience = lazy(() => import('./pages/Experience'));
 const EPerformance = lazy(() => import('./pages/EPerformance'));
 const Finder = lazy(() => import('./pages/Finder'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 
 // Admin pages — heavy, never needed on first load
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
@@ -26,7 +27,6 @@ const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const Inventory = lazy(() => import('./pages/admin/Inventory'));
 const Bookings = lazy(() => import('./pages/admin/Bookings'));
 const Customers = lazy(() => import('./pages/admin/Customers'));
-const Settings = lazy(() => import('./pages/admin/Settings'));
 
 // Minimal loading fallback
 const PageLoader = () => (
@@ -59,7 +59,6 @@ function App() {
             <Route path="/admin/inventory" element={<AdminRoute><Inventory /></AdminRoute>} />
             <Route path="/admin/bookings" element={<AdminRoute><Bookings /></AdminRoute>} />
             <Route path="/admin/customers" element={<AdminRoute><Customers /></AdminRoute>} />
-            <Route path="/admin/settings" element={<AdminRoute><Settings /></AdminRoute>} />
 
             {/* Main App Routes - With Header/Footer */}
             <Route path="/" element={<MainLayout><Home /></MainLayout>} />
@@ -72,6 +71,7 @@ function App() {
             <Route path="/experience" element={<MainLayout><Experience /></MainLayout>} />
             <Route path="/e-performance" element={<MainLayout><EPerformance /></MainLayout>} />
             <Route path="/finder" element={<MainLayout><Finder /></MainLayout>} />
+            <Route path="/reset-password" element={<MainLayout><ResetPassword /></MainLayout>} />
           </Routes>
         </Suspense>
       </Router>

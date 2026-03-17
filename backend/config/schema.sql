@@ -12,7 +12,6 @@ CREATE TABLE public.profiles (
   phone TEXT,
   avatar TEXT,
   role TEXT DEFAULT 'user' CHECK (role IN ('user', 'admin')),
-  address JSONB,
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
@@ -45,7 +44,6 @@ CREATE TABLE public.reservations (
   price DECIMAL(12,2) NOT NULL DEFAULT 0 CHECK (price >= 0),
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'ready for pickup')),
   total_amount DECIMAL(12,2) NOT NULL CHECK (total_amount >= 0),
-  shipping_address JSONB NOT NULL,
   payment_method TEXT NOT NULL CHECK (payment_method IN ('credit_card', 'debit_card', 'paypal', 'bank_transfer')),
   payment_status TEXT DEFAULT 'pending' CHECK (payment_status IN ('pending', 'paid', 'failed', 'refunded')),
   order_notes TEXT,
