@@ -12,7 +12,6 @@ Your project includes the following MongoDB collections:
 - **avatar**: String (optional)
 - **phone**: String (optional)
 - **address**: Object (optional)
-- **wishlist**: Array of Car ObjectIds (for cart functionality)
 - **isActive**: Boolean (default: true)
 - **timestamps**: createdAt, updatedAt
 
@@ -84,7 +83,6 @@ npm run seed
 This will create:
 - ✅ 6 premium cars with detailed specifications
 - ✅ Admin user: `admin@carcommerce.com` / `admin123`
-- ✅ Regular users with wishlists
 - ✅ Sample reviews and ratings
 
 ## 🖥️ Alternative: Local MongoDB Setup
@@ -142,7 +140,7 @@ POST http://localhost:5000/api/auth/login
 ```
 backend/
 ├── models/
-│   ├── User.js          # User schema with wishlist/cart
+│   ├── User.js          # User schema
 │   ├── Car.js           # Car schema with reviews
 │   └── Order.js         # Order schema
 ├── routes/
@@ -164,7 +162,6 @@ backend/
 - ✅ JWT-based authentication
 - ✅ Role-based access (user/admin)
 - ✅ Profile management
-- ✅ Wishlist/Cart functionality
 
 ### Car Management
 - ✅ Full CRUD operations
@@ -204,7 +201,7 @@ After running `npm run seed`, you'll have:
 - Porsche 911 Carrera 2023 ($120,000)
 - Ford F-150 2023 ($35,000)
 
-Each car includes specifications, reviews, and some users have items in their wishlist/cart.
+Each car includes specifications and reviews.
 
 ## 🚀 Ready to Launch!
 

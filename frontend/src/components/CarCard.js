@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const CarCard = ({ car, onToggleWishlist, isInWishlist = false }) => {
+const CarCard = ({ car }) => {
     // Guard clause for missing car data
     if (!car || (!car.id && !car._id)) {
         return null; // Silent fail for cleaner UI

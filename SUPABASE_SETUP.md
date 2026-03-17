@@ -65,7 +65,7 @@ CREATE TABLE public.cars (
 ```
 
 #### 3. Create remaining tables:
-Follow the same pattern for `reviews`, `wishlist`, `orders`, and `order_items` tables as defined in `schema.sql`.
+Follow the same pattern for `reviews`, `orders`, and `order_items` tables as defined in `schema.sql`.
 
 ## 🔑 Step 3: Configure Authentication
 
@@ -115,10 +115,9 @@ cd backend
 npm run seed
 ```
 
-This will create:
 - ✅ 6 sample cars with specifications
 - ✅ User profiles (you'll need to create auth users separately)
-- ✅ Sample reviews and wishlist items
+- ✅ Sample reviews
 
 ## 🧪 Step 7: Test the Setup
 

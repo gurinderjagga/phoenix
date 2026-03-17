@@ -35,7 +35,6 @@ const seedData = async () => {
     console.log('🧹 Clearing existing data...');
 
     // Delete in correct order due to foreign key constraints
-    await supabase.from('wishlist').delete().neq('id', '00000000-0000-0000-0000-000000000000');
     await supabase.from('reservations').delete().neq('id', '00000000-0000-0000-0000-000000000000');
     await supabase.from('cars').delete().neq('id', '00000000-0000-0000-0000-000000000000');
     await supabase.from('profiles').delete().neq('id', '00000000-0000-0000-0000-000000000000');
@@ -302,29 +301,7 @@ const seedData = async () => {
       console.log(`✅ Created ${createdUsers?.length || 0} user profiles`);
     }
 
-    // Add wishlist items
-    if (createdUsers && createdUsers.length >= 2) {
-      const john = createdUsers.find(u => u.email === 'john@example.com');
-      const jane = createdUsers.find(u => u.email === 'jane@example.com');
 
-      if (john && jane) {
-        const wishlistData = [
-          { user_id: john.id, car_id: createdCars[0].id },
-          { user_id: john.id, car_id: createdCars[2].id },
-          { user_id: jane.id, car_id: createdCars[1].id }
-        ];
-
-        const { error: wishlistError } = await supabase
-          .from('wishlist')
-          .insert(wishlistData);
-
-        if (wishlistError) {
-          console.log('⚠️  Error adding wishlist items:', wishlistError.message);
-        } else {
-          console.log('✅ Added wishlist items');
-        }
-      }
-    }
 
     // Note: RLS remains enabled for security
 
@@ -332,7 +309,6 @@ const seedData = async () => {
     console.log('\n📊 Sample Data Created:');
     console.log('👤 Users: admin@carcommerce.com, john@example.com, jane@example.com');
     console.log('🚗 Cars: 6 premium cars (BMW, Mercedes, Audi, Tesla, Porsche, Ford)');
-    console.log('💝 Wishlist: Users have cars in their wishlist');
 
     console.log('\n⚠️  Note: User authentication will need to be set up through Supabase Auth');
     console.log('📖 Check the README for complete setup instructions');

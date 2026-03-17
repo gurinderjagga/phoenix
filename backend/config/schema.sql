@@ -36,14 +36,7 @@ CREATE TABLE public.cars (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
--- Wishlist table
-CREATE TABLE public.wishlist (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  car_id UUID REFERENCES public.cars(id) ON DELETE CASCADE NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
-  UNIQUE(user_id, car_id) -- One entry per user per car
-);
+
 
 -- Cart table
 CREATE TABLE public.cart (
@@ -80,7 +73,7 @@ CREATE INDEX idx_cars_category ON public.cars(category);
 CREATE INDEX idx_cars_featured ON public.cars(featured);
 CREATE INDEX idx_cars_price ON public.cars(price);
 CREATE INDEX idx_cars_year ON public.cars(year);
-CREATE INDEX idx_wishlist_user_id ON public.wishlist(user_id);
+
 CREATE INDEX idx_cart_user_id ON public.cart(user_id);
 CREATE INDEX idx_cart_updated_at ON public.cart(updated_at);
 CREATE INDEX idx_reservations_user_id ON public.reservations(user_id);
@@ -110,7 +103,7 @@ CREATE TRIGGER update_cart_updated_at BEFORE UPDATE ON public.cart FOR EACH ROW 
 -- Enable RLS on all tables
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cars ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.wishlist ENABLE ROW LEVEL SECURITY;
+
 ALTER TABLE public.cart ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.reservations ENABLE ROW LEVEL SECURITY;
 
@@ -131,10 +124,7 @@ CREATE POLICY "Admins can delete cars" ON public.cars FOR DELETE USING (
   EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
 );
 
--- Wishlist policies
-CREATE POLICY "Users can view their own wishlist" ON public.wishlist FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can insert into their own wishlist" ON public.wishlist FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "Users can delete from their own wishlist" ON public.wishlist FOR DELETE USING (auth.uid() = user_id);
+
 
 -- Cart policies
 CREATE POLICY "Users can view their own cart" ON public.cart FOR SELECT USING (auth.uid() = user_id);

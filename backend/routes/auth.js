@@ -204,28 +204,6 @@ router.put('/change-password', authenticateToken, async (req, res) => {
   }
 });
 
-// Add/Remove from wishlist
-router.post('/wishlist/:carId', authenticateToken, async (req, res) => {
-  try {
-    const { carId } = req.params;
 
-    const result = await authService.toggleWishlist(req.user.id, carId);
-
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get user wishlist
-router.get('/wishlist', authenticateToken, async (req, res) => {
-  try {
-    const wishlist = await authService.getWishlist(req.user.id);
-
-    res.json(wishlist);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
 module.exports = router;
