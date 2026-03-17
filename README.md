@@ -1,6 +1,6 @@
 # 🚗 Phoenix
 
-A modern, full-stack e-commerce application for buying and selling cars, built with React, Node.js, and **Supabase**!
+A modern, full-stack e-commerce application for buying and selling cars, built with React, Node.js, and **Supabase**.
 
 ## ✨ Features
 
@@ -9,46 +9,46 @@ A modern, full-stack e-commerce application for buying and selling cars, built w
 - **Car Listings**: Browse cars with advanced filtering and search
 - **Car Details**: Detailed car pages with specifications and reviews
 - **Shopping Cart**: Add cars to cart and manage quantities
-- **User Authentication**: Seamless login and registration
+- **User Authentication**: Seamless login and registration via Supabase
 - **User Profile**: Manage personal information and view order history
-- **Order Management**: View and track orders
+- **Order Management**: View and track orders/reservations
 - **Real-time Updates**: Live data synchronization
 
 ### ⚡ Backend (Node.js + Express + Supabase)
-- **RESTful API**: Complete API for cars, users, orders, and authentication
+- **RESTful API**: Complete API for cars, users, cart, reservations, and admin dashboard
 - **Supabase Integration**: PostgreSQL database with real-time capabilities
 - **User Management**: Registration, login, profile management
 - **Car Management**: Full CRUD operations for car listings
-- **Order Processing**: Complete order lifecycle management
+- **Order Processing**: Complete reservation lifecycle management
 - **Authentication**: Supabase Auth with role-based access
 - **Row Level Security**: Database-level security policies
-- **Real-time Subscriptions**: Live updates for car data
 
 ## 🏗️ Project Structure
 
-```
+```text
 car-commerce/
 ├── frontend/              # React application
-│   ├── src/
-│   │   ├── components/    # Reusable UI components
-│   │   ├── pages/         # Page components
-│   │   ├── context/       # React context for state management
-│   │   └── utils/         # Utility functions
-│   └── public/
+│   ├── public/            # Static assets
+│   └── src/               # React source files
+│       ├── components/    # Reusable UI components (admin, auth, UI elements)
+│       ├── context/       # React context for state management (AuthContext, etc.)
+│       ├── hooks/         # Custom React hooks
+│       ├── pages/         # Page components (Home, Cars, Register, Login, Cart, Profile, etc.)
+│       └── utils/         # API Service and Supabase client configs
 ├── backend/               # Node.js/Express API
-│   ├── config/            # Supabase configuration
-│   │   ├── supabase.js    # Supabase client setup
-│   │   └── schema.sql     # Database schema
-│   ├── services/          # Supabase service layer
-│   │   ├── authService.js
-│   │   ├── carService.js
-│   │   └── orderService.js
-│   ├── routes/            # API route handlers
-│   ├── middleware/        # Authentication middleware
-│   ├── scripts/
-│   │   └── seed.js        # Database seeding
-│   └── server.js          # Main server file
-├── SUPABASE_SETUP.md      # Complete Supabase setup guide
+│   ├── config/            # Configuration (supabase.js)
+│   ├── middleware/        # Authentication & Role-based middleware (auth.js)
+│   ├── models/            # Database definitions or local data structures
+│   ├── routes/            # Express route handlers
+│   │   ├── admin.js       # Admin panel routes
+│   │   ├── auth.js        # Auth and profile routes
+│   │   ├── cars.js        # Car listing and CRUD routes
+│   │   ├── cart.js        # Shopping cart routes
+│   │   └── reservations.js# Car booking and reservation routes
+│   ├── scripts/           # Utility scripts (seed.js)
+│   ├── services/          # Supabase service layer encapsulating DB logic
+│   ├── uploads/           # Directory for uploaded assets/images
+│   └── server.js          # Express app entry point
 └── README.md
 ```
 
@@ -67,13 +67,7 @@ car-commerce/
    cd car-commerce
    ```
 
-2. **Set up Supabase** (see detailed guide below)
-   ```bash
-   # Follow SUPABASE_SETUP.md for complete instructions
-   # This includes creating your project and setting up the database
-   ```
-
-3. **Backend Setup**
+2. **Backend Setup**
    ```bash
    cd backend
    npm install
@@ -82,15 +76,14 @@ car-commerce/
    npm start
    ```
 
-4. **Frontend Setup**
+3. **Frontend Setup**
    ```bash
    cd frontend
    npm install
    npm start
    ```
 
-5. **Environment Variables**
-
+4. **Environment Variables**
    Create a `.env` file in the backend directory:
    ```env
    PORT=5000
@@ -103,31 +96,50 @@ car-commerce/
 
 ## 🔗 API Endpoints
 
-### 🔐 Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/profile` - Get user profile
-- `PUT /api/auth/profile` - Update user profile
-- `PUT /api/auth/change-password` - Change password
-- `POST /api/auth/wishlist/:carId` - Toggle wishlist item
-- `GET /api/auth/wishlist` - Get user wishlist
+### 🔐 Authentication (`/api/auth`)
+- `GET /api/auth/info` - Get auth configuration info
+- `POST /api/auth/register` - User registration (delegated to Supabase)
+- `POST /api/auth/login` - User login (delegated to Supabase)
+- `POST /api/auth/callback` - Callback for Supabase to sync user profiles
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/profile` - Get current user profile
+- `PUT /api/auth/profile` - Update current user profile
+- `POST /api/auth/create-profile` - Create a user profile based on a valid token
+- `PUT /api/auth/change-password` - Change user password
+- `POST /api/auth/wishlist/:carId` - Add/remove car from wishlist
+- `GET /api/auth/wishlist` - Get current user's wishlist
 
-### 🚗 Cars
-- `GET /api/cars` - Get all cars (with filtering, pagination, search)
-- `GET /api/cars/:id` - Get single car with reviews
-- `POST /api/cars` - Create car (admin only)
-- `PUT /api/cars/:id` - Update car (admin only)
-- `DELETE /api/cars/:id` - Delete car (admin only)
-- `POST /api/cars/:id/reviews` - Add review to car
+### 🚗 Cars (`/api/cars`)
+- `GET /api/cars` - Get all cars (with search, category, and limit query params)
 - `GET /api/cars/featured/all` - Get featured cars
+- `GET /api/cars/:id` - Get a single car by its ID
+- `POST /api/cars` - Create a new car listing (Admin only)
+- `PUT /api/cars/:id` - Update an existing car listing (Admin only)
+- `DELETE /api/cars/:id` - Delete a car listing (Admin only)
 
-### 📦 Orders
-- `GET /api/orders/my-orders` - Get user's orders
-- `GET /api/orders/:id` - Get single order
-- `POST /api/orders` - Create new order
-- `PUT /api/orders/:id/status` - Update order status (admin)
-- `PUT /api/orders/:id/cancel` - Cancel order
-- `GET /api/orders` - Get all orders (admin only)
+### 🛒 Shopping Cart (`/api/cart`) *(Requires Auth)*
+- `GET /api/cart` - Get user's active cart and nested items
+- `GET /api/cart/summary` - Get summary (item count, total price) of user's cart
+- `POST /api/cart/add/:carId` - Add a specific car to the cart
+- `PUT /api/cart/item/:cartItemId` - Update the quantity of a specific cart item
+- `DELETE /api/cart/item/:cartItemId` - Remove an item from the cart
+- `DELETE /api/cart/clear` - Clear all items from the user's cart
+
+### 📅 Reservations / Bookings (`/api/reserved`) *(Requires Auth)*
+- `GET /api/reserved/my-reservations` - Get all reservations for the logged-in user
+- `GET /api/reserved/:id` - Get details of a single reservation
+- `POST /api/reserved/book` - Book a car directly (create a reservation)
+- `PUT /api/reserved/:id/status` - Update reservation status (Admin only)
+- `PUT /api/reserved/:id/cancel` - Cancel a pending reservation (Admin or listing owner)
+- `GET /api/reserved` - Get a paginated list of all reservations (Admin only)
+
+### ⚙️ Admin Dashboard (`/api/admin`) *(Requires Admin Role)*
+- `GET /api/admin/stats` - Get summary statistics (Total Sales, Revenue Trend, Cars in Stock, etc.)
+- `GET /api/admin/users` - List all user profiles with search and pagination
+- `GET /api/admin/users/:id` - Get a specific user profile and reservation counts
+- `PUT /api/admin/users/:id` - Update a specific user's role or block status
+- `GET /api/admin/bookings` - List all platform bookings/reservations with status filters
+- `PUT /api/admin/bookings/:id/status` - Update the status of a specific booking
 
 ## Technology Stack
 
@@ -135,17 +147,16 @@ car-commerce/
 - **React**: Component-based UI library
 - **React Router**: Client-side routing
 - **Tailwind CSS**: Utility-first CSS framework
-- **Axios**: HTTP client for API calls
-- **Heroicons**: Beautiful hand-crafted SVG icons
+- **Supabase JS**: Browser client for Auth & DB interaction
 
 ### Backend
 - **Node.js**: JavaScript runtime
 - **Express.js**: Web application framework
-- **Supabase**: PostgreSQL database with real-time capabilities
-- **Supabase Auth**: Built-in authentication system
-- **Row Level Security**: Database-level security policies
-- **Real-time**: Live data synchronization
+- **Supabase JS**: Server queries
 - **CORS**: Cross-origin resource sharing
+
+## License
+This project is licensed under the MIT License.
 
 ## Features in Detail
 
@@ -168,10 +179,10 @@ car-commerce/
 - Order total calculation
 
 ### Order Management
-- Complete order lifecycle
-- Order status tracking
-- Order history
-- Admin order management
+- Complete reservation lifecycle
+- Reservation status tracking
+- Reservation history
+- Admin reservation management
 
 ## ⚙️ Supabase Setup
 
@@ -226,12 +237,6 @@ npm run dev        # Start development server with nodemon
 4. Run tests
 5. Submit a pull request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Support
 
 For questions or support, please contact the development team or create an issue in the repository.
-
-# phoenix
