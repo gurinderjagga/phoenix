@@ -36,19 +36,6 @@ CREATE TABLE public.cars (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
-
-
--- Cart table
-CREATE TABLE public.cart (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  car_id UUID REFERENCES public.cars(id) ON DELETE CASCADE NOT NULL,
-  quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity > 0),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
-  UNIQUE(user_id, car_id) -- One cart entry per user per car
-);
-
 -- Reservations table
 CREATE TABLE public.reservations (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -66,16 +53,12 @@ CREATE TABLE public.reservations (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
-
 -- Create indexes for better performance
 CREATE INDEX idx_cars_brand ON public.cars(brand);
 CREATE INDEX idx_cars_category ON public.cars(category);
 CREATE INDEX idx_cars_featured ON public.cars(featured);
 CREATE INDEX idx_cars_price ON public.cars(price);
 CREATE INDEX idx_cars_year ON public.cars(year);
-
-CREATE INDEX idx_cart_user_id ON public.cart(user_id);
-CREATE INDEX idx_cart_updated_at ON public.cart(updated_at);
 CREATE INDEX idx_reservations_user_id ON public.reservations(user_id);
 CREATE INDEX idx_reservations_status ON public.reservations(status);
 
@@ -95,16 +78,15 @@ $$ language 'plpgsql';
 CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_cars_updated_at BEFORE UPDATE ON public.cars FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_reservations_updated_at BEFORE UPDATE ON public.reservations FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_cart_updated_at BEFORE UPDATE ON public.cart FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 
--- Row Level Security (RLS) Policies
+-- ============================================================
+-- Row Level Security (RLS)
+-- ============================================================
 
 -- Enable RLS on all tables
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cars ENABLE ROW LEVEL SECURITY;
-
-ALTER TABLE public.cart ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.reservations ENABLE ROW LEVEL SECURITY;
 
 -- Profiles policies
@@ -124,14 +106,6 @@ CREATE POLICY "Admins can delete cars" ON public.cars FOR DELETE USING (
   EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
 );
 
-
-
--- Cart policies
-CREATE POLICY "Users can view their own cart" ON public.cart FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can insert into their own cart" ON public.cart FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "Users can update their own cart" ON public.cart FOR UPDATE USING (auth.uid() = user_id);
-CREATE POLICY "Users can delete from their own cart" ON public.cart FOR DELETE USING (auth.uid() = user_id);
-
 -- Reservations policies
 CREATE POLICY "Users can view their own reservations" ON public.reservations FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert their own reservations" ON public.reservations FOR INSERT WITH CHECK (auth.uid() = user_id);
@@ -141,4 +115,3 @@ CREATE POLICY "Admins can view all reservations" ON public.reservations FOR SELE
 CREATE POLICY "Admins can update all reservations" ON public.reservations FOR UPDATE USING (
   EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
 );
-
