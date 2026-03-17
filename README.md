@@ -32,7 +32,7 @@ car-commerce/
 │       ├── components/    # Reusable UI components (admin, auth, UI elements)
 │       ├── context/       # React context for state management (AuthContext, etc.)
 │       ├── hooks/         # Custom React hooks
-│       ├── pages/         # Page components (Home, Cars, Register, Login, Cart, Profile, etc.)
+│       ├── pages/         # Page components (Home, Cars, Register, Login, Profile, Orders, etc.)
 │       └── utils/         # API Service and Supabase client configs
 ├── backend/               # Node.js/Express API
 │   ├── config/            # Configuration (supabase.js)
@@ -104,8 +104,6 @@ car-commerce/
 - `PUT /api/auth/profile` - Update current user profile
 - `POST /api/auth/create-profile` - Create a user profile based on a valid token
 - `PUT /api/auth/change-password` - Change user password
-- `POST /api/auth/wishlist/:carId` - Add/remove car from wishlist
-- `GET /api/auth/wishlist` - Get current user's wishlist
 
 ### 🚗 Cars (`/api/cars`)
 - `GET /api/cars` - Get all cars (with search, category, and limit query params)
