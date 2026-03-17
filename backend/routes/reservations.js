@@ -28,7 +28,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 // Book a car directly
 router.post('/book', authenticateToken, async (req, res) => {
   try {
-    const { carId, quantity = 1, shippingAddress, paymentMethod, orderNotes } = req.body;
+    const { carId, quantity = 1, paymentMethod, orderNotes } = req.body;
 
     if (!carId) {
       return res.status(400).json({ message: 'Car ID is required' });
@@ -37,7 +37,6 @@ router.post('/book', authenticateToken, async (req, res) => {
     const result = await reservationService.bookCar(req.user.id, {
       carId,
       quantity,
-      shippingAddress,
       paymentMethod,
       orderNotes
     });

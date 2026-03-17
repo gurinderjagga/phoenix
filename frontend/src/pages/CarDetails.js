@@ -63,7 +63,7 @@ const CarDetails = () => {
         setProcessingOrder(true);
         try {
             // Default to bank_transfer without shipping since it's an immediate booking
-            await apiService.bookCar(car.id, 1, { address: 'In-Store Pickup', city: 'N/A', country: 'N/A' }, 'bank_transfer', 'Immediate Booking via Car Details');
+            await apiService.bookCar(car.id, 1, 'bank_transfer', 'Immediate Booking via Car Details');
 
             // Note: In a real app we might prompt the user for address or shipping details, but this ensures a seamless transition for now based on the previous simple setup 
             setAlertModal({ isOpen: true, message: 'Reservation created successfully!', isError: false, goOrders: true });

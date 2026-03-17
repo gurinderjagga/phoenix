@@ -24,7 +24,7 @@ const Home = () => {
         fetchBufferedCars();
     }, []);
 
-    // Wishlist functionality removed.
+
 
     return (
         <div className="bg-secondary overflow-x-hidden">

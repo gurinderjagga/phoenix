@@ -13,7 +13,7 @@ class AuthService {
           phone: userMetadata.phone || null,
           role: 'user'
         }])
-        .select()
+        .select('id, name, email, phone, avatar, role, is_active, created_at, updated_at')
         .single();
 
       if (error) throw error;
@@ -28,7 +28,7 @@ class AuthService {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('*')
+        .select('id, name, email, phone, avatar, role, is_active, created_at, updated_at')
         .eq('id', userId)
         .single();
 
@@ -72,7 +72,7 @@ class AuthService {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('*')
+        .select('id, name, email, phone, avatar, role, is_active, created_at, updated_at')
         .eq('id', userId)
         .single();
 
@@ -91,7 +91,7 @@ class AuthService {
         .from('profiles')
         .update(updates)
         .eq('id', userId)
-        .select()
+        .select('id, name, email, phone, avatar, role, is_active, created_at, updated_at')
         .single();
 
       if (error) throw error;

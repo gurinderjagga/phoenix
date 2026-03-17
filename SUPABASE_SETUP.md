@@ -9,7 +9,7 @@
 1. Go to [supabase.com](https://supabase.com) and sign up/login
 2. Click **"New Project"**
 3. Fill in project details:
-   - **Name**: `car-commerce` (or your choice)
+   - **Name**: `phoenix` (or your choice)
    - **Database Password**: Choose a strong password
    - **Region**: Select closest to your location
 4. Click **"Create new project"**

@@ -117,13 +117,12 @@ class ApiService {
     });
   }
 
-  async bookCar(carId, quantity = 1, shippingAddress = null, paymentMethod = 'bank_transfer', orderNotes = null) {
+  async bookCar(carId, quantity = 1, paymentMethod = 'bank_transfer', orderNotes = null) {
     return this.request('/reserved/book', {
       method: 'POST',
       body: JSON.stringify({
         carId,
         quantity,
-        shippingAddress,
         paymentMethod,
         orderNotes
       })

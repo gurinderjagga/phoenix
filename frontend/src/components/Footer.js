@@ -35,7 +35,7 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div className="text-gray-600 text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-0">
-                        © 2024 Phoenix AG. Legal notice. Privacy Policy. Cookie Policy.
+                        © 2026 Phoenix AG. Legal notice. Privacy Policy. Cookie Policy.
                     </div>
                     <div className="flex space-x-6">
                         <span className="text-gray-600 text-[10px] font-bold uppercase tracking-widest">

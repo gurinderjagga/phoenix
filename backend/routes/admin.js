@@ -19,9 +19,9 @@ router.get('/stats', async (req, res) => {
       { count: bookingsCount, error: bookingsError },
       { count: testDrivesCount, error: testDrivesError }
     ] = await Promise.all([
-      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['confirmed', 'ready for pickup', 'delivered']),
-      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['pending', 'confirmed', 'ready for pickup']),
-      supabase.from('reservations').select('*', { count: 'exact', head: true }).eq('status', 'pending')
+      supabase.from('reservations').select('id', { count: 'exact', head: true }).in('status', ['confirmed', 'ready for pickup', 'delivered']),
+      supabase.from('reservations').select('id', { count: 'exact', head: true }).in('status', ['pending', 'confirmed', 'ready for pickup']),
+      supabase.from('reservations').select('id', { count: 'exact', head: true }).eq('status', 'pending')
     ]);
 
     if (salesError) throw salesError;
@@ -150,7 +150,7 @@ router.get('/stats', async (req, res) => {
       // Fallback without car join
       const { data: recentFallback } = await supabase
         .from('reservations')
-        .select('id, total_amount, status, created_at')
+        .select('id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at')
         .order('created_at', { ascending: false })
         .limit(5);
       recentBookingsData = recentFallback || [];
@@ -180,7 +180,7 @@ router.get('/users', async (req, res) => {
 
     let query = supabase
       .from('profiles')
-      .select('*', { count: 'exact' });
+      .select('id, name, email, phone, avatar, role, is_active, created_at, updated_at', { count: 'exact' });
 
     if (search) {
       query = query.or(`name.ilike.%${search}%,email.ilike.%${search}%`);
@@ -215,7 +215,7 @@ router.get('/users/:id', async (req, res) => {
 
     const { data: user, error: userError } = await supabase
       .from('profiles')
-      .select('*')
+      .select('id, name, email, phone, avatar, role, is_active, created_at, updated_at')
       .eq('id', id)
       .single();
 
@@ -224,7 +224,7 @@ router.get('/users/:id', async (req, res) => {
     // Fetch user's reservations summary
     const { count: reservationCount, error: reservationError } = await supabase
       .from('reservations')
-      .select('*', { count: 'exact', head: true })
+      .select('id', { count: 'exact', head: true })
       .eq('user_id', id);
 
     if (reservationError) console.warn('Error fetching user reservation count:', reservationError);
@@ -254,7 +254,7 @@ router.put('/users/:id', async (req, res) => {
       .from('profiles')
       .update(updates)
       .eq('id', id)
-      .select()
+      .select('id, name, email, phone, avatar, role, is_active, created_at, updated_at')
       .single();
 
     if (error) throw error;
@@ -299,7 +299,7 @@ router.put('/bookings/:id/status', async (req, res) => {
       .from('reservations')
       .update({ status })
       .eq('id', id)
-      .select()
+      .select('id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at')
       .single();
 
     if (error) throw error;

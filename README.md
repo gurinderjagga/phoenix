@@ -25,7 +25,7 @@ A modern, full-stack e-commerce application for buying and selling cars, built w
 ## 🏗️ Project Structure
 
 ```text
-car-commerce/
+phoenix/
 ├── frontend/              # React application
 │   ├── public/            # Static assets
 │   └── src/               # React source files
@@ -62,7 +62,7 @@ car-commerce/
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd car-commerce
+   cd phoenix
    ```
 
 2. **Backend Setup**

@@ -12,7 +12,7 @@ class ReservationService {
       // Try relational join (works after SQL migration adds car_id FK)
       ({ data, error, count } = await supabase
         .from('reservations')
-        .select(`*, cars ( id, name, brand, model, images )`, { count: 'exact' })
+        .select(`id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at, cars ( id, name, brand, model, images )`, { count: 'exact' })
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
         .range(from, to));
@@ -21,7 +21,7 @@ class ReservationService {
       if (error) {
         ({ data, error, count } = await supabase
           .from('reservations')
-          .select('*', { count: 'exact' })
+          .select('id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at', { count: 'exact' })
           .eq('user_id', userId)
           .order('created_at', { ascending: false })
           .range(from, to));
@@ -52,7 +52,7 @@ class ReservationService {
       // Try with car join first
       let result = await supabase
         .from('reservations')
-        .select(`*, cars ( id, name, brand, model, images, specifications ), profiles ( name, email )`)
+        .select(`id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at, cars ( id, name, brand, model, images, specifications ), profiles ( name, email )`)
         .eq('id', reservationId)
       [isAdmin ? 'maybeSingle' : 'single']();
 
@@ -60,7 +60,7 @@ class ReservationService {
         // Fallback without car join
         result = await supabase
           .from('reservations')
-          .select(`*, profiles ( name, email )`)
+          .select(`id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at, profiles ( name, email )`)
           .eq('id', reservationId)
           .single();
       }
@@ -112,7 +112,7 @@ class ReservationService {
           order_notes: reservationNotes || `Reservation for ${car.name}`,
           status: 'pending'
         }])
-        .select()
+        .select('id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at')
         .single();
 
       if (reservationError) throw reservationError;
@@ -229,7 +229,7 @@ class ReservationService {
       const from = (page - 1) * limit;
       const to = from + limit - 1;
 
-      let selectStr = `*, cars ( id, name, brand, model, price, images ), profiles ( name, email )`;
+      let selectStr = `id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at, cars ( id, name, brand, model, price, images ), profiles ( name, email )`;
 
       let query = supabase.from('reservations').select(selectStr, { count: 'exact' });
       if (status) query = query.eq('status', status);
@@ -240,7 +240,7 @@ class ReservationService {
 
       // Fallback without car join
       if (error) {
-        query = supabase.from('reservations').select(`*, profiles ( name, email )`, { count: 'exact' });
+        query = supabase.from('reservations').select(`id, user_id, car_id, quantity, price, total_amount, payment_method, payment_status, order_notes, status, created_at, profiles ( name, email )`, { count: 'exact' });
         if (status) query = query.eq('status', status);
         ({ data, error, count } = await query
           .order('created_at', { ascending: false })

@@ -32,17 +32,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  address: {
-    street: String,
-    city: String,
-    state: String,
-    zipCode: String,
-    country: String
-  },
-  wishlist: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Car'
-  }],
   isActive: {
     type: Boolean,
     default: true

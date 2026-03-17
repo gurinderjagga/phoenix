@@ -68,7 +68,7 @@ Create a `.env` file in the `backend` folder:
 ```env
 PORT=5000
 NODE_ENV=development
-MONGODB_URI=mongodb+srv://yourusername:yourpassword@cluster0.xxxxx.mongodb.net/car-commerce?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://yourusername:yourpassword@cluster0.xxxxx.mongodb.net/phoenix?retryWrites=true&w=majority
 JWT_SECRET=your_super_secret_jwt_key_here_change_in_production
 ```
 
@@ -103,7 +103,7 @@ docker run -d -p 27017:27017 --name mongodb mongo:latest
 ### Configure for Local MongoDB
 Update your `.env` file:
 ```env
-MONGODB_URI=mongodb://localhost:27017/car-commerce
+MONGODB_URI=mongodb://localhost:27017/phoenix
 ```
 
 ## 🧪 Testing the Setup
