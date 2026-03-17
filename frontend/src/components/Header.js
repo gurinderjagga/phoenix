@@ -193,8 +193,8 @@ const Header = () => {
                                 <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-6 border-b border-gray-200 pb-3">Contact Us</h3>
                                 <div className="space-y-6">
                                     <div><p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Email</p><a href="mailto:support@phoenix.com" className="text-base font-medium text-gray-900">support@phoenix.com</a></div>
-                                    <div><p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Live Help</p><a href="tel:+18005550123" className="text-base font-medium text-gray-900">+1 (800) 555-0123</a></div>
-                                    <div><p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Headquarters</p><p className="text-sm text-gray-900">123 Innovation Drive<br />Silicon Valley, CA 94025</p></div>
+                                    <div><p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Live Help</p><a href="tel:+91987654321" className="text-base font-medium text-gray-900">+91 987654321</a></div>
+                                    <div><p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Headquarters</p><p className="text-sm text-gray-900">Chandigarh, India</p></div>
                                 </div>
                             </div>
                         )}
@@ -309,8 +309,8 @@ const Header = () => {
                                     <h3 className="text-sm font-bold uppercase tracking-widest text-primary mb-8 border-b border-gray-200 pb-4">Contact Us</h3>
                                     <div className="space-y-8">
                                         <div><p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Email</p><a href="mailto:support@phoenix.com" className="text-xl font-medium text-gray-900">support@phoenix.com</a></div>
-                                        <div><p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Live Help</p><a href="tel:+18005550123" className="text-xl font-medium text-gray-900">+1 (800) 555-0123</a></div>
-                                        <div><p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Headquarters</p><p className="text-lg text-gray-900">123 Innovation Drive<br />Silicon Valley, CA 94025</p></div>
+                                        <div><p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Live Help</p><a href="tel:+91987654321" className="text-xl font-medium text-gray-900">+91 987654321</a></div>
+                                        <div><p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Headquarters</p><p className="text-lg text-gray-900">Chandigarh, India</p></div>
                                     </div>
                                 </div>
                             )}

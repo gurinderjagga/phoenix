@@ -8,7 +8,7 @@ const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [alertModal, setAlertModal] = useState({ isOpen: false, message: '', isError: false });
+  const [alertModal, setAlertModal] = useState({ isOpen: false, title: '', message: '', isError: false });
   const navigate = useNavigate();
 
   useBodyScrollLock(alertModal.isOpen);
@@ -26,7 +26,25 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // Check if email already exists in profiles table
+      const { data: existingUser } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('email', formData.email)
+        .maybeSingle();
+
+      if (existingUser) {
+        setAlertModal({ 
+          isOpen: true, 
+          title: 'ALREADY REGISTERED',
+          message: 'This email is already registered. Please sign in instead.', 
+          isError: true 
+        });
+        setLoading(false);
+        return;
+      }
+
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -34,10 +52,10 @@ const Register = () => {
           emailRedirectTo: `${window.location.origin}/login`
         }
       });
-      if (error) throw error;
+
+      if (signUpError) throw signUpError;
       if (data.user) {
-        // Auto-login or redirect
-        setAlertModal({ isOpen: true, message: 'Registration successful! Please login.', isError: false });
+        setAlertModal({ isOpen: true, title: 'Registration Complete', message: 'Registration successful! Please login.', isError: false });
       }
     } catch (error) {
       setError(error.message || 'Registration failed');
@@ -166,10 +184,14 @@ const Register = () => {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative text-center border-t-4 border-black">
             <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center border-2 ${alertModal.isError ? 'border-red-500 text-red-500' : 'border-black text-black'}`}>
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" /></svg>
+              {alertModal.isError ? (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              ) : (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" /></svg>
+              )}
             </div>
             <h2 className="text-lg font-bold uppercase tracking-widest text-primary mb-2">
-              Registration Complete
+              {alertModal.title}
             </h2>
             <p className="text-sm text-gray-500 mb-8 leading-relaxed">
               {alertModal.message}
@@ -177,7 +199,7 @@ const Register = () => {
             <button
               className="w-full bg-black text-white px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em]"
               onClick={() => {
-                setAlertModal({ isOpen: false, message: '', isError: false });
+                setAlertModal({ isOpen: false, title: '', message: '', isError: false });
                 navigate('/login');
               }}
             >

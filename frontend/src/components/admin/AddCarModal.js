@@ -54,7 +54,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                 horsepower: car.specifications?.horsepower || '',
                 acceleration: car.specifications?.acceleration || '',
                 topSpeed: car.specifications?.topSpeed || '',
-                price: car.price || '',
+                price: car.price ? new Intl.NumberFormat('en-IN').format(car.price) : '',
                 transmission: car.specifications?.transmission?.toLowerCase() || 'automatic',
                 fuelType: car.specifications?.fuelType?.toLowerCase() || 'gasoline',
                 color: car.specifications?.color || '',
@@ -92,9 +92,16 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        let newValue = value;
+
+        if (name === 'price') {
+            const numericValue = value.replace(/\D/g, '');
+            newValue = numericValue ? new Intl.NumberFormat('en-IN').format(numericValue) : '';
+        }
+
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: newValue
         }));
         // Clear error when user starts typing
         if (errors[name]) {
@@ -140,7 +147,10 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
         if (!formData.engine.trim()) newErrors.engine = 'Engine is required';
         if (!formData.horsepower) newErrors.horsepower = 'Horsepower is required';
         if (!formData.price) newErrors.price = 'Price is required';
-        else if (formData.price <= 0) newErrors.price = 'Price must be greater than 0';
+        else {
+            const numPrice = parseFloat(formData.price.toString().replace(/,/g, ''));
+            if (isNaN(numPrice) || numPrice <= 0) newErrors.price = 'Price must be greater than 0';
+        }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -203,7 +213,7 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                 brand: formData.brand,
                 model: formData.model,
                 year: parseInt(formData.year),
-                price: parseFloat(formData.price),
+                price: parseFloat(formData.price.toString().replace(/,/g, '')),
                 description: formData.description,
                 images: finalImages,
                 category: formData.category || 'Sedan',
@@ -437,13 +447,12 @@ const AddCarModal = ({ isOpen, onClose, onSave, car }) => {
                                         Price *
                                     </label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         name="price"
                                         value={formData.price}
                                         onChange={handleInputChange}
                                         className="w-full px-3 py-2 border border-gray-300 focus:ring-0 focus:border-gray-900"
-                                        placeholder="e.g., 150000"
-                                        min="0"
+                                        placeholder="e.g., 1,50,000"
                                     />
                                     {errors.price && <p className="text-red-600 text-sm mt-1">{errors.price}</p>}
                                 </div>

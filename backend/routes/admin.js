@@ -19,8 +19,8 @@ router.get('/stats', async (req, res) => {
       { count: bookingsCount, error: bookingsError },
       { count: testDrivesCount, error: testDrivesError }
     ] = await Promise.all([
-      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['confirmed', 'delivered']),
-      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['pending', 'confirmed']),
+      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['confirmed', 'ready for pickup', 'delivered']),
+      supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', ['pending', 'confirmed', 'ready for pickup']),
       supabase.from('reservations').select('*', { count: 'exact', head: true }).eq('status', 'pending')
     ]);
 
@@ -39,7 +39,7 @@ router.get('/stats', async (req, res) => {
     const { data: allSales, error: revenueError } = await supabase
       .from('reservations')
       .select('total_amount')
-      .in('status', ['confirmed', 'delivered']);
+      .in('status', ['confirmed', 'ready for pickup', 'delivered']);
 
     let totalSalesValue = 0;
     if (!revenueError && allSales) {
@@ -67,7 +67,7 @@ router.get('/stats', async (req, res) => {
     const { data: trendReservations, error: trendError } = await supabase
       .from('reservations')
       .select('total_amount, created_at')
-      .in('status', ['confirmed', 'delivered'])
+      .in('status', ['confirmed', 'ready for pickup', 'delivered'])
       .gte('created_at', startDate.toISOString())
       .order('created_at', { ascending: true });
 
