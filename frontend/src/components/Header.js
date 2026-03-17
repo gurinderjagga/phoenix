@@ -11,13 +11,6 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user, signOut } = useAuth();
-    // Fetch wishlist count simplified for brevity
-    // useEffect(() => {
-    //     if (user) {
-    //         apiService.getCartSummary().then(res => setWishlistCount(res.totalItems || 0)).catch(() => setWishlistCount(0));
-    //     }
-    // }, [user]);
-
     // Prevent scrolling when menu is open
     useEffect(() => {
         if (isMenuOpen) {

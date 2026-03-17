@@ -8,14 +8,13 @@ A modern, full-stack e-commerce application for buying and selling cars, built w
 - **Modern UI**: Clean, responsive design using Tailwind CSS
 - **Car Listings**: Browse cars with advanced filtering and search
 - **Car Details**: Detailed car pages with specifications and reviews
-- **Shopping Cart**: Add cars to cart and manage quantities
 - **User Authentication**: Seamless login and registration via Supabase
 - **User Profile**: Manage personal information and view order history
 - **Order Management**: View and track orders/reservations
 - **Real-time Updates**: Live data synchronization
 
 ### ⚡ Backend (Node.js + Express + Supabase)
-- **RESTful API**: Complete API for cars, users, cart, reservations, and admin dashboard
+- **RESTful API**: Complete API for cars, users, reservations, and admin dashboard
 - **Supabase Integration**: PostgreSQL database with real-time capabilities
 - **User Management**: Registration, login, profile management
 - **Car Management**: Full CRUD operations for car listings
@@ -43,7 +42,6 @@ car-commerce/
 │   │   ├── admin.js       # Admin panel routes
 │   │   ├── auth.js        # Auth and profile routes
 │   │   ├── cars.js        # Car listing and CRUD routes
-│   │   ├── cart.js        # Shopping cart routes
 │   │   └── reservations.js# Car booking and reservation routes
 │   ├── scripts/           # Utility scripts (seed.js)
 │   ├── services/          # Supabase service layer encapsulating DB logic
@@ -117,14 +115,6 @@ car-commerce/
 - `PUT /api/cars/:id` - Update an existing car listing (Admin only)
 - `DELETE /api/cars/:id` - Delete a car listing (Admin only)
 
-### 🛒 Shopping Cart (`/api/cart`) *(Requires Auth)*
-- `GET /api/cart` - Get user's active cart and nested items
-- `GET /api/cart/summary` - Get summary (item count, total price) of user's cart
-- `POST /api/cart/add/:carId` - Add a specific car to the cart
-- `PUT /api/cart/item/:cartItemId` - Update the quantity of a specific cart item
-- `DELETE /api/cart/item/:cartItemId` - Remove an item from the cart
-- `DELETE /api/cart/clear` - Clear all items from the user's cart
-
 ### 📅 Reservations / Bookings (`/api/reserved`) *(Requires Auth)*
 - `GET /api/reserved/my-reservations` - Get all reservations for the logged-in user
 - `GET /api/reserved/:id` - Get details of a single reservation
@@ -171,12 +161,6 @@ This project is licensed under the MIT License.
 - Password hashing with bcrypt
 - Role-based access control (user/admin)
 - Protected routes and API endpoints
-
-### Shopping Cart
-- Add/remove cars from cart
-- Quantity management
-- Persistent cart state
-- Order total calculation
 
 ### Order Management
 - Complete reservation lifecycle
