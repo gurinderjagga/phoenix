@@ -1,15 +1,13 @@
 const { createClient } = require('@supabase/supabase-js');
 
-const supabaseUrl = process.env.SUPABASE_URL || 'https://rckfzebmphobenrcgmqv.supabase.co';
+const supabaseUrl = process.env.SUPABASE_URL;
+if (!supabaseUrl) throw new Error('Missing env var: SUPABASE_URL');
 
 // IMPORTANT: The backend uses the Service Role Key, NOT the anon key.
 // The anon key is for the browser/frontend where Supabase Auth session is active.
 // The service role key bypasses RLS so the Express server can make queries on behalf
 // of any user — security is enforced by the authenticateToken / requireAdmin middleware.
-const supabaseKey =
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJja2Z6ZWJtcGhvYmVucmNnbXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MjAzMjcsImV4cCI6MjA4NDQ5NjMyN30.JOj2Ok6ke82csWJyRUg_ZF9VKv8QbpuETZsGjjmEBDM';
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
 
 if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
   console.warn(

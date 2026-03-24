@@ -1,11 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Hardcoded for now - update with your actual Supabase credentials
-const supabaseUrl = 'https://rckfzebmphobenrcgmqv.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJja2Z6ZWJtcGhvYmVucmNnbXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MjAzMjcsImV4cCI6MjA4NDQ5NjMyN30.JOj2Ok6ke82csWJyRUg_ZF9VKv8QbpuETZsGjjmEBDM';
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Missing Supabase environment variables. Using hardcoded values.');
+    throw new Error('Missing Supabase env vars: REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_ANON_KEY must be set in .env');
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
