@@ -400,6 +400,15 @@ const CarDetails = () => {
             {alertModal.isOpen && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60">
                     <div className="bg-white w-full max-w-sm p-8 shadow-2xl relative text-center border-t-4 border-black">
+                        <button
+                            onClick={() => setAlertModal({ isOpen: false, message: '', isError: false, goOrders: false })}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors"
+                            aria-label="Close"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
                         <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center border-2 ${alertModal.isError ? 'border-red-500 text-red-500' : 'border-black text-black'}`}>
                             {alertModal.isError ? (
                                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>

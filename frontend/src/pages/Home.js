@@ -55,7 +55,7 @@ const Home = () => {
                     </p>
                     <div className="flex flex-col md:flex-row gap-6 justify-start opacity-0 animate-slide-up" style={{ animationDelay: '0.6s' }}>
 
-                        <Link to="/cars">
+                        <Link to="/cars/a9c3025a-09ff-43e9-bd46-be184498f005">
                             <Button className="min-w-[200px] bg-gray-200 text-black border-none">Discover</Button>
                         </Link>
                     </div>
