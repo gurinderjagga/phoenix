@@ -176,9 +176,12 @@ const Header = () => {
                         )}
                         {activeMenu === 'Experience' && (
                             <div className="flex flex-col items-center justify-center h-full text-center animate-fade-in py-10">
-                                <h2 className="text-4xl font-bold text-gray-200 uppercase tracking-tighter mb-4">Project</h2>
+                                <h2 className="text-4xl font-bold text-gray-200 uppercase tracking-tighter mb-4">GGDSD</h2>
                                 <p className="text-lg font-medium text-gray-900 tracking-wide">College Project</p>
                                 <p className="text-xs text-gray-500 mt-4 max-w-sm px-4">Demonstrating modern web excellence through a luxury automotive commerce experience.</p>
+                                <p className="text-sm text-gray-600 tracking-wide mt-6 font-medium">
+                                    Developed By<br />Yuvraj and Gurinder Singh
+                                </p>
                             </div>
                         )}
                         {activeMenu === 'Support' && (
@@ -292,9 +295,12 @@ const Header = () => {
                             )}
                             {activeMenu === 'Experience' && (
                                 <div className="flex flex-col items-center pt-24 pb-12 text-center animate-fade-in">
-                                    <h2 className="text-6xl font-bold text-gray-200 uppercase tracking-tighter mb-4">Project</h2>
+                                    <h2 className="text-6xl font-bold text-gray-200 uppercase tracking-tighter mb-4">GGDSD</h2>
                                     <p className="text-xl font-medium text-gray-900 tracking-wide">College Project</p>
                                     <p className="text-sm text-gray-500 mt-4 max-w-md">Demonstrating modern web excellence through a luxury automotive commerce experience.</p>
+                                    <p className="text-lg text-gray-600 tracking-wide mt-6 font-medium">
+                                        Developed By<br />Yuvraj and Gurinder Singh
+                                    </p>
                                 </div>
                             )}
                             {activeMenu === 'Support' && (
