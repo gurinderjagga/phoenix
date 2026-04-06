@@ -180,7 +180,7 @@ const Header = () => {
                                 <p className="text-lg font-medium text-gray-900 tracking-wide">College Project</p>
                                 <p className="text-xs text-gray-500 mt-4 max-w-sm px-4">Demonstrating modern web excellence through a luxury automotive commerce experience.</p>
                                 <p className="text-sm text-gray-600 tracking-wide mt-6 font-medium">
-                                    Developed By<br />Yuvraj and Gurinder Singh
+                                    Developed By<br />Gurinder Singh and Yuvraj
                                 </p>
                             </div>
                         )}
@@ -299,7 +299,7 @@ const Header = () => {
                                     <p className="text-xl font-medium text-gray-900 tracking-wide">College Project</p>
                                     <p className="text-sm text-gray-500 mt-4 max-w-md">Demonstrating modern web excellence through a luxury automotive commerce experience.</p>
                                     <p className="text-lg text-gray-600 tracking-wide mt-6 font-medium">
-                                        Developed By<br />Yuvraj and Gurinder Singh
+                                        Developed By<br />Gurinder Singh and Yuvraj
                                     </p>
                                 </div>
                             )}
