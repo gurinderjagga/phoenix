@@ -104,27 +104,27 @@ const CarDetails = () => {
     if (!car) return <div className="h-screen flex items-center justify-center bg-white text-primary uppercase tracking-widest font-bold">Vehicle Not Found</div>;
 
     return (
-        <div className="bg-white min-h-screen pt-28 md:pt-32 pb-20 lg:pb-12">
-            <div className="flex flex-col lg:flex-row min-h-[calc(100vh-6rem)]">
+        <div className="bg-white pt-16 lg:pt-20 pb-8 lg:pb-0 h-auto lg:h-screen flex flex-col">
+            <div className="flex flex-col lg:flex-row flex-1 lg:h-[calc(100vh-7rem)] max-w-[1600px] w-full mx-auto min-h-0">
 
                 {/* Visuals - 75% width on desktop */}
-                <div className="lg:w-3/4 relative bg-white flex flex-col px-4 sm:px-6 lg:px-12 pb-4 lg:pb-12 pt-2 lg:pt-4">
-                    {/* Main Image Box - Locked to 16:9 aspect ratio */}
-                    <div className="relative w-full rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6" style={{ paddingBottom: '56.25%' }}>
+                <div className="lg:w-3/4 relative bg-white flex flex-col px-4 sm:px-6 lg:px-12 pb-4 lg:pb-6 pt-2 lg:pt-4 h-full min-h-0">
+                    {/* Main Image Box */}
+                    <div className="relative w-full flex-1 mb-4 min-h-[250px] flex items-center justify-center bg-transparent">
                         <img
                             src={car.images[selectedImage]}
                             alt={car.model}
-                            className="absolute inset-0 w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                         />
                     </div>
                     {/* Thumbnails */}
                     {car.images.length > 1 && (
-                        <div className="flex overflow-x-auto space-x-2 sm:space-x-4 pb-2">
+                        <div className="flex overflow-x-auto space-x-2 sm:space-x-4 pb-2 hide-scrollbar flex-shrink-0 h-20 md:h-24">
                             {car.images.map((img, idx) => (
                                 <button
                                     key={idx}
                                     onClick={() => setSelectedImage(idx)}
-                                    className={`relative w-16 h-11 sm:w-20 sm:h-14 md:w-24 md:h-16 flex-shrink-0 rounded-lg overflow-hidden ${selectedImage === idx ? 'ring-2 ring-black ring-offset-2 ring-offset-white' : 'opacity-50'}`}
+                                    className={`relative w-20 h-14 sm:w-24 sm:h-16 md:w-32 md:h-20 flex-shrink-0 transition-opacity duration-300 ease-in-out ${selectedImage === idx ? 'opacity-100 border-b-2 border-black' : 'opacity-30 hover:opacity-100'}`}
                                 >
                                     <img src={img} alt="" className="w-full h-full object-cover" />
                                 </button>
@@ -156,15 +156,11 @@ const CarDetails = () => {
                                 </div>
                             ))}
                         </div>
-
-                        {car.description && (
-                            <p className="text-gray-500 text-xs leading-relaxed">{car.description}</p>
-                        )}
                     </div>
                 </div>
 
                 {/* Specs & config - 25% width — DESKTOP ONLY */}
-                <div className="hidden lg:flex lg:w-1/4 p-6 lg:p-8 bg-white border-t lg:border-t-0 lg:border-l border-gray-100 flex-col justify-between">
+                <div className="hidden lg:flex lg:w-1/4 p-6 lg:p-8 bg-white flex-col justify-between h-full overflow-hidden">
                     <div>
                         <div className="mb-8">
                             <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-1 block">{car.year} Model</span>
@@ -204,12 +200,7 @@ const CarDetails = () => {
                             </div>
                         </div>
 
-                        {/* Description */}
-                        <div className="mb-8 hidden sm:block"> {/* Hide description on very small screens to save space if needed, or keep minimal */}
-                            <p className="text-gray-500 text-xs leading-relaxed">
-                                {car.description}
-                            </p>
-                        </div>
+                        {/* Description removed */}
                     </div>
 
                     {/* Actions - Stark & Minimal */}
